@@ -10,8 +10,206 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User {
-  id    Int     @id @default(autoincrement())
-  email String  @unique
-  name  String?
+//---------------------------Usuario--------------------------------------------
+model Usuario {
+  id            Int     @id @default(autoincrement())
+  Nombre        String
+  Apellido      String
+  Telefono      String
+  Email         String  @unique
+  Contrasenna   String
+  Calificacion  Decimal @db.Decimal(10, 2)
+  Deshabilitado Boolean @default(false)
+
+  Roles       RolOnUsuario[]
+  MetodoPago  MetodoPago[]
+  Direccion   Direccion[]
+  Producto    Producto[]
+  Mensaje     Mensaje[]
+  Compra      Compra[]
+  Evaluadores Evaluacion[]   @relation(name: "Evaluadores")
+  Evaluados   Evaluacion[]   @relation(name: "Evaluados")
+}
+
+model Rol {
+  id          Int     @id @default(autoincrement())
+  Descripcion String
+  Borrado     Boolean @default(false)
+
+  Usuarios RolOnUsuario[]
+}
+
+model RolOnUsuario {
+  RolId Int
+  rol   Rol @relation(fields: [RolId], references: [id])
+
+  UsuarioId Int
+  usuario   Usuario @relation(fields: [UsuarioId], references: [id])
+
+  @@id([RolId, UsuarioId])
+}
+
+model TipoPago {
+  id          Int          @id @default(autoincrement())
+  Descripcion String
+  Borrado     Boolean      @default(false)
+  MetodoPago  MetodoPago[]
+}
+
+model MetodoPago {
+  id        Int     @id @default(autoincrement())
+  UsuarioId Int
+  usuario   Usuario @relation(fields: [UsuarioId], references: [id])
+
+  TipoPagoId Int
+  tipoPago   TipoPago @relation(fields: [TipoPagoId], references: [id])
+
+  NumeroCuenta String
+  Expiracion   DateTime
+  Titulo       String
+  Borrado      Boolean  @default(false)
+  Compra       Compra[]
+}
+
+model Direccion {
+  id Int @id @default(autoincrement())
+
+  UsuarioId Int
+  usuario   Usuario @relation(fields: [UsuarioId], references: [id])
+
+  Provincia    String
+  Canton       String
+  Distrito     String
+  Detalle      String
+  CodigoPostal String
+  Telefono     String
+  Titulo       String
+  Compra       Compra[]
+}
+
+//---------------------------Producto--------------------------------------------
+model Producto {
+  id          Int     @id @default(autoincrement())
+  Nombre      String
+  Descripcion String
+  Precio      Decimal @db.Decimal(10, 2)
+  Cantidad    Int
+
+  CategoriaId Int
+  categoria   Categoria @relation(fields: [CategoriaId], references: [id])
+
+  EstadoId Int
+  estado   EstadoProducto @relation(fields: [EstadoId], references: [id])
+
+  VendedorId Int
+  vendedor   Usuario @relation(fields: [VendedorId], references: [id])
+
+  Borrado       Boolean         @default(false)
+  FotoProducto  FotoProducto[]
+  Mensaje       Mensaje[]
+  CompraDetalle CompraDetalle[]
+}
+
+model Categoria {
+  id          Int        @id @default(autoincrement())
+  Descripcion String
+  Borrado     Boolean    @default(false)
+  Producto    Producto[]
+}
+
+model EstadoProducto {
+  id          Int        @id @default(autoincrement())
+  Descripcion String
+  Producto    Producto[]
+  Borrado     Boolean    @default(false)
+}
+
+model FotoProducto {
+  id Int @id @default(autoincrement())
+
+  ProductoId Int
+  producto   Producto @relation(fields: [ProductoId], references: [id])
+
+  Foto Bytes
+
+  Borrado Boolean @default(false)
+}
+
+model Mensaje {
+  id Int @id @default(autoincrement())
+
+  ClienteId Int
+  cliente   Usuario @relation(fields: [ClienteId], references: [id])
+
+  ProductoId Int
+  producto   Producto @relation(fields: [ProductoId], references: [id])
+
+  Pregunta  String
+  Respuesta String
+
+  Borrado Boolean  @default(false)
+  Fecha   DateTime @default(now())
+}
+
+//---------------------------Compra--------------------------------------------
+model EstadoCompra {
+  id          Int      @id @default(autoincrement())
+  Descripcion String
+  Borrado     Boolean  @default(false)
+  Compra      Compra[]
+}
+
+model Compra {
+  id        Int     @id @default(autoincrement())
+  ClienteId Int
+  cliente   Usuario @relation(fields: [ClienteId], references: [id])
+
+  DireccionId Int
+  direccion   Direccion @relation(fields: [DireccionId], references: [id])
+
+  MetodoPagoId Int
+  metodoPago   MetodoPago @relation(fields: [MetodoPagoId], references: [id])
+
+  EstadoCompraId Int          @default(1)
+  estadoCompra   EstadoCompra @relation(fields: [EstadoCompraId], references: [id])
+
+  Subtotal Decimal @db.Decimal(10, 2)
+  Total    Decimal @db.Decimal(10, 2)
+
+  Fecha         DateTime        @default(now())
+  Borrado       Boolean         @default(false)
+  CompraDetalle CompraDetalle[]
+  Evaluacion    Evaluacion[]
+}
+
+model CompraDetalle {
+  id Int @id @default(autoincrement())
+
+  CompraId Int
+  compra   Compra @relation(fields: [CompraId], references: [id])
+
+  ProductoId Int
+  producto   Producto @relation(fields: [ProductoId], references: [id])
+
+  Cantidad Int
+  Subtotal Decimal @db.Decimal(10, 2)
+
+  Borrado Boolean @default(false)
+}
+
+model Evaluacion {
+  id Int @id @default(autoincrement())
+
+  CompraId Int
+  compra   Compra @relation(fields: [CompraId], references: [id])
+
+  EvaluadorId Int
+  evaluador   Usuario @relation(name: "Evaluadores", fields: [EvaluadorId], references: [id])
+
+  EvaluadoId Int
+  evaluado   Usuario @relation(name: "Evaluados", fields: [EvaluadoId], references: [id])
+
+  Calificacion Int
+
+  Borrado Boolean @default(false)
 }
