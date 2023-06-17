@@ -177,8 +177,6 @@ model Compra {
   Borrado       Boolean         @default(false)
   CompraDetalle CompraDetalle[]
   Evaluacion    Evaluacion[]
-
-  estadoCompraId Int?
 }
 
 model CompraDetalle {

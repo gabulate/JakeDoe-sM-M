@@ -32,7 +32,8 @@
     "@prisma/client": "^4.14.1"
   },
   "scripts": {
-    "tsc": "tsc"
+    "tsc": "tsc",
+    "dev":"nodemon app.js"
   },
   "prisma": {
     "seed": "ts-node prisma/seed.ts"
