@@ -6,7 +6,11 @@ const cors = require("cors");
 const logger = require("morgan");
 const app = express();
 const prism = new PrismaClient();
+
+//Routers
 const usuarioRoutes = require('./routes/UsuarioRoutes');
+const productoRoutes = require('./routes/ProductoRoutes');
+const compraRoutes = require('./routes/CompraRoutes');
 
 
 //---Archivos de rutas---
@@ -33,6 +37,9 @@ app.use(
 
 //---- Definir rutas ----
 app.use("/usuario/", usuarioRoutes);
+app.use("/producto/", productoRoutes);
+app.use("/compra/", compraRoutes);
+
 // Servidor
 app.listen(port, () => {
   console.log("Jake Doe's store API is up and running! B^)");

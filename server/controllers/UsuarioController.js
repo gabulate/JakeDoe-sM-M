@@ -16,7 +16,11 @@ module.exports.get = async (request, response, next) => {
       Email: true,
       Calificacion: true,
       Deshabilitado: true,
-      Roles: true,
+      Roles: {
+        select: {
+          rol: true
+        },
+      },
     },
   });
   response.json(usuarios);
@@ -29,21 +33,27 @@ module.exports.getById = async (request, response, next) => {
     where: { id: id },
     //Selecciona todos los campos MENOS el de la contraseña
     select: {
-        id: true,
-        Nombre: true,
-        Apellido: true,
-        Telefono: true,
-        Email: true,
-        Calificacion: true,
-        Deshabilitado: true,
-        Roles: true,
+      id: true,
+      Nombre: true,
+      Apellido: true,
+      Telefono: true,
+      Email: true,
+      Calificacion: true,
+      Deshabilitado: true,
+      Roles: {
+        select: {
+          rol: true
+        },
       },
+      Direccion: true,
+      MetodoPago: true,
+    },
   });
   response.json(usuario);
 };
 
-//Crear un videojuego
+//Crear un usuario
 module.exports.create = async (request, response, next) => {};
 
-//Actualizar un videojuego
+//Actualizar un usuario
 module.exports.update = async (request, response, next) => {};
