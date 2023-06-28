@@ -1,0 +1,136 @@
+{
+	"info": {
+		"_postman_id": "d00de0df-af1a-4490-9b3a-45b6537a55bd",
+		"name": "JakeDoesAPI",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "28163533"
+	},
+	"item": [
+		{
+			"name": "productos",
+			"item": [
+				{
+					"name": "Listar productos",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/producto",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"producto"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Obtener producto por Id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/producto/1",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"producto",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "compras",
+			"item": [
+				{
+					"name": "Listar compras",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/compra",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"compra"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Obtener compra por Id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/compra/1",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"compra",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "usuarios",
+			"item": [
+				{
+					"name": "Listar usuarios",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/usuario",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"usuario"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Obtener usuario por Id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/usuario/1",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"usuario",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

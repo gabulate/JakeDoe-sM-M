@@ -7,13 +7,13 @@ const logger = require("morgan");
 const app = express();
 const prism = new PrismaClient();
 
-//Routers
-const usuarioRoutes = require('./routes/UsuarioRoutes');
-const productoRoutes = require('./routes/ProductoRoutes');
-const compraRoutes = require('./routes/CompraRoutes');
-
-
 //---Archivos de rutas---
+const usuarioRouter = require('./routes/usuarioRoutes');
+const productoRouter = require('./routes/productoRoutes');
+const compraRouter = require('./routes/compraRoutes');
+
+
+
 // Acceder a la configuracion del archivo .env
 dotEnv.config();
 
@@ -36,9 +36,9 @@ app.use(
 );
 
 //---- Definir rutas ----
-app.use("/usuario/", usuarioRoutes);
-app.use("/producto/", productoRoutes);
-app.use("/compra/", compraRoutes);
+app.use("/usuario/", usuarioRouter);
+app.use("/producto/", productoRouter);
+app.use("/compra/", compraRouter);
 
 // Servidor
 app.listen(port, () => {

@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 
 //Controlador con las acciones de las rutas
-const productoController = require("../controllers/ProductoController");
+const productoController = require("../controllers/productoController");
 
 //Rutas de Usuarios
 router.get("/", productoController.get);

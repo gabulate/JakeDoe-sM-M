@@ -2,8 +2,9 @@
   "name": "jakedoes",
   "version": "1.0.0",
   "description": "Proyecto de programación con software libre",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
+    "dev": "nodemon app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
@@ -30,10 +31,6 @@
   },
   "dependencies": {
     "@prisma/client": "^4.14.1"
-  },
-  "scripts": {
-    "tsc": "tsc",
-    "dev":"nodemon app.js"
   },
   "prisma": {
     "seed": "ts-node prisma/seed.ts"
