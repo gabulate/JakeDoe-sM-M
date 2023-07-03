@@ -32,4 +32,37 @@ export const Productos = [
     EstadoId: 4,
     VendedorId: 5,
   },
+  //4
+  {
+    Nombre: "Camiseta 424",
+    Descripcion:
+      "Camiseta con diseño de 434.",
+    Precio: "15000",
+    Cantidad: 24,
+    CategoriaId: 5,
+    EstadoId: 1,
+    VendedorId: 5,
+  },
+  //5
+  {
+    Nombre: "Vinilo Plastic Beach",
+    Descripcion:
+      "Vinilo del álbum Plastic Beach de Gorillaz.",
+    Precio: "20000",
+    Cantidad: 4,
+    CategoriaId: 2,
+    EstadoId: 1,
+    VendedorId: 5,
+  },
+  //6
+  {
+    Nombre: "Poster Eras Tour",
+    Descripcion:
+      "Poster de Taylor Swift en el Eras Tour.",
+    Precio: "5000",
+    Cantidad: 6,
+    CategoriaId: 3,
+    EstadoId: 1,
+    VendedorId: 5,
+  },
 ];
