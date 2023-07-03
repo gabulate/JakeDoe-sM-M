@@ -1,0 +1,20 @@
+<mat-card class="dashboard-card" *ngIf="datos"  >
+    <mat-card-header>
+      <mat-card-title>
+        {{datos.nombre }}
+       
+      </mat-card-title>
+    </mat-card-header>
+    <mat-card-content class="dashboard-card-content">
+      <p><b>Cliente: </b>{{datos.compra.cliente.Nombre + ' ' + datos.compra.cliente.Apellido}}</p>
+      <p><b>Vendedor: </b>{{datos.producto.vendedor.Nombre + ' ' + datos.producto.vendedor.Apellido}}</p>
+      <p><b>Producto: </b>{{ datos.producto.Nombre}}</p>
+      <p><b>Cantidad: </b>{{ datos.Cantidad}}</p>
+      <p><b>Subtotal: </b>{{datos.Subtotal| currency:'USD'}}</p>
+      <p><b>Fecha: </b>{{ datos.compra.Fecha | date : "hh:mm - dd/MM/yyyy"}}</p>
+
+      <p><b>Categoría: </b>{{ datos.producto.categoria.Descripcion}}</p>
+      <p><b>Estado: </b>{{ datos.producto.estado.Descripcion}}</p>
+      
+    </mat-card-content>
+  </mat-card>

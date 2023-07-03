@@ -10,7 +10,7 @@ const prism = new PrismaClient();
 //---Archivos de rutas---
 const usuarioRouter = require('./routes/usuarioRoutes');
 const productoRouter = require('./routes/productoRoutes');
-const compraRouter = require('./routes/compraRoutes');
+const compraRouter = require('./routes/CompraRoutes');
 
 
 
