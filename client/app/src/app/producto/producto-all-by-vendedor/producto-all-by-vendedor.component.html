@@ -1,7 +1,8 @@
+<p>producto-all-by-vendedor works!</p>
 <mat-card class="full-width">
     <!-- Titulo del Card -->
     <mat-card-title>
-      <h1>Pedidos</h1>
+      <h1>Inventario de proveedor</h1>
     </mat-card-title>
     <mat-card-content>
       <!-- Table -->
@@ -13,47 +14,49 @@
           matSort
           aria-label="Elements"
         >
-          <!-- Columna Cliente -->
-          <ng-container matColumnDef="cliente">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Compra</th>
-            <td mat-cell *matCellDef="let row">{{ row.compra.cliente.Nombre +' '+ row.compra.cliente.Apellido }}</td>
-            <!-- <td mat-cell *matCellDef="let row">{{ row.compra.id }}</td> -->
-          </ng-container>
-  
-          <!-- Columna Prodcuto -->
+          <!-- Columna Producto -->
           <ng-container matColumnDef="producto">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>Producto</th>
-            <td mat-cell *matCellDef="let row">{{ row.producto.Nombre}}</td>
+            <td mat-cell *matCellDef="let row">{{ row.Nombre }}</td>
+          </ng-container>
+  
+           <!-- Columna acciones -->
+           <ng-container matColumnDef="categoria-estado">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Categoría y Estado</th>
+            <td mat-cell *matCellDef="let row">{{ row.categoria.Descripcion + " " + row.estado.Descripcion }}</td> 
           </ng-container>
 
-           <!-- Columna Cantidad -->
-           <ng-container matColumnDef="cantidad">
+          <!-- Columna Cantidad -->
+          <ng-container matColumnDef="cantidad">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>Cantidad</th>
-            <td mat-cell *matCellDef="let row">{{ row.Cantidad}}</td>
+            <td mat-cell *matCellDef="let row">{{ row.Cantidad }}</td>
           </ng-container>
   
-          <!-- Columna Producto -->
-          <ng-container matColumnDef="total">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Subtotal</th>
-            <td mat-cell *matCellDef="let row">{{ row.Subtotal| currency: "CRC" }}</td>
+          <!-- Columna Precio -->
+          <ng-container matColumnDef="precio">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Precio</th>
+            <td mat-cell *matCellDef="let row">{{ row.Precio }}</td> 
           </ng-container>
-  
+
+           
+
+
           <!-- Columna acciones -->
-          <ng-container matColumnDef="acciones">
+          <!-- <ng-container matColumnDef="acciones">
             <th mat-header-cell *matHeaderCellDef>Acciones</th>
             <td mat-cell *matCellDef="let row">
               <button
                 mat-mini-fab
                 color="accent"
-                matTooltip="Detalle Pedido"
-                aria-label="Detalle Pedido"
+                matTooltip="Detalle"
+                aria-label="Detalle"
                 color="primary"
                 (click)="detalle(row.id)"
               >
                 <mat-icon class="mat-18">info</mat-icon>
               </button>
             </td>
-          </ng-container>
+          </ng-container> -->
   
           <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
           <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>

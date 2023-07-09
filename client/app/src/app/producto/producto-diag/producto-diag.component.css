@@ -1,0 +1,12 @@
+.dialog-content {
+    display: flex;
+    justify-content: space-between;
+  }
+  .dialog-left {
+    width: 50%; /* Ajusta el ancho de la primera parte según tus necesidades */
+  }
+  .dialog-right {
+    width: 50%; /* Ajusta el ancho de la segunda parte según tus necesidades */
+   /* flex-direction: column;*/
+   ;
+  }

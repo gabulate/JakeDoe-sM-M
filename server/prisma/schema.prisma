@@ -145,7 +145,7 @@ model Mensaje {
   producto   Producto @relation(fields: [ProductoId], references: [id])
 
   Pregunta  String
-  Respuesta String
+  Respuesta String?
 
   Borrado Boolean  @default(false)
   Fecha   DateTime @default(now())

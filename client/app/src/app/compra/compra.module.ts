@@ -23,7 +23,12 @@ import { CompraDetalleComponent } from './compra-detalle/compra-detalle.componen
 import { PedidoDetalleComponent } from './pedido-detalle/pedido-detalle.component';
 
 @NgModule({
-  declarations: [CompraByClienteComponent, CompraDetalleComponent, PedidoByVendedorComponent, PedidoDetalleComponent],
+  declarations: [
+    CompraByClienteComponent, 
+    CompraDetalleComponent, 
+    PedidoByVendedorComponent, 
+    PedidoDetalleComponent
+  ],
   imports: [
     CommonModule,
     PedidoRoutingModule,

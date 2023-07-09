@@ -1,7 +1,7 @@
 export const Productos = [
   //1
     {
-    Nombre: "Midnights",
+    Nombre: "Midnights - Taylor Swift",
     Descripcion:
       "Midnights es el décimo álbum de estudio  de Taylor Swift, una colección de 13 pistas que presenta como 'las historias de 13 noches de insomnio repartidas a lo largo de mi vida'.",
     Precio: "30000",
@@ -12,9 +12,9 @@ export const Productos = [
   },
   //2
   {
-    Nombre: "Three cheers for sweet revenge",
+    Nombre: "Three cheers for sweet revenge - My Chemical Romance",
     Descripcion:
-      "Third Album form My Chemical Romance",
+      "Tercer álbum de la banda My Chemical Romance",
     Precio: "30000",
     Cantidad: 10,
     CategoriaId: 1,

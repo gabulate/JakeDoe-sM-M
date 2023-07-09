@@ -66,3 +66,30 @@ module.exports.create = async (request, response, next) => {};
 
 //Actualizar un usuario
 module.exports.update = async (request, response, next) => {};
+
+//Obtener listado por vendedor
+module.exports.getByVendedor = async (request, response, next) => {
+  let idVendedor = parseInt(request.params.id);
+
+  const productos = await prisma.producto.findMany({
+    where: { 
+      VendedorId: idVendedor,
+     },
+    orderBy: {
+      id: "asc",
+    },
+    include: {
+        categoria: {
+        select: {
+          Descripcion: true,
+        },
+      },
+      estado: {
+        select: {
+          Descripcion: true,
+        },
+      },
+    },
+  });
+  response.json(productos);
+};

@@ -7,7 +7,10 @@
 
                 <mat-card-header>
                     <mat-card-title>{{item.Nombre}}</mat-card-title>
+                
+                    <mat-card-subtitle>{{item.categoria.Descripcion + " - " + item.estado.Descripcion}}</mat-card-subtitle>
                 </mat-card-header>
+                <mat-divider inset></mat-divider>
                 <mat-card-content class="dashboard-card-content">
                     <div>{{item.Precio}}</div>
                 </mat-card-content>
@@ -18,7 +21,8 @@
                         matTooltip="Detalle Producto"
                         aria-label="Detalle Producto"
                         color="primary"
-                        
+
+                            (click)="detalleProducto(item.id)" 
                         >
                         <mat-icon class="mat-18">info</mat-icon>    
                     </button>

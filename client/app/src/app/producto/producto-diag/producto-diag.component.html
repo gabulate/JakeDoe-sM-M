@@ -1,0 +1,53 @@
+<!-- <p>producto-diag works!</p>
+<p>videojuego-diag works!</p> -->
+<button mat-icon-button class="close-button" [mat-dialog-close]="true">
+  <mat-icon class="close-icon" color="primary">close</mat-icon>
+</button>
+<mat-dialog-content class="dialog-content">
+  <!-- Contenido de la primera parte de la página -->
+  <div class="dialog-left ">
+    <div *ngIf="datos">
+      <h2 mat-dialog-title>{{ datos.Nombre }}</h2>
+      
+      <mat-dialog-content>
+        <h4>{{ "Tipo de Producto: " +  datos.categoria.Descripcion}}</h4>
+    
+        <p>{{ datos.Descripcion }}</p>
+        <p>{{"Disponibles: " + datos.Cantidad}}</p>
+        <h4>{{"Estado: " + datos.estado.Descripcion}}</h4>
+        <h4>{{ datos.Precio | currency : "USD" }}</h4>
+      </mat-dialog-content>
+    
+      <mat-dialog-actions> </mat-dialog-actions>
+    </div>
+  </div>
+
+  <!-- Contenido de la segunda parte de la página -->
+  <div class="dialog-right">
+       <mat-grid-list [cols]="1">
+        <mat-grid-tile *ngFor="let item of datosMensaje">
+            <mat-card class="dashboard-card">
+
+              <mat-card-subtitle>
+                <p>Pregunta</p>
+              </mat-card-subtitle>
+                <mat-card-content class="dashboard-card-content">
+                    <div>{{item.Pregunta}}</div>
+                </mat-card-content>
+                <div *ngIf="item.Respuesta !== null && item.Respuesta !== ''">
+                  <mat-card-subtitle>
+                    <p>Respuesta</p>
+                  </mat-card-subtitle>
+                    <mat-card-content class="dashboard-card-content">
+                        <div>{{item.Respuesta}}</div>
+                    </mat-card-content>
+                </div>
+            </mat-card>
+        </mat-grid-tile>
+    </mat-grid-list>
+  </div>
+</mat-dialog-content>
+
+
+    
+

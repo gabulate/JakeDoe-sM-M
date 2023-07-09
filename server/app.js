@@ -9,9 +9,9 @@ const prism = new PrismaClient();
 
 //---Archivos de rutas---
 const usuarioRouter = require('./routes/usuarioRoutes');
-const productoRouter = require('./routes/productoRoutes');
+const productoRouter = require('./routes/ProductoRoutes');
 const compraRouter = require('./routes/CompraRoutes');
-
+const mensajeRouter = require('./routes/MensajeRoutes');
 
 
 // Acceder a la configuracion del archivo .env
@@ -39,6 +39,7 @@ app.use(
 app.use("/usuario/", usuarioRouter);
 app.use("/producto/", productoRouter);
 app.use("/compra/", compraRouter);
+app.use("/mensaje/", mensajeRouter);
 
 // Servidor
 app.listen(port, () => {

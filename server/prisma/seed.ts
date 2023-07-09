@@ -11,6 +11,7 @@ import { MetodoPago } from "./seeds/MetodoPago";
 import { Productos } from "./seeds/Producto";
 import { Compras } from "./seeds/Compra";
 import { CompraDetalles } from "./seeds/CompraDetalle";
+import { Mensajes } from "./seeds/Mensaje";
 
 const prisma = new PrismaClient();
 
@@ -138,6 +139,10 @@ async function main() {
 
   await prisma.compraDetalle.createMany({
     data: CompraDetalles,
+  });
+
+  await prisma.mensaje.createMany({
+    data: Mensajes,
   });
 }
 

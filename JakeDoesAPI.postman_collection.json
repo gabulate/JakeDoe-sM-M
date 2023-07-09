@@ -45,6 +45,26 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "Listar productos por vendedor",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/producto/vendedor/5",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"producto",
+								"vendedor",
+								"5"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
@@ -124,6 +144,31 @@
 							"port": "3000",
 							"path": [
 								"usuario",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "mensajes",
+			"item": [
+				{
+					"name": "Listar mensajes por producto",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/mensaje/producto/1",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"mensaje",
+								"producto",
 								"1"
 							]
 						}
