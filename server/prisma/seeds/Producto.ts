@@ -36,7 +36,7 @@ export const Productos = [
   {
     Nombre: "Camiseta 424",
     Descripcion:
-      "Camiseta con diseño de 434.",
+      "Camiseta con diseño de 424.",
     Precio: "15000",
     Cantidad: 24,
     CategoriaId: 5,

@@ -1,4 +1,5 @@
 import { PrismaClient } from "@prisma/client";
+import fs from "fs"; //sirve para leer el contenido de un archivo de imagen en bytes y luego se almacena en la base de datos.
 
 import { Roles } from "./seeds/Rol";
 import { Categorias } from "./seeds/Categoria";
@@ -12,6 +13,7 @@ import { Productos } from "./seeds/Producto";
 import { Compras } from "./seeds/Compra";
 import { CompraDetalles } from "./seeds/CompraDetalle";
 import { Mensajes } from "./seeds/Mensaje";
+import { FotoProductos } from "./seeds/FotoProducto";
 
 const prisma = new PrismaClient();
 
@@ -135,6 +137,17 @@ async function main() {
 
   await prisma.compra.createMany({
     data: Compras,
+  });
+
+  await prisma.fotoProducto.createMany({
+    data: FotoProductos,
+  });
+
+  await prisma.fotoProducto.create({
+    data: {
+      ProductoId: 6,
+      Foto: fs.readFileSync("images/erasTourPoster.jpg"),
+    },
   });
 
   await prisma.compraDetalle.createMany({

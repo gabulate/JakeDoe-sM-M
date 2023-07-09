@@ -8,6 +8,8 @@ module.exports.get = async (request, response, next) => {
       id: "asc",
     },
     include: {
+      FotoProducto: true,
+
       categoria: {
         select: {
           Descripcion: true,
@@ -72,14 +74,14 @@ module.exports.getByVendedor = async (request, response, next) => {
   let idVendedor = parseInt(request.params.id);
 
   const productos = await prisma.producto.findMany({
-    where: { 
+    where: {
       VendedorId: idVendedor,
-     },
+    },
     orderBy: {
       id: "asc",
     },
     include: {
-        categoria: {
+      categoria: {
         select: {
           Descripcion: true,
         },

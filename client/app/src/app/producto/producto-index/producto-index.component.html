@@ -1,41 +1,48 @@
 <p>producto-index works!</p>
 <div class="grid-container">
-    <h1 class="mat-h1">Productos</h1>
-    <mat-grid-list [cols]="3" rowHeights="12em" gutterSize="10px">
-        <mat-grid-tile *ngFor="let item of datos">
-            <mat-card class="dashboard-card">
+  <h1 class="mat-h1">Productos</h1>
+  <mat-grid-list [cols]="3" rowHeights="12em" gutterSize="10px">
+    <mat-grid-tile *ngFor="let item of datos">
+      <mat-card class="dashboard-card">
+        <img
+          mat-card-image
+          [src]="getImageUrl(item.FotoProducto[0].Foto.data)"
+          alt="photo"
+        />
+        <mat-card-header>
+          <mat-card-title>{{ item.Nombre }}</mat-card-title>
 
-                <mat-card-header>
-                    <mat-card-title>{{item.Nombre}}</mat-card-title>
-                
-                    <mat-card-subtitle>{{item.categoria.Descripcion + " - " + item.estado.Descripcion}}</mat-card-subtitle>
-                </mat-card-header>
-                <mat-divider inset></mat-divider>
-                <mat-card-content class="dashboard-card-content">
-                    <div>{{item.Precio}}</div>
-                </mat-card-content>
-                <mat-divider inset></mat-divider>
-                <mat-card-actions>
-                    <button
-                        mat-mini-fab color="accent"
-                        matTooltip="Detalle Producto"
-                        aria-label="Detalle Producto"
-                        color="primary"
-
-                            (click)="detalleProducto(item.id)" 
-                        >
-                        <mat-icon class="mat-18">info</mat-icon>    
-                    </button>
-                    <button
-                        mat-mini-fab color="accent"
-                        matTooltip="Comprar"
-                        aria-label="Comprar"
-                        color="primary">
-                        <mat-icon class="mat-18">add_shopping_cart</mat-icon>    
-                    </button>
-    
-                </mat-card-actions>
-            </mat-card>
-        </mat-grid-tile>
-    </mat-grid-list>
+          <mat-card-subtitle>{{
+            item.categoria.Descripcion + " - " + item.estado.Descripcion
+          }}</mat-card-subtitle>
+        </mat-card-header>
+        <mat-divider inset></mat-divider>
+        <mat-card-content class="dashboard-card-content">
+          <div>{{ item.Precio }}</div>
+        </mat-card-content>
+        <mat-divider inset></mat-divider>
+        <mat-card-actions>
+          <button
+            mat-mini-fab
+            color="accent"
+            matTooltip="Detalle Producto"
+            aria-label="Detalle Producto"
+            color="primary"
+            (click)="detalleProducto(item.id)"
+          >
+            <mat-icon class="mat-18">info</mat-icon>
+          </button>
+          <button
+            mat-mini-fab
+            color="accent"
+            matTooltip="Comprar"
+            aria-label="Comprar"
+            color="primary"
+          >
+            <mat-icon class="mat-18">add_shopping_cart</mat-icon>
+          </button>
+        </mat-card-actions>
+      </mat-card>
+    </mat-grid-tile>
+  </mat-grid-list>
 </div>
