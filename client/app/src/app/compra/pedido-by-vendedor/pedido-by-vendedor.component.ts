@@ -1,17 +1,12 @@
-import {
-  AfterViewInit,
-  Component,
-  Inject,
-  OnInit,
-  ViewChild,
-} from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import {AfterViewInit,Component,Inject,OnInit,ViewChild,} from '@angular/core';
+import { MAT_DIALOG_DATA, MatDialog, MatDialogConfig, MatDialogRef } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
 import { GenericService } from 'src/app/share/generic.service';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTable, MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
+import { PedidoDiagComponent } from '../pedido-diag/pedido-diag.component';
 
 @Component({
   selector: 'app-pedido-by-vendedor',
@@ -28,13 +23,15 @@ export class PedidoByVendedorComponent implements AfterViewInit {
   dataSource = new MatTableDataSource<any>();
 
   /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
-  displayedColumns = ['cliente', 'producto', 'cantidad', 'total' ,'acciones'];
+  displayedColumns = ['orden', 'producto', 'cantidad', 'total' ,'acciones'];
 
   constructor(
     private router: Router,
     private route: ActivatedRoute,
-    private gService: GenericService
-  ) {}
+    private gService: GenericService,
+    private dialog:MatDialog
+  ) {
+  }
 
   ngAfterViewInit(): void {
     let id=this.route.snapshot.paramMap.get('id');
@@ -54,9 +51,18 @@ export class PedidoByVendedorComponent implements AfterViewInit {
       });
   }
   detalle(id: number) {
-    this.router.navigate(['/pedido', id], {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.disableClose = false;
+    dialogConfig.data = {
+      id: id,
+    };
+  //"abra el elemento q se va a convertir en el dialogo"
+  this.dialog.open(PedidoDiagComponent, dialogConfig);
+  
+
+/*     this.router.navigate(['/pedido', id], {
       relativeTo: this.route,
-    });
+    }); */
   }
 
   ngOnDestroy() {

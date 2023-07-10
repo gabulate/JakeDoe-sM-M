@@ -4,6 +4,7 @@ import { Subject, takeUntil } from 'rxjs';
 import { GenericService } from 'src/app/share/generic.service';
 import { ProductoDiagComponent } from '../producto-diag/producto-diag.component';
 import { DomSanitizer } from '@angular/platform-browser';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-producto-index',
@@ -14,7 +15,9 @@ export class ProductoIndexComponent {
   datos: any;
   destroy$: Subject<boolean> = new Subject<boolean>();
 
-  constructor(private gService: GenericService, private dialog: MatDialog, private sanitizer: DomSanitizer,) {
+  constructor(private gService: GenericService, private dialog: MatDialog, 
+    private sanitizer: DomSanitizer,private router: Router,
+    private route: ActivatedRoute,) {
     this.listarProductos();
     
   }
@@ -29,6 +32,13 @@ export class ProductoIndexComponent {
   }
 
   detalleProducto(id: number) {
+    this.router.navigate(['/producto', id], {
+      relativeTo: this.route,
+    });
+  }
+
+/* 
+  detalleProducto(id: number) {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = false;
     dialogConfig.data = {
@@ -37,6 +47,7 @@ export class ProductoIndexComponent {
     //"abra el elemento q se va a convertir en el dialogo"
     this.dialog.open(ProductoDiagComponent, dialogConfig);
   }
+ */
 
   getImageUrl(image) {
     let binary = '';

@@ -28,7 +28,7 @@ export class CompraDetalleComponent implements AfterViewInit{
   dataSource = new MatTableDataSource<any>();
 
   /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
-  displayedColumns = ['producto', 'vendedor', 'precio' , 'estado', 'acciones'];
+  displayedColumns = ['producto', 'categoriaProducto','estadoProducto','cantidad', 'precio','estado', ];
 
   constructor(
     private router: Router,

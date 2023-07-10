@@ -21,13 +21,14 @@ import { MatRadioModule } from '@angular/material/radio';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CompraDetalleComponent } from './compra-detalle/compra-detalle.component';
 import { PedidoDetalleComponent } from './pedido-detalle/pedido-detalle.component';
+import { PedidoDiagComponent } from './pedido-diag/pedido-diag.component';
 
 @NgModule({
   declarations: [
     CompraByClienteComponent, 
     CompraDetalleComponent, 
     PedidoByVendedorComponent, 
-    PedidoDetalleComponent
+    PedidoDetalleComponent, PedidoDiagComponent
   ],
   imports: [
     CommonModule,

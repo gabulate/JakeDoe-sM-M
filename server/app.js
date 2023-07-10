@@ -12,7 +12,7 @@ const usuarioRouter = require('./routes/usuarioRoutes');
 const productoRouter = require('./routes/ProductoRoutes');
 const compraRouter = require('./routes/CompraRoutes');
 const mensajeRouter = require('./routes/MensajeRoutes');
-
+const fotoRouter = require('./routes/FotoProductoRoutes'); 
 
 // Acceder a la configuracion del archivo .env
 dotEnv.config();
@@ -40,6 +40,7 @@ app.use("/usuario/", usuarioRouter);
 app.use("/producto/", productoRouter);
 app.use("/compra/", compraRouter);
 app.use("/mensaje/", mensajeRouter);
+app.use("/fotoProducto/", fotoRouter);
 
 // Servidor
 app.listen(port, () => {

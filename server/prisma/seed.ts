@@ -143,12 +143,12 @@ async function main() {
     data: FotoProductos,
   });
 
-  await prisma.fotoProducto.create({
+/*   await prisma.fotoProducto.create({
     data: {
       ProductoId: 6,
       Foto: fs.readFileSync("images/erasTourPoster.jpg"),
     },
-  });
+  }); */
 
   await prisma.compraDetalle.createMany({
     data: CompraDetalles,
