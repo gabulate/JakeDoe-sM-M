@@ -19,7 +19,7 @@ export const Productos = [
     Cantidad: 10,
     CategoriaId: 1,
     EstadoId: 1,
-    VendedorId: 5,
+    VendedorId: 4,
   },
   //3
   {
@@ -30,7 +30,7 @@ export const Productos = [
     Cantidad: 13,
     CategoriaId: 4,
     EstadoId: 4,
-    VendedorId: 5,
+    VendedorId: 4,
   },
   //4
   {
@@ -63,6 +63,6 @@ export const Productos = [
     Cantidad: 6,
     CategoriaId: 3,
     EstadoId: 1,
-    VendedorId: 5,
+    VendedorId: 4,
   },
 ];

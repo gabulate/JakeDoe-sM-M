@@ -1,12 +1,10 @@
 <mat-card class="dashboard-card color" *ngIf="datos"  >
-  <mat-card-header>
-    <mat-card-title>
-      <p><b>Orden No. </b>{{datos.id}}</p>
-     
-    </mat-card-title>
-  </mat-card-header>
-  <mat-card-content class="dashboard-card-content">
-    <p><b>Fecha: </b> {{ datos.Fecha | date : "dd/MM/yyyy"}}</p>
+  <p class="titulo"><b>Orden No. </b>{{datos.id}}</p>
+
+  <mat-dialog-content class="dialog-content">
+    <div class="dialog-left">
+      
+      <p><b>Fecha: </b> {{ datos.Fecha | date : "dd/MM/yyyy"}}</p>
     <p><b>Cliente </b>{{datos.cliente.Nombre + ' ' + datos.cliente.Apellido}}</p>
 
     <p><b>Código Postal: </b> {{ datos.direccion.CodigoPostal}}</p>
@@ -15,11 +13,18 @@
       datos.direccion.Distrito+ '. '}} 
       {{datos.direccion.Detalle}} 
       </p>
+      
+    </div>
+    <div class="dialog-right">
       <p><b>Método de pago: </b> {{ datos.metodoPago.Titulo}}</p>
-      <p><b>Subtotal: </b>{{datos.Subtotal | currency : "₡" }}</p>
-      <p><b>Total: </b>{{datos.Total | currency : "₡" }}</p>
+        <p><b>Subtotal: </b>{{datos.Subtotal | currency : "₡" }}</p>
+        <p><b>Total: </b>{{datos.Total | currency : "₡" }}</p>
+    </div>
+  </mat-dialog-content>
+  
+  
 
-
+  <mat-card-content class="dashboard-card-content">
     <mat-card-content>
       <!-- Table -->
       <div class="mat-elevation-z8" *ngIf="dataSource">

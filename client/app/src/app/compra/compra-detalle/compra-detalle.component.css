@@ -4,3 +4,26 @@ body{
 .color{
   background-color:#C6AC8F !important;
 }
+.dialog-content {
+  display: flex;
+  justify-content: space-between;
+  margin: 2%;
+  background-color:white !important;
+  box-shadow: 0px 5px 5px -3px rgba(0, 0, 0, 0.2), 0px 8px 10px 1px rgba(0, 0, 0, 0.14), 0px 3px 14px 2px rgba(0, 0, 0, 0.12);
+  padding: 1%;
+}
+.dialog-left {
+  width: 50%; /* Ajusta el ancho de la primera parte según tus necesidades */
+  padding: 0%;
+}
+.dialog-right {
+  width: 50%; /* Ajusta el ancho de la segunda parte según tus necesidades */
+  margin-top: 2%;
+ /* flex-direction: column;*/
+ 
+}
+.titulo{
+  font-size:xx-large;
+  text-align: center;
+  padding-top: 1%;
+}
