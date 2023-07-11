@@ -4,9 +4,11 @@ export const Compras = [
       ClienteId: 1,
       DireccionId: 1,
       MetodoPagoId: 1,
-      Subtotal: "30000",
-      Total: "33900",
+      Subtotal: "95000",
+      Total: "107350",
     },
+
+
     //2
     {
       ClienteId: 3,
@@ -22,6 +24,22 @@ export const Compras = [
       MetodoPagoId: 2,
       Subtotal: "35000",
       Total: "39550",
-    }
+    },
+    //4
+    {
+      ClienteId: 1,
+      DireccionId: 1,
+      MetodoPagoId: 1,
+      Subtotal: "35000",
+      Total: "39550",
+    },
+    //5
+    {
+      ClienteId: 1,
+      DireccionId: 1,
+      MetodoPagoId: 1,
+      Subtotal: "95000",
+      Total: "107350",
+    },
   ];
   
