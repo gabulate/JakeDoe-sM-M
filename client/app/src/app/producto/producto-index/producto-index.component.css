@@ -1,3 +1,4 @@
+
 grid-container {
     margin: 20px;
     }
@@ -15,6 +16,7 @@ grid-container {
     }
     .dashboard-card-content {
     text-align: center;
+    margin-left:50%;
     }
 
     .dashboard-card img {
@@ -27,3 +29,18 @@ grid-container {
         height: 55%;
         object-fit: contain;
       }
+.mat-h1{
+  margin: 1%;
+  text-align: center;
+  color: #22333B;
+}
+.fotoProducto{
+  margin-top:5%;
+}
+.dk{
+  right:50px;
+  border-radius: 5px;
+  background-color: #22333B;
+  color: white;
+  padding: 1%;
+}

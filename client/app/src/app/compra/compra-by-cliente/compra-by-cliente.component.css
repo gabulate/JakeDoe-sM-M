@@ -1,3 +1,13 @@
 .full-width-table {
     width: 100%;
   }
+  body{
+    background-color:#C6AC8F !important;
+}
+.color{
+  background-color:#C6AC8F !important;
+}
+.titulo{
+  text-align: center;
+  color: #22333B;
+}

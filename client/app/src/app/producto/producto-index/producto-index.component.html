@@ -1,11 +1,11 @@
-<p>producto-index works!</p>
+<!-- <p>producto-index works!</p> -->
 <div class="grid-container">
   <h1 class="mat-h1">Productos</h1>
-  <mat-grid-list [cols]="3" rowHeights="12em" gutterSize="10px">
+  <mat-grid-list [cols]="4" rowHeights="12em" gutterSize="10px">
     <mat-grid-tile *ngFor="let item of datos">
       <mat-card class="dashboard-card">
-        <img
-          mat-card-image
+        <img 
+          mat-card-image class="fotoProducto"
           [src]="getImageUrl(item.FotoProducto[0].Foto.data)"
           alt="photo"
         />
@@ -16,11 +16,11 @@
             item.categoria.Descripcion + " - " + item.estado.Descripcion
           }}</mat-card-subtitle>
         </mat-card-header>
-        <mat-divider inset></mat-divider>
-        <mat-card-content class="dashboard-card-content">
-          <div>{{ item.Precio }}</div>
-        </mat-card-content>
-        <mat-divider inset></mat-divider>
+        <!-- <mat-divider inset></mat-divider> -->
+          <mat-card-content class="dashboard-card-content ">
+            <div class="dk">{{"₡ " +  item.Precio }}</div>
+          </mat-card-content>
+        <!-- <mat-divider inset></mat-divider> -->
         <mat-card-actions>
           <button
             mat-mini-fab

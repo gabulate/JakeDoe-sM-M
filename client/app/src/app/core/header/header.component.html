@@ -1,37 +1,13 @@
- <!--    <button [matMenuTriggerFor]="menu1" mat-icon-button class="example-icon" 
-    aria-label="Example icon-button with menu icon">
-      <mat-icon>menu</mat-icon>
-    </button>
-     <span>Productos</span> 
-
-  <mat-menu #menu1="matMenu">
-    <button mat-menu-item [routerLink]="['/']" routerLinkActive="mat-raised-button">
-        Vertebrates
-    </button>
-    <button mat-menu-item [routerLink]="['/']" routerLinkActive="mat-raised-button">
-        Vertebrates
-    </button>
-    <button mat-menu-item [matMenuTriggerFor]="menu2" routerLinkActive="mat-raised-button">
-      Vertebrates
-    </button>
-
-    <mat-menu #menu2="matMenu">
-      <button mat-menu-item [routerLink]="['/']" routerLinkActive="mat-raised-button">
-        Vertebrates
-      </button>
-    </mat-menu>
-</mat-menu> -->
-
 
 <mat-toolbar color="primary">
 
-<!--aquí se pondría el menú pasado-->
-<span>JAKE DOE'S music & merch</span> 
-
+<button mat-button [routerLink]="['/']" routerLinkActive="mat-raised-button">
+  <img mat-card-lg-image src="../../../assets/img/logov2.png"/>
+</button>
 <button mat-button [routerLink]="['/producto']" routerLinkActive="mat-raised-button">Productos</button>
 <button mat-button [routerLink]="['/compra/cliente/1']" routerLinkActive="mat-raised-button">Compras</button>
 <button mat-button [routerLink]="['/pedido/vendedor/5']" routerLinkActive="mat-raised-button">Pedidos</button>
-<button mat-button [routerLink]="['/producto/vendedor/5']" routerLinkActive="mat-raised-button">Vendedor</button>
+<button mat-button [routerLink]="['/producto/vendedor/5']" routerLinkActive="mat-raised-button">Proveedor</button>
 </mat-toolbar>
 
-<p>header works!</p>
+<!-- <p>header works!</p> -->

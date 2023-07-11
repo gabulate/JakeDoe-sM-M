@@ -1,25 +1,45 @@
-
-// Custom Theming for Angular Material
-// For more information: https://material.angular.io/guide/theming
 @use '@angular/material' as mat;
-// Plus imports for other components in your app.
 
-// Include the common styles for Angular Material. We include this here so that you only
-// have to load a single css file for Angular Material in your app.
-// Be sure that you only ever include this mixin once!
 @include mat.core();
 
-// Define the palettes for your theme using the Material Design palettes available in palette.scss
-// (imported above). For each palette, you can optionally specify a default, lighter, and darker
-// hue. Available color palettes: https://material.io/design/color/
-$app-primary: mat.define-palette(mat.$indigo-palette);
-$app-accent: mat.define-palette(mat.$pink-palette, A200, A100, A400);
+$cream-palette: (
+    50 : #f8f5f2,
+    100 : #eee6dd,
+    200 : #e3d6c7,
+    300 : #d7c5b1,
+    400 : #cfb8a0,
+    500 : #c6ac8f,
+    600 : #c0a587,
+    700 : #b99b7c,
+    800 : #b19272,
+    900 : #a48260,
+    A100 : #ffffff,
+    A200 : #ffefe0,
+    A400 : #ffd5ad,
+    A700 : #ffc893,
+    contrast: (
+        50 : rga(black,0.87),
+        100 : rga(black,0.87),
+        200 : rga(black,0.87),
+        300 : rga(black,0.87),
+        400 : rga(black,0.87),
+        500 : rga(black,0.87),
+        600 : rga(black,0.87),
+        700 : rga(black,0.87),
+        800 : rga(black,0.87),
+        900 : rga(black,0.87),
+        A100 : rga(black,0.87),
+        A200 : rga(black,0.87),
+        A400 : rga(black,0.87),
+        A700 : rga(black,0.87),
+    )
+);
 
-// The warn palette is optional (defaults to red).
-$app-warn: mat.define-palette(mat.$red-palette);
+$app-primary: mat.define-palette(mat.$grey-palette,900);
+$app-accent: mat.define-palette(mat.$blue-palette, A200, A100, A400);
+$app-warn: mat.define-palette(mat.$red-palette); 
+$app-background :mat.define-palette($cream-palette,500);
 
-// Create the theme object. A theme consists of configurations for individual
-// theming systems such as "color" or "typography".
 $app-theme: mat.define-light-theme((
   color: (
     primary: $app-primary,
@@ -28,8 +48,5 @@ $app-theme: mat.define-light-theme((
   )
 ));
 
-// Include theme styles for core and each component used in your app.
-// Alternatively, you can import and @include the theme mixins for each component
-// that you are using.
 @include mat.all-component-themes($app-theme);
 
