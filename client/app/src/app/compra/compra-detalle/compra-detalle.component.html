@@ -16,8 +16,8 @@
       {{datos.direccion.Detalle}} 
       </p>
       <p><b>Método de pago: </b> {{ datos.metodoPago.Titulo}}</p>
-      <p><b>Subtotal: </b>{{datos.Subtotal| currency:'CRC'}}</p>
-      <p><b>Total: </b>{{datos.Total| currency:'CRC'}}</p>
+      <p><b>Subtotal: </b>{{datos.Subtotal | currency : "₡" }}</p>
+      <p><b>Total: </b>{{datos.Total | currency : "₡" }}</p>
 
 
     <mat-card-content>
@@ -58,7 +58,7 @@
           <!-- Columna Producto -->
           <ng-container matColumnDef="precio">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>Precio Unitario</th>
-            <td mat-cell *matCellDef="let row">{{ row.producto.Precio| currency: "CRC" }}</td>
+            <td mat-cell *matCellDef="let row">{{ row.producto.Precio | currency : "₡"  }}</td>
           </ng-container>
 
           <ng-container matColumnDef="estado">

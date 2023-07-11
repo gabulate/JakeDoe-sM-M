@@ -18,7 +18,7 @@
         </mat-card-header>
         <!-- <mat-divider inset></mat-divider> -->
           <mat-card-content class="dashboard-card-content ">
-            <div class="dk">{{"₡ " +  item.Precio }}</div>
+            <div class="dk">{{item.Precio | currency : "₡" }}</div>
           </mat-card-content>
         <!-- <mat-divider inset></mat-divider> -->
         <mat-card-actions>
