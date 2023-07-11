@@ -26,6 +26,7 @@
         <h4>{{ "Tipo de Producto: " + datos.categoria.Descripcion }}</h4>
 
         <p>{{ datos.Descripcion }}</p>
+        <p>{{"Proveedor: " + datos.vendedor.Nombre + " " + datos.vendedor.Apellido}}</p>
         <p>{{ "Disponibles: " + datos.Cantidad }}</p>
         <h4>{{ "Estado: " + datos.estado.Descripcion }}</h4>
         <h4>{{ datos.Precio | currency : "USD" }}</h4>
