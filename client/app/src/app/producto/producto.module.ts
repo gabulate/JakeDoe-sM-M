@@ -1,5 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { CarouselModule } from '@coreui/angular';
+
 
 import { ProductoRoutingModule } from './producto-routing.module';
 import { ProductoIndexComponent } from './producto-index/producto-index.component';
@@ -37,7 +39,8 @@ import { ProductoAllByVendedorComponent } from './producto-all-by-vendedor/produ
     MatDividerModule,
     MatIconModule,
     MatButtonModule,
-    MatDialogModule
+    MatDialogModule,
+    CarouselModule,
   ]
 })
 export class ProductoModule { }
