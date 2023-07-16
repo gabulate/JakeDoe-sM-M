@@ -11,6 +11,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 })
 export class ProductoDetailComponent implements OnInit {
   datos: any;
+  listaRecomendados: any;
   datosMensaje: any;
   destroy$: Subject<boolean> = new Subject<boolean>();
   listaFotos: any[] = [];
@@ -26,7 +27,8 @@ export class ProductoDetailComponent implements OnInit {
     if (!isNaN(Number(id))) {
       this.obtenerProducto(Number(id));
       this.listarMensajes(Number(id));
-      this.obtenerFotosProducto(Number(id));
+      //this.obtenerFotosProducto(Number(id));
+      this.listarProductos();
     }
   }
 
@@ -49,16 +51,6 @@ export class ProductoDetailComponent implements OnInit {
       });
   }
 
-  obtenerFotosProducto(id: number) {
-    this.gService
-      .list(`fotoProducto/producto/${id}`)
-      .pipe(takeUntil(this.destroy$))
-      .subscribe((data: any) => {
-        console.log(data);
-        this.listaFotos = data;
-      });
-  }
-
   getImageUrl(image) {
     let binary = '';
     const bytes = new Uint8Array(image);
@@ -69,6 +61,24 @@ export class ProductoDetailComponent implements OnInit {
     const base64Image = window.btoa(binary);
     const imageUrl = 'data:image/jpeg;base64,' + base64Image;
     return this.sanitizer.bypassSecurityTrustUrl(imageUrl);
+  }
+
+  //Para el listado de productos recomendados
+  //Quiero hacer que muestre solo productos de la misma categoría pero ya despuééés lo hago 
+  listarProductos() {
+    this.gService
+      .list('producto/')
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((data: any) => {
+        console.log(data);
+        this.listaRecomendados = data;
+      });
+  }
+
+  detalleProducto(id: number) {
+    this.router
+      .navigateByUrl('/', { skipLocationChange: true })
+      .then(() => this.router.navigate(['/producto/' + id]));
   }
 
   ngOnDestroy() {

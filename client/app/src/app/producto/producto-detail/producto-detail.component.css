@@ -1,30 +1,50 @@
 .dialog-content {
-    display: flex;
-    justify-content: space-between;
-  }
-  .dialog-left {
-    width: 50%; /* Ajusta el ancho de la primera parte según tus necesidades */
-  }
-  .dialog-right {
-    width: 50%; /* Ajusta el ancho de la segunda parte según tus necesidades */
-   /* flex-direction: column;*/
-   
-  }
-.mat-grid-tile{
+  display: flex;
+  justify-content: space-between;
+}
+.dialog-left {
+  width: 75%; /* Ajusta el ancho de la primera parte según tus necesidades */
+}
+.dialog-right {
+  width: 25%; /* Ajusta el ancho de la segunda parte según tus necesidades */
+  /* flex-direction: column;*/
+}
+.mat-grid-tile {
   padding: 0%;
 }
 
-.dashboard-card{
+.product {
+  background-color: white;
+  padding: 1rem;
+  margin: 1rem;
+  box-shadow: 0px 5px 5px -3px rgba(0, 0, 0, 0.2),
+    0px 8px 10px 1px rgba(0, 0, 0, 0.14), 0px 3px 14px 2px rgba(0, 0, 0, 0.12);
+  display: flex;
+}
+
+.productInfo{
+  width: 60%;
+}
+
+.reviews {
+  background-color: white;
+  padding: 1rem;
+  margin: 1rem;
+  box-shadow: 0px 5px 5px -3px rgba(0, 0, 0, 0.2),
+    0px 8px 10px 1px rgba(0, 0, 0, 0.14), 0px 3px 14px 2px rgba(0, 0, 0, 0.12);
+}
+
+.dashboard-card {
   padding: 1%;
   margin-bottom: 5%;
-  margin-right: 50% ;
-  margin-left: 2.5% ;
+  margin-right: 50%;
+  margin-left: 2.5%;
 }
-.resp{
-  margin-left: 10% ;
+.resp {
+  margin-left: 10%;
 }
-.titulo{
-  color: #22333B;
+.titulo {
+  color: #22333b;
   margin-top: 5%;
 }
 
@@ -33,9 +53,8 @@
 .carousel {
   box-shadow: rgba(0, 0, 0, 0.15) 0px 5px 15px 0px !important;
   margin: 2rem;
-  margin-left: auto;
-  margin-right: auto;
-  width: 25rem;
+  width: 40%;
+
 }
 
 .carousel-item {
@@ -47,6 +66,48 @@
   height: 100%;
   object-fit: contain;
   border-radius: 1%;
+}
+
+/* RECOMENDADOS */
+
+.recommended {
+  margin-top: 1rem;
+  width: 90%;
+}
+.recommendedCard {
+  margin: 0.5rem;
+  padding: 0.5rem;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  background-color: white;
+  box-shadow: 0px 5px 5px -3px rgba(0, 0, 0, 0.2),
+    0px 8px 10px 1px rgba(0, 0, 0, 0.14), 0px 3px 14px 2px rgba(0, 0, 0, 0.12);
+    border: none !important;
+  border-radius: 5px;
+  text-align: left !important;
+}
+
+.recommendedCard:hover{
+  background-color: #acacac;
+}
+
+.recommendedCard img {
+  margin: 0.3rem;
+  float: left;
+  width: 5rem;
+  height: 5rem;
+  object-fit: contain;
+}
+
+.dk {
+  padding: 1%;
+  margin: 1%;
+  right: 0;
+  border-radius: 5px;
+  background-color: #22333b;
+  color: white;
+  height: min-content;
 }
 
 @media only screen and (max-width: 576px) {
