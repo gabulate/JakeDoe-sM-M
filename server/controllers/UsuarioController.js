@@ -18,7 +18,7 @@ module.exports.get = async (request, response, next) => {
       Deshabilitado: true,
       Roles: {
         select: {
-          rol: true
+          rol: true,
         },
       },
     },
@@ -42,7 +42,7 @@ module.exports.getById = async (request, response, next) => {
       Deshabilitado: true,
       Roles: {
         select: {
-          rol: true
+          rol: true,
         },
       },
       Direccion: true,
@@ -53,7 +53,62 @@ module.exports.getById = async (request, response, next) => {
 };
 
 //Crear un usuario
-module.exports.create = async (request, response, next) => {};
+module.exports.create = async (request, response, next) => {
+  let usuario = request.body;
+  const newUsuario = await prisma.usuario.create({
+    data: {
+      Nombre: usuario.Nombre,
+      Apellido: usuario.Apellido,
+      Telefono: usuario.Telefono,
+      Email: usuario.Email,
+      Contrasenna: usuario.Contrasenna, //Encriptar lueeeego
+      Calificacion: "5", //5 por defecto
+
+      Roles: {
+        //Roles tiene que ser {id:valor}
+        // [{ id: 1 },{id: 3}]
+        connect: usuario.Roles,
+      },
+    },
+  });
+  response.json(newUsuario);
+};
 
 //Actualizar un usuario
-module.exports.update = async (request, response, next) => {};
+module.exports.update = async (request, response, next) => {
+  let usuario = request.body;
+  let idUsuario = parseInt(request.params.id);
+
+  //Obtener usuario viejo
+  const usuarioViejo = await prisma.usuario.findUnique({
+    where: { id: idUsuario },
+    include: {
+      Roles: {
+        select: {
+          id: true,
+        },
+      },
+    },
+  });
+
+  const newUsuario = await prisma.usuario.update({
+    where: {
+      id: idUsuario,
+    },
+    data: {
+      Nombre: usuario.Nombre,
+      Apellido: usuario.Apellido,
+      Telefono: usuario.Telefono,
+      Email: usuario.Email,
+      Contrasenna: usuario.Contrasenna, //Encriptar lueeeego
+      Calificacion: usuario.Calificacion, 
+
+      Roles: {
+        //Roles tiene que ser {id:valor}
+        disconnect: usuarioViejo.Roles,
+        connect: usuario.Roles,
+      },
+    },
+  });
+  response.json(newUsuario);
+};
