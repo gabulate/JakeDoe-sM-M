@@ -7,10 +7,12 @@ const usuarioController = require("../controllers/UsuarioController");
 //Rutas de Usuarios
 router.get("/", usuarioController.get);
 
-router.post("/", usuarioController.create);
-
 router.get("/:id", usuarioController.getById);
 
-router.put("/:id", usuarioController.update)
+router.post("/", usuarioController.create);
+
+router.post("/login", usuarioController.login);
+
+router.put("/", usuarioController.update);
 
 module.exports = router;

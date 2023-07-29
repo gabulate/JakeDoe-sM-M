@@ -28,7 +28,7 @@ async function main() {
       Apellido: "Bodoque",
       Telefono: "8888 8888",
       Email: "juanbodoque@gmail.com",
-      Contrasenna: "bizcochito",
+      Contrasenna: '$2b$10$Qmee6hXHmLE3LQtyIZV5OuwBBhZNl.iyTikoQalubE50vULOdryli',
       Calificacion: "0",
       Roles: {
         createMany: {
@@ -44,7 +44,7 @@ async function main() {
       Apellido: "Ulate",
       Telefono: "8888 8888",
       Email: "gulate@gmail.com",
-      Contrasenna: "bizcochito",
+      Contrasenna: '$2b$10$Qmee6hXHmLE3LQtyIZV5OuwBBhZNl.iyTikoQalubE50vULOdryli',
       Calificacion: "5",
       Roles: {
         createMany: {
@@ -60,7 +60,7 @@ async function main() {
       Apellido: "Vargas",
       Telefono: "8888 8888",
       Email: "mvargas@gmail.com",
-      Contrasenna: "bizcochito",
+      Contrasenna: '$2b$10$Qmee6hXHmLE3LQtyIZV5OuwBBhZNl.iyTikoQalubE50vULOdryli',
       Calificacion: "5",
       Roles: {
         createMany: {
@@ -76,7 +76,7 @@ async function main() {
       Apellido: "Doe",
       Telefono: "8888 8888",
       Email: "jdoe@gmail.com",
-      Contrasenna: "bizcochito",
+      Contrasenna: '$2b$10$Qmee6hXHmLE3LQtyIZV5OuwBBhZNl.iyTikoQalubE50vULOdryli',
       Calificacion: "3",
       Roles: {
         createMany: {
@@ -92,7 +92,7 @@ async function main() {
       Apellido: "Doe",
       Telefono: "8888 8888",
       Email: "jakedoe@gmail.com",
-      Contrasenna: "bizcochito",
+      Contrasenna: '$2b$10$Qmee6hXHmLE3LQtyIZV5OuwBBhZNl.iyTikoQalubE50vULOdryli',
       Calificacion: "4",
       Roles: {
         createMany: {
