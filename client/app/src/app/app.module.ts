@@ -12,6 +12,7 @@ import { ProductoModule } from './producto/producto.module';
 import { ToastrModule } from 'ngx-toastr';
 import { HttpClientModule } from '@angular/common/http';
 import { PedidoModule } from './compra/compra.module';
+import { MensajeModule } from './mensaje/mensaje.module';
 
 @NgModule({
   declarations: [
@@ -30,6 +31,7 @@ import { PedidoModule } from './compra/compra.module';
     ProductoModule,
 
     AppRoutingModule,
+      MensajeModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

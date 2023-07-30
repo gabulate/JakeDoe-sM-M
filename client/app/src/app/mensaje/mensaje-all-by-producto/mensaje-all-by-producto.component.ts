@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit, ViewChild } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
@@ -7,13 +7,12 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { AuthenticationService } from 'src/app/share/authentication.service';
 
 @Component({
-  selector: 'app-producto-detail',
-  templateUrl: './producto-detail.component.html',
-  styleUrls: ['./producto-detail.component.css'],
+  selector: 'app-mensaje-all-by-producto',
+  templateUrl: './mensaje-all-by-producto.component.html',
+  styleUrls: ['./mensaje-all-by-producto.component.css']
 })
-export class ProductoDetailComponent implements OnInit {
+export class MensajeAllByProductoComponent {
   datos: any;
-  listaRecomendados: any;
   datosMensaje: any;
   destroy$: Subject<boolean> = new Subject<boolean>();
   listaFotos: any[] = [];
@@ -21,8 +20,9 @@ export class ProductoDetailComponent implements OnInit {
   submitted = false;
   respMensaje: any;
   productoId: any;
-  clienteId=1;
-
+  //clienteId=1;
+  usuarioId=1;
+  
   constructor(
     private fb: FormBuilder,
     private router: Router,
@@ -32,6 +32,7 @@ export class ProductoDetailComponent implements OnInit {
     private authService:AuthenticationService
   ) {
     this.formularioReactive();
+    
   }
   ngOnInit(): void {
     let id = this.route.snapshot.paramMap.get('id');
@@ -39,11 +40,8 @@ export class ProductoDetailComponent implements OnInit {
       this.productoId= Number(id);
       this.obtenerProducto(Number(id));
       this.listarMensajes(Number(id));
-      //this.obtenerFotosProducto(Number(id));
-      this.listarProductos();
     }
   }
-
   obtenerProducto(id: any) {
     this.gService
       .get('producto', id)
@@ -63,35 +61,10 @@ export class ProductoDetailComponent implements OnInit {
       });
   }
 
-  getImageUrl(image) {
-    let binary = '';
-    const bytes = new Uint8Array(image);
-    const len = bytes.byteLength;
-    for (let i = 0; i < len; i++) {
-      binary += String.fromCharCode(bytes[i]);
-    }
-    const base64Image = window.btoa(binary);
-    const imageUrl = 'data:image/jpeg;base64,' + base64Image;
-    return this.sanitizer.bypassSecurityTrustUrl(imageUrl);
+  filtrarDatosMensaje(){
+    return this.datosMensaje.filter(item => item.Respuesta === null || item.Respuesta === '');
   }
 
-  //Para el listado de productos recomendados
-  //Quiero hacer que muestre solo productos de la misma categoría pero ya despuééés lo hago 
-  listarProductos() {
-    this.gService
-      .list('producto/')
-      .pipe(takeUntil(this.destroy$))
-      .subscribe((data: any) => {
-        console.log(data);
-        this.listaRecomendados = data;
-      });
-  }
-
-  detalleProducto(id: number) {
-    this.router
-      .navigateByUrl('/', { skipLocationChange: true })
-      .then(() => this.router.navigate(['/producto/' + id]));
-  }
   formularioReactive() {
     //[null, Validators.required]
     this.preguntaForm=this.fb.group({

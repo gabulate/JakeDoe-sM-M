@@ -15,3 +15,15 @@ module.exports.getByProducto = async (request, response, next) => {
     });
     response.json(mensajes);
   };
+  
+  module.exports.create = async(request, response, next ) => {
+    let mensaje = request.body;
+    const newMensaje = await prisma.mensaje.create({
+      data:{
+        ClienteId:mensaje.clienteId,
+        ProductoId:mensaje.id,
+        Pregunta: mensaje.pregunta
+      },
+    });
+    response.json(newMensaje);
+  }

@@ -56,8 +56,8 @@ export class PedidoByVendedorComponent implements AfterViewInit {
     dialogConfig.data = {
       id: id,
     };
-  //"abra el elemento q se va a convertir en el dialogo"
-  this.dialog.open(PedidoDiagComponent, dialogConfig);
+  //"abra el elemento q se va a convertir en el dialogo"  
+  this.dialog.open(PedidoDiagComponent, dialogConfig); 
   
 
 /*     this.router.navigate(['/pedido', id], {

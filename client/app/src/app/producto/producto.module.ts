@@ -18,6 +18,10 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog';
 import { ProductoDiagComponent } from './producto-diag/producto-diag.component';
 import { ProductoAllByVendedorComponent } from './producto-all-by-vendedor/producto-all-by-vendedor.component';
+import { MatRadioModule } from '@angular/material/radio';
+import { ReactiveFormsModule } from '@angular/forms';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
 
 
 @NgModule({
@@ -41,6 +45,10 @@ import { ProductoAllByVendedorComponent } from './producto-all-by-vendedor/produ
     MatButtonModule,
     MatDialogModule,
     CarouselModule,
+    ReactiveFormsModule,
+    MatRadioModule,
+    MatInputModule,
+    MatSelectModule
   ]
 })
 export class ProductoModule { }

@@ -1,8 +1,9 @@
+<!-- <p>mensaje-index works!</p> -->
 
 <mat-card class="full-width color">
     <!-- Titulo del Card -->
     <mat-card-title>
-      <h1 class="titulo">Inventario de proveedor</h1>
+      <h1 class="titulo">  </h1>
     </mat-card-title>
     <mat-card-content>
       <!-- Table -->
@@ -19,32 +20,12 @@
             <th mat-header-cell *matHeaderCellDef mat-sort-header>Producto</th>
             <td mat-cell *matCellDef="let row">{{ row.Nombre }}</td>
           </ng-container>
-  
-           <!-- Columna acciones -->
-           <ng-container matColumnDef="categoria-estado">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Categoría y Estado</th>
-            <td mat-cell *matCellDef="let row">{{ row.categoria.Descripcion + " - " + row.estado.Descripcion }}</td> 
-          </ng-container>
-
-          <!-- Columna Cantidad -->
-          <ng-container matColumnDef="cantidad">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Cantidad</th>
-            <td mat-cell *matCellDef="let row">{{ row.Cantidad }}</td>
-          </ng-container>
-  
-          <!-- Columna Precio -->
-          <ng-container matColumnDef="precio">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Precio</th>
-            <td mat-cell *matCellDef="let row">{{ row.Precio  | currency : "₡"  }}</td> 
-          </ng-container>
-
-           
+    
           <!-- Columna acciones -->
-      <!--     <ng-container matColumnDef="acciones">
-            <th mat-header-cell *matHeaderCellDef>Acciones</th>
+          <ng-container matColumnDef="acciones">
+            <th mat-header-cell *matHeaderCellDef>Ver mensajes</th>
             <td mat-cell *matCellDef="let row">
-              <button
-                mat-mini-fab
+              <button mat-mini-fab class="btnMensajes"
                 color="accent"
                 matTooltip="Mensajes"
                 aria-label="Mensajes"
@@ -54,8 +35,7 @@
               <mat-icon>question_answer</mat-icon>
               </button>
             </td>
-          </ng-container>  -->
-  
+          </ng-container> 
           <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
           <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
         </table>
@@ -73,4 +53,3 @@
       <!-- Table -->
     </mat-card-content>
   </mat-card>
-  

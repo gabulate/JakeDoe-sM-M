@@ -59,6 +59,11 @@ export class ProductoAllByVendedorComponent implements AfterViewInit {
     });
   }
 
+  mensajes(id:number){
+    this.router.navigate(['/mensaje/producto', id], {
+      relativeTo: this.route,
+    });
+  }
 
 
   

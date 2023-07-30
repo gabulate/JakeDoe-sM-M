@@ -49,30 +49,58 @@
         <mat-dialog-actions> </mat-dialog-actions>
       </div>
     </div>
+    
     <div class="reviews">
-      <h3>Preguntas al vendedor</h3>
-      <br />
-      <mat-grid-list [cols]="1" class="grid-list">
-        <div>
-          <mat-card class="dashboard-card" *ngFor="let item of datosMensaje">
-            <mat-card-subtitle>
-              <p>Pregunta</p>
-            </mat-card-subtitle>
-            <mat-card-content class="dashboard-card-content">
-              <div>{{ item.Pregunta }}</div>
-            </mat-card-content>
-            <div *ngIf="item.Respuesta !== null && item.Respuesta !== ''">
-              <mat-card-subtitle class="resp">
-                <p>Respuesta</p>
+      
+      <div class="dialog-left-questions">
+       
+        <mat-grid-list [cols]="1" class="grid-list">
+          <h3>Preguntas de usuarios</h3>
+          <br />
+          <div>
+            <mat-card class="dashboard-card" *ngFor="let item of datosMensaje">
+              <mat-card-subtitle>
+                <p>Pregunta</p>
               </mat-card-subtitle>
-              <mat-card-content class="dashboard-card-content resp">
-                <div>{{ item.Respuesta }}</div>
+              <mat-card-content class="dashboard-card-content">
+                <div>{{ item.Pregunta }}</div>
               </mat-card-content>
-            </div>
-          </mat-card>
-        </div>
-      </mat-grid-list>
+              <div *ngIf="item.Respuesta !== null && item.Respuesta !== ''">
+                <mat-card-subtitle class="resp">
+                  <p>Respuesta</p>
+                </mat-card-subtitle>
+                <mat-card-content class="dashboard-card-content resp">
+                  <div>{{ item.Respuesta }}</div>
+                </mat-card-content>
+              </div>
+            </mat-card>
+          </div>
+        </mat-grid-list>
+      </div>
+
+      <div class="dialog-right-questions">
+        <form [formGroup]="preguntaForm" (ngSubmit)="crearPregunta()" > 
+          <h4>¿Tiene alguna pregunta para el proveedor?</h4>
+          <input type="hidden" formControlName="id" />
+          <input type="hidden" formControlName="clienteId" />
+              <mat-form-field class="full-width">
+                <mat-label>Escriba aquí</mat-label>
+                <textarea matInput formControlName="pregunta" maxlength="500" >  </textarea>
+                <mat-hint align="end"> / 500</mat-hint>
+                 <!-- <mat-error *ngIf="errorHandling('pregunta','required')">
+                  Nombre es <strong>requerido</strong>
+                </mat-error>
+                <mat-error *ngIf="errorHandling('pregunta','minlength')">
+                  Nombre debe tener <strong>3 caracteres</strong>
+                </mat-error> -->  
+              </mat-form-field> 
+              <mat-card-actions>
+                <button mat-raised-button class="btnGuardar" color="primary" type="submit">Guardar</button>
+              </mat-card-actions>
+        </form> 
+      </div>
     </div>
+
   </div>
 
   <!-- Contenido de la segunda parte de la página -->

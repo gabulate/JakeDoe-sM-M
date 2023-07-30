@@ -1,10 +1,4 @@
-import {
-  AfterViewInit,
-  Component,
-  Inject,
-  OnInit,
-  ViewChild,
-} from '@angular/core';
+import {  AfterViewInit,  Component,  Inject,  OnInit,  ViewChild,} from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
@@ -14,11 +8,11 @@ import { MatTable, MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
 
 @Component({
-  selector: 'app-compra-detalle',
-  templateUrl: './compra-detalle.component.html',
-  styleUrls: ['./compra-detalle.component.css']
+  selector: 'app-mensaje-index',
+  templateUrl: './mensaje-index.component.html',
+  styleUrls: ['./mensaje-index.component.css']
 })
-export class CompraDetalleComponent implements AfterViewInit{
+export class MensajeIndexComponent {
   datos: any;
   destroy$: Subject<boolean> = new Subject<boolean>();
 
@@ -28,7 +22,7 @@ export class CompraDetalleComponent implements AfterViewInit{
   dataSource = new MatTableDataSource<any>();
 
   /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
-  displayedColumns = ['producto', 'categoriaProducto','estadoProducto','cantidad', 'precio','estado', ];
+  displayedColumns = ['producto',  'acciones' ];
 
   constructor(
     private router: Router,
@@ -38,28 +32,26 @@ export class CompraDetalleComponent implements AfterViewInit{
 
   ngAfterViewInit(): void {
     let id=this.route.snapshot.paramMap.get('id');
-      if(!isNaN(Number(id))){
-        this.getCompra(Number(id));
-      }
+    this.listaProductos(Number(id));
   }
-  getCompra(id:any) {
-    //localhost:3000/compra
+  listaProductos(id:any) {
+    //localhost:3000/videojuego
     this.gService
-      .get('compra/', id)
+      .get('producto/vendedor', id)
       .pipe(takeUntil(this.destroy$))
       .subscribe((data: any) => {
         console.log(data);
         this.datos = data;
-        this.dataSource = new MatTableDataSource(this.datos.CompraDetalle);
+        this.dataSource = new MatTableDataSource(this.datos);
         this.dataSource.sort = this.sort;
         this.dataSource.paginator = this.paginator;
       });
   }
-/*   detalle(id: number) {
-    this.router.navigate(['/pedido', id], {
+  mensajes(id:number){
+    this.router.navigate(['/mensaje/producto', id], {
       relativeTo: this.route,
     });
-  } */
+  }
 
   ngOnDestroy() {
     this.destroy$.next(true);

@@ -1,0 +1,40 @@
+<!-- <p>mensaje-all-by-producto works!</p> -->
+<div class="reviews">
+    
+      <mat-grid-list [cols]="1" class="grid-list">
+        <h3>Preguntas de usuarios</h3>
+        <br />
+          <mat-card class="dashboard-card" *ngFor="let item of filtrarDatosMensaje()">
+            <div >
+              <mat-card-subtitle>
+                <p>Pregunta</p>
+              </mat-card-subtitle>
+              <mat-card-content class="dashboard-card-content">
+                <div>{{ item.Pregunta }}</div>
+              </mat-card-content>
+
+              <div class="resp">
+                <mat-card-subtitle>
+                  <p>Respuesta</p>
+                </mat-card-subtitle>
+                <form [formGroup]="preguntaForm" (ngSubmit)="crearPregunta()" > 
+                  <input type="hidden" formControlName="id" />
+                  <input type="hidden" formControlName="clienteId" />
+                      <mat-form-field class="full-width">
+                        <mat-label>Escriba aquí</mat-label>
+                        <textarea matInput formControlName="pregunta" maxlength="500" >  </textarea>
+                        <mat-hint align="end"> / 500</mat-hint>
+                         
+                      </mat-form-field> 
+                  <button mat-raised-button class="btnResponder" color="accent" type="submit"
+                    color="primary" >
+                    Responder
+                  </button>
+                </form> 
+              </div>
+
+              
+              </div>  
+          </mat-card>
+      </mat-grid-list>
+  </div>
