@@ -11,4 +11,7 @@ router.get("/:id", productoController.getById);
 
 router.get("/vendedor/:id", productoController.getByVendedor);
 
+router.post("/", productoController.create);
+
+
 module.exports = router;

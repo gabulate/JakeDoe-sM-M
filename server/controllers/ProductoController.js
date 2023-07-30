@@ -63,11 +63,67 @@ module.exports.getById = async (request, response, next) => {
   response.json(producto);
 };
 
-//Crear un usuario
-module.exports.create = async (request, response, next) => {};
+//Crear un producto
+module.exports.create = async (request, response, next) => {
+  try {
+    let producto = request.body;
+    const newProducto = await prisma.producto.create({
+      data: {
+        Nombre: producto.Nombre,
+        Descripcion: producto.Descripcion,
+        Precio: producto.Precio,
+        Cantidad: producto.Cantidad,
+        CategoriaId: producto.CategoriaId,
+        EstadoId: producto.EstadoId,
+        VendedorId: producto.VendedorId,
+      },
+    });
+    response.status(201).json({
+      success: true,
+      message: "Producto creado",
+      data: newProducto,
+    });
+  } catch (error) {
+    console.error(error);
+    response
+      .status(500)
+      .json({ error: "Ha ocurrido un error al crear el producto." });
+  }
+};
 
-//Actualizar un usuario
-module.exports.update = async (request, response, next) => {};
+//Actualizar un producto
+module.exports.update = async (request, response, next) => {
+  let producto = request.body;
+  let idProducto = parseInt(request.params.id);
+  //Obtener videojuego viejo
+  const productoViejo = await prisma.producto.findUnique({
+    where: { id: idProducto },
+  });
+
+  //Elimina las fotos que ya tiene
+  await prisma.FotoProducto.deleteMany({
+    where: { ProductoId: idProducto },
+  });
+
+  const newProducto = await prisma.producto.update({
+    where: {
+      id: idProducto,
+    },
+    data: {
+      Nombre: producto.Nombre,
+      Descripcion: producto.Descripcion,
+      Precio: producto.Precio,
+      Cantidad: producto.Cantidad,
+      CategoriaId: producto.CategoriaId,
+      EstadoId: producto.EstadoId,
+      VendedorId: producto.VendedorId,
+      /* FotoProducto: {
+        connect: producto.generos,
+      }, */
+    },
+  });
+  response.json(newProducto);
+};
 
 //Obtener listado por vendedor
 module.exports.getByVendedor = async (request, response, next) => {

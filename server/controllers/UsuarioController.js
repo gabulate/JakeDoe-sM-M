@@ -3,7 +3,6 @@ const prisma = new PrismaClient();
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
-
 //Obtener listado
 module.exports.get = async (request, response, next) => {
   const usuarios = await prisma.usuario.findMany({
@@ -103,14 +102,10 @@ module.exports.create = async (request, response, next) => {
   }
 };
 
-///////////////////////////////////////////////////////7
-//HAY QUE CAMBIARLO NO SIRVE ASÍ COMO ESTÁ 
-//LUEGO LO HAGO, SON LA 1:24 TENGO SUEÑO
-//////////////////////////////////////////////////////
 //Actualizar un usuario
 module.exports.update = async (request, response, next) => {
   let usuario = request.body;
-  let idUsuario = parseInt(request.params.id);
+  let Email = usuario.Email;
 
   let salt = bcrypt.genSaltSync(10);
 
@@ -121,17 +116,14 @@ module.exports.update = async (request, response, next) => {
     hash = bcrypt.hashSync(usuario.ContrasennaNueva, salt);
   } else {
     hash = bcrypt.hashSync(usuario.Contrasenna, salt);
+    usuario.ContrasennaNueva = usuario.Contrasenna;
   }
 
   //Obtener usuario viejo
   const usuarioViejo = await prisma.usuario.findUnique({
-    where: { id: idUsuario },
+    where: { Email: Email },
     include: {
-      Roles: {
-        select: {
-          id: true,
-        },
-      },
+      Roles: true,
     },
   });
 
@@ -141,12 +133,13 @@ module.exports.update = async (request, response, next) => {
       success: false,
       message: "Usuario no registrado",
     });
+    return;
   }
 
   //Verifica que la contraseña actual coincida por la dada por el usuario
   const checkPassword = await bcrypt.compare(
-    usuarioViejo.Contrasenna,
-    usuario.password
+    usuario.Contrasenna,
+    usuarioViejo.Contrasenna
   );
   if (checkPassword === false) {
     response.status(401).send({
@@ -154,28 +147,49 @@ module.exports.update = async (request, response, next) => {
       message: "Credenciales no validas",
     });
   } else {
+    try {
+      const selectedRoleIds = usuario.RolesSeleccionados;
+
+      //Elimina los roles que ya tiene
+      await prisma.rolOnUsuario.deleteMany({
+        where: { UsuarioId: usuarioViejo.id },
+      });
+
+      const newUsuario = await prisma.usuario.update({
+        where: {
+          Email: Email,
+        },
+        data: {
+          Nombre: usuario.Nombre,
+          Apellido: usuario.Apellido,
+          Telefono: usuario.Telefono,
+          Contrasenna: hash, //Envía la contraseña encriptada
+          Calificacion: usuario.Calificacion,
+
+          Roles: {
+            create: selectedRoleIds.map((RolId) => ({
+              rol: {
+                connect: {
+                  id: RolId,
+                },
+              },
+            })),
+          },
+        },
+      });
+
+      response.status(201).json({
+        success: true,
+        message: "Usuario actualizada.",
+        data: newUsuario,
+      });
+    } catch (error) {
+      console.error(error);
+      response
+        .status(500)
+        .json({ error: "Ha ocurrido un error al actualizar el usuario." });
+    }
   }
-
-  const newUsuario = await prisma.usuario.update({
-    where: {
-      id: idUsuario,
-    },
-    data: {
-      Nombre: usuario.Nombre,
-      Apellido: usuario.Apellido,
-      Telefono: usuario.Telefono,
-      Email: usuario.Email,
-      Contrasenna: hash, //Envía la contraseña encriptada
-      Calificacion: usuario.Calificacion,
-
-      Roles: {
-        //Roles tiene que ser {id:valor}
-        disconnect: usuarioViejo.Roles,
-        connect: usuario.Roles,
-      },
-    },
-  });
-  response.json(newUsuario);
 };
 
 module.exports.login = async (request, response, next) => {
