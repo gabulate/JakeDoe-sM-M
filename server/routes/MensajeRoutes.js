@@ -7,6 +7,7 @@ const productoController =require("../controllers/ProductoController")
 //Rutas de Usuarios
 
 router.post("/",mensajeController.create);
+router.put('/:id', mensajeController.update);
 router.get("/producto/:id", mensajeController.getByProducto);
 router.get("/producto/vendedor/:id", productoController.getByVendedor);
 

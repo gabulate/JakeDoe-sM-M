@@ -27,3 +27,22 @@ module.exports.getByProducto = async (request, response, next) => {
     });
     response.json(newMensaje);
   }
+
+  module.exports.update = async(request, response, next ) =>{
+    let mensaje= request.body;
+    //let idMensaje = parseInt(mensaje.id);
+
+    const newMensaje = await prisma.mensaje.update({
+      where:{
+        id: parseInt(mensaje.mensajeId),
+      },
+      data:{
+        ClienteId: mensaje.clienteId,
+        ProductoId: mensaje.productoId,
+        Pregunta: mensaje.pregunta,
+        Respuesta:mensaje.respuesta,
+      },
+    });
+    response.json(newMensaje);
+    }
+  

@@ -16,7 +16,8 @@ export class MensajeAllByProductoComponent {
   datosMensaje: any;
   destroy$: Subject<boolean> = new Subject<boolean>();
   listaFotos: any[] = [];
-  preguntaForm: FormGroup;
+  //preguntaForm: FormGroup;
+  preguntaForms: FormGroup[]=[];
   submitted = false;
   respMensaje: any;
   productoId: any;
@@ -37,11 +38,13 @@ export class MensajeAllByProductoComponent {
   ngOnInit(): void {
     let id = this.route.snapshot.paramMap.get('id');
     if (!isNaN(Number(id))) {
+      console.log("id es " + id);
       this.productoId= Number(id);
       this.obtenerProducto(Number(id));
       this.listarMensajes(Number(id));
     }
   }
+
   obtenerProducto(id: any) {
     this.gService
       .get('producto', id)
@@ -51,68 +54,106 @@ export class MensajeAllByProductoComponent {
       });
   }
 
-  listarMensajes(id: number) {
+   listarMensajes(id: number) {
     this.gService
       .list(`mensaje/producto/${id}`)
       .pipe(takeUntil(this.destroy$))
       .subscribe((data: any) => {
-        console.log(data);
-        this.datosMensaje = data;
+        console.log(data); 
+        this.datosMensaje = data.filter
+        (item => item.Respuesta === null || item.Respuesta === '');
+        if(this.datosMensaje && this.datosMensaje.length >0){
+          this.crearFormulariosMensajes();
+          
+        }else{
+          console.log("datos en datosMensaje no son válidos");
+        }
       });
-  }
+  } 
 
-  filtrarDatosMensaje(){
-    return this.datosMensaje.filter(item => item.Respuesta === null || item.Respuesta === '');
+  crearFormulariosMensajes(){
+    //Crear un formulario para cada pregunta en los datos obtenidos
+    this.datosMensaje.forEach(item => {
+      const preguntaForm =this.fb.group({
+        mensajeId: Number([item.id]),
+        productoId: Number([item.ProductoId]),
+        clienteId:Number ([item.ClienteId]),
+        pregunta:[item.Pregunta],
+        respuesta:[null,Validators.compose([
+          Validators.required,
+          Validators.minLength(3)
+        ])]
+      });
+      console.log(preguntaForm);
+      this.preguntaForms.push(preguntaForm);
+    });
   }
-
   formularioReactive() {
+    this.preguntaForms=[];
+  } 
+
+  crearRespuesta(i:number){
+    this.submitted = true;
+    const preguntaForm= this.preguntaForms[i];
+    if(isNaN(preguntaForm.value.mensajeId)){
+      console.log("mensajeId es NaN");
+    }
+    
+    console.log(preguntaForm.value);
+    this.gService.update('mensaje',preguntaForm.value)
+    .pipe(takeUntil(this.destroy$)).subscribe((data: any) => {
+      this.respMensaje=data;
+      console.log(this.respMensaje);
+    },
+    (error:any)=>{
+      console.error(error);
+    }
+    );
+  }
+  
+  ngOnDestroy() {
+    this.destroy$.next(true);
+    this.destroy$.unsubscribe();
+  }
+}
+
+
+  /*  formularioReactive() {
     //[null, Validators.required]
-    this.preguntaForm=this.fb.group({
+    /* this.preguntaForm=this.fb.group({
       id:[null,null],
       clienteId:[null,null],
       pregunta:[null, Validators.compose([
         Validators.required,
         Validators.minLength(3)
       ])]
-    })
-  }
-
-  crearPregunta(){
+    }) */
+    //Reiniciar el arreglo de formularios
+  /*   this.preguntaForms=[];
+  } */
+  
+  /*   crearRespuesta(i:number){
     this.submitted = true;
-    if(this.preguntaForm.invalid){
+    const preguntaForm= this.preguntaForms[i];
+    if(preguntaForm.invalid){
       return;
     }
-    this.preguntaForm.patchValue({
-      id: this.productoId,
-      clienteId:1
+    preguntaForm.patchValue({
+      mensajeId: parseInt(preguntaForm.get('mensajeId')?.value),
+      productoId: parseInt(preguntaForm.get('productoId')?.value),
+      clienteId: parseInt(preguntaForm.get('clienteId')?.value),
+      pregunta:preguntaForm.get('pregunta')?.value
     });
-    console.log(this.preguntaForm.value);
-    this.gService.create('mensaje',this.preguntaForm.value)
-    .pipe(takeUntil(this.destroy$)) 
-    .subscribe((data: any) => {
-      this.respMensaje=data;
-      /* this.router.navigate(['/producto', this.productoId], {
+    console.log(preguntaForm.value);
+    this.gService.update('mensaje',preguntaForm.value)
+    .pipe(takeUntil(this.destroy$)).subscribe((data: any) => {
+      this.respMensaje=data; */
+      /*this.listarMensajes(this.productoId);
+      preguntaForm.reset();
+       this.router.navigate(['/producto', this.productoId], {
         queryParams: {update:'true'}
       }); */
-    });
-    this.listarMensajes(this.productoId);
-    this.preguntaForm.reset();
+/*     });
   }
-
+ */
 //let ClienteId= this.authService.currentUser.subscribe((x)=>(this.currentUser=x));
-  onReset() {
-    this.submitted = false;
-    this.preguntaForm.reset();
-  }
-  onBack(){
-      this.router.navigate(
-        ['/producto', this.productoId], 
-        {state:{datos:this.datos}}
-      );
-    }
-
-  ngOnDestroy() {
-    this.destroy$.next(true);
-    this.destroy$.unsubscribe();
-  }
-}
