@@ -12,11 +12,14 @@ module.exports.get = async (request, response, next) => {
 
       categoria: {
         select: {
+          id: true,
           Descripcion: true,
         },
       },
       estado: {
         select: {
+          id: true,
+
           Descripcion: true,
         },
       },
@@ -40,11 +43,14 @@ module.exports.getById = async (request, response, next) => {
       FotoProducto: true,
       categoria: {
         select: {
+          id: true,
           Descripcion: true,
         },
       },
       estado: {
         select: {
+          id: true,
+
           Descripcion: true,
         },
       },

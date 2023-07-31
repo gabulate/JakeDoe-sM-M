@@ -2,17 +2,10 @@
   <!-- Titulo del Card -->
   <mat-card-title>
     <h1 class="titulo">Productos</h1>
-    <a
-      mat-fab
-      matTooltip="Crear Producto"
-      aria-label="Crear Producto"
-      color="primary"
-      (click)="crearProducto()"
-    >
-      <mat-icon>add</mat-icon>
-    </a>
   </mat-card-title>
   <mat-card-content>
+    <button mat-raised-button color="primary" (click)="crearProducto()">Nuevo Producto</button>
+
     <!-- Table -->
     <div class="mat-elevation-z8" *ngIf="datos">
       <table

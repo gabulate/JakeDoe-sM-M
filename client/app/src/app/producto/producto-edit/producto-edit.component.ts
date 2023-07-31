@@ -36,7 +36,7 @@ export class ProductoEditComponent implements OnInit {
     private activeRouter: ActivatedRoute
   ) {
     this.formularioReactive();
-    this.listaGeneros();
+    this.listaCategorias();
   }
 
   ngOnInit(): void {
@@ -52,16 +52,18 @@ export class ProductoEditComponent implements OnInit {
           .pipe(takeUntil(this.destroy$))
           .subscribe((data: any) => {
             this.productoInfo = data;
+            console.log(this.productoInfo.categoria);
+
             //Establecer los valores en cada una de las entradas del formulario
             this.productoForm.setValue({
               id: this.productoInfo.id,
-              Nombre: this.productoInfo.Nombre,
-              Descripcion: this.productoInfo.Descripcion,
-              Precio: this.productoInfo.Precio,
-              Cantidad: this.productoInfo.Cantidad,
-              CategoriaId: this.productoInfo.CategoriaId,
-              VendedorId: this.productoInfo.VendedorId,
-              Borrado: this.productoInfo.Borrado,
+              nombre: this.productoInfo.Nombre,
+              descripcion: this.productoInfo.Descripcion,
+              precio: this.productoInfo.Precio,
+              cantidad: this.productoInfo.Cantidad,
+              vendedorId: this.productoInfo.VendedorId,
+              borrado: this.productoInfo.Borrado,
+              categoria: this.productoInfo.categoria.map(({ id }) => id),
 
               FotoProducto: this.productoInfo.FotoProducto.map(({ id }) => id),
             });
@@ -78,14 +80,16 @@ export class ProductoEditComponent implements OnInit {
         null,
         Validators.compose([Validators.required, Validators.minLength(3)]),
       ],
+      vendedorId: [null, Validators.required],
+      categoria: [null, Validators.required],
       descripcion: [null, Validators.required],
       precio: [null, Validators.required],
-      publicar: [true, Validators.required],
-      generos: [null, Validators.required],
+      borrado: [false, Validators.required],
+      cantidad: [null, Validators.required],
     });
   }
-  
-  listaGeneros() {
+
+  listaCategorias() {
     this.CategoriaList = null;
     this.gService
       .list('categoria')
@@ -104,7 +108,12 @@ export class ProductoEditComponent implements OnInit {
     //Establecer submit verdadero
     this.submitted = true;
     //Verificar validación
+    this.productoForm.patchValue({ id: 0 });
+    ////////////////////////////////////////////////////////PONER AQUI EL USUARIO QUE LO CREA
+    this.productoForm.patchValue({ VendedorId: 4 });
+
     if (this.productoForm.invalid) {
+      console.log(this.productoForm);
       return;
     }
 
@@ -113,9 +122,10 @@ export class ProductoEditComponent implements OnInit {
       .get('categoria')
       .value.map((x) => ({ ['id']: x }));
       
+     */
     //Asignar valor al formulario
-    this.productoForm.patchValue({ generos: gFormat });
-    console.log(this.productoForm.value); */
+
+    console.log(this.productoForm.value);
 
     //Accion API create enviando toda la informacion del formulario
     this.gService
@@ -124,7 +134,7 @@ export class ProductoEditComponent implements OnInit {
       .subscribe((data: any) => {
         //Obtener respuesta
         this.respProducto = data;
-        this.router.navigate(['/producto/'], {
+        this.router.navigate(['/producto/' + this.respProducto.id], {
           queryParams: { create: 'true' },
         });
       });

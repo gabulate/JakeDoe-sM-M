@@ -15,6 +15,7 @@ const mensajeRouter = require('./routes/MensajeRoutes');
 const fotoRouter = require('./routes/FotoProductoRoutes'); 
 const metodoPagoRouter = require('./routes/MetodoPagoRoutes'); 
 const direccionRouter = require('./routes/DireccionRoutes'); 
+const categoriaRoutes = require('./routes/CategoriaRoutes');
 
 // Acceder a la configuracion del archivo .env
 dotEnv.config();
@@ -45,6 +46,7 @@ app.use("/mensaje/", mensajeRouter);
 app.use("/fotoProducto/", fotoRouter);
 app.use("/metodoPago/", metodoPagoRouter);
 app.use("/direccion/", direccionRouter);
+app.use("/categoria/", categoriaRoutes);
 
 // Servidor
 app.listen(port, () => {

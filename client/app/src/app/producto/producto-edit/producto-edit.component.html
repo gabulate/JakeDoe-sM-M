@@ -1,72 +1,112 @@
-<form [formGroup]="productoForm" (ngSubmit)="isCreate ? crearProducto(): actualizarVideojuego()"  novalidate >
-    <input type="hidden" formControlName="id" />
-    <mat-card class="shipping-card"> 
-      <mat-card-header>
-        <mat-card-title>{{titleForm}} Producto</mat-card-title>
-      </mat-card-header>
-      <mat-card-content>
-        <div class="row">
-          <div class="col">
-            <mat-form-field class="full-width">
-              <input matInput formControlName="nombre" maxlength="20" placeholder="Nombre" >
-              <mat-hint align="end"> / 20</mat-hint>
-              <mat-error *ngIf="errorHandling('nombre','required')">
-                Nombre es <strong>requerido</strong>
-              </mat-error>
-              <mat-error *ngIf="errorHandling('nombre','minlength')">
-                Nombre debe tener <strong>3 caracteres</strong>
-              </mat-error>
-            </mat-form-field>
-          </div>
+<form
+  [formGroup]="productoForm"
+  (ngSubmit)="isCreate ? crearProducto() : actualizarVideojuego()"
+  novalidate
+>
+  <input type="hidden" formControlName="id" />
+  <input type="hidden" formControlName="vendedorId" />
+  <mat-card class="shipping-card">
+    <mat-card-header>
+      <mat-card-title>{{ titleForm }} Producto</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <input
+              matInput
+              #nombre
+              formControlName="nombre"
+              maxlength="20"
+              placeholder="Nombre"
+            />
+            <mat-hint align="end"> {{ nombre.value.length }}/ 20</mat-hint>
+            <mat-error *ngIf="errorHandling('nombre', 'required')">
+              Nombre es <strong>requerido</strong>
+            </mat-error>
+            <mat-error *ngIf="errorHandling('nombre', 'minlength')">
+              Nombre debe tener <strong>3 caracteres</strong>
+            </mat-error>
+          </mat-form-field>
         </div>
-        
-        <div class="row">
-          <div class="col">
-            <mat-form-field class="full-width">
-              <input matInput placeholder="Descripción" formControlName="descripcion">
-              <mat-error *ngIf="errorHandling('descripcion','required')">
-                Descripción es <strong>requerido</strong>
-              </mat-error>
-            </mat-form-field>
-          </div>
-          <div class="col">
-            <mat-form-field class="full-width">
-              <input matInput placeholder="Precio" formControlName="precio">
-              <mat-error *ngIf="errorHandling('precio','required')">
-                Precio es <strong>requerido</strong>
-              </mat-error>
-            </mat-form-field>
-          </div>
+        <div class="col">
+          <mat-form-field class="full-width">
+            <input
+              matInput
+              type="number"
+              placeholder="Precio"
+              formControlName="precio"
+            />
+            <span matTextPrefix>₡&nbsp;</span>
+            <mat-error *ngIf="errorHandling('precio', 'required')">
+              Precio es <strong>requerido</strong>
+            </mat-error>
+          </mat-form-field>
         </div>
-        
-        <div class="row">
-          <div class="col" *ngIf="CategoriaList">
-            <mat-form-field class="full-width">
-              <mat-select placeholder="Generos" formControlName="generos"  multiple>
-                <mat-option *ngFor="let g of CategoriaList" [value]="g.id">
-                    {{g.Descripcion}}
-                </mat-option>
-              </mat-select>
-              <mat-error >
-                Generos es <strong>requerido</strong>
-              </mat-error>
-            </mat-form-field>
-          </div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <textarea
+              matInput
+              #descripcion
+              placeholder="Descripción"
+              [maxlength]="200"
+              formControlName="descripcion"
+            ></textarea>
+            <mat-hint align="end">
+              {{ descripcion.value.length }}/ 200</mat-hint
+            >
+            <mat-error *ngIf="errorHandling('descripcion', 'required')">
+              Descripción es <strong>requerido</strong>
+            </mat-error>
+          </mat-form-field>
         </div>
-        
-        <div class="row">
-          <div class="col">
-            <mat-label>Publicar</mat-label>
-            <mat-radio-group formControlName="publicar">
-              <mat-radio-button [value]="true">Sí</mat-radio-button>
-              <mat-radio-button [value]="false">No</mat-radio-button>
-            </mat-radio-group>
-          </div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <input
+              matInput
+              #cantidad
+              formControlName="cantidad"
+              maxlength="10"
+              placeholder="Cantidad"
+            />
+            <mat-error *ngIf="errorHandling('cantidad', 'required')">
+              Cantidad es <strong>requerido</strong>
+            </mat-error>
+          </mat-form-field>
         </div>
-      </mat-card-content>
-      <mat-card-actions>
-        <button mat-raised-button color="primary" type="submit">Guardar</button>
-      </mat-card-actions>
-    </mat-card>
-  </form>
-  
+      </div>
+
+      <div class="row">
+        <div class="col" *ngIf="CategoriaList">
+          <mat-form-field class="full-width">
+            <mat-select placeholder="Categoria" formControlName="categoria">
+              <mat-option *ngFor="let g of CategoriaList" [value]="g.id" >
+                {{ g.Descripcion }}
+              </mat-option>
+            </mat-select>
+            <mat-error> Categoria es <strong>requerido</strong> </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <mat-label>Ocultar</mat-label>
+          <mat-radio-group formControlName="borrado">
+            <mat-radio-button [value]="false">No</mat-radio-button>
+            <mat-radio-button [value]="true">Sí</mat-radio-button>
+          </mat-radio-group>
+        </div>
+      </div>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-raised-button color="primary" type="submit">Guardar</button>
+    </mat-card-actions>
+  </mat-card>
+</form>
