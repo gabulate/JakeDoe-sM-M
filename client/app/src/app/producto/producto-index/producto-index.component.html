@@ -5,7 +5,7 @@
     <mat-grid-tile *ngFor="let item of datos">
       <mat-card class="dashboard-card">
         <img 
-          mat-card-image class="fotoProducto"
+          mat-card-image class="fotoProducto" *ngIf="item.FotoProducto[0] !== undefined"
           [src]="getImageUrl(item.FotoProducto[0].Foto.data)"
           alt="photo"
         />

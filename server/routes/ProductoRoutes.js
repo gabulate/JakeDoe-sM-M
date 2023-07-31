@@ -5,15 +5,14 @@ const router = express.Router();
 const productoController = require("../controllers/ProductoController");
 
 //Rutas de Producto
-router.post("/", productoController.create);
 
 router.get("/", productoController.get);
+
+router.post("/", productoController.create);
+
+router.put("/:id", productoController.update);
 
 router.get("/:id", productoController.getById);
 
 router.get("/vendedor/:id", productoController.getByVendedor);
-
-
-
-
 module.exports = router;

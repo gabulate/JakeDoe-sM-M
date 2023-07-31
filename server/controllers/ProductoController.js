@@ -75,13 +75,13 @@ module.exports.create = async (request, response, next) => {
     let producto = request.body;
     const newProducto = await prisma.producto.create({
       data: {
-        Nombre: producto.Nombre,
-        Descripcion: producto.Descripcion,
-        Precio: producto.Precio,
-        Cantidad: producto.Cantidad,
-        CategoriaId: producto.CategoriaId,
-        EstadoId: producto.EstadoId,
-        VendedorId: producto.VendedorId,
+        Nombre: producto.nombre,
+        Descripcion: producto.descripcion,
+        Precio: producto.precio,
+        Cantidad: parseInt(producto.cantidad),
+        CategoriaId: producto.categoria,
+        EstadoId: 1,
+        VendedorId: producto.vendedorId,
       },
     });
     response.status(201).json({
@@ -91,6 +91,7 @@ module.exports.create = async (request, response, next) => {
     });
   } catch (error) {
     console.error(error);
+    console.error(producto);
     response
       .status(500)
       .json({ error: "Ha ocurrido un error al crear el producto." });
@@ -100,29 +101,29 @@ module.exports.create = async (request, response, next) => {
 //Actualizar un producto
 module.exports.update = async (request, response, next) => {
   let producto = request.body;
-  let idProducto = parseInt(request.params.id);
+  let idProducto = parseInt(producto.id);
   //Obtener videojuego viejo
   const productoViejo = await prisma.producto.findUnique({
     where: { id: idProducto },
   });
 
-  //Elimina las fotos que ya tiene
+  /* //Elimina las fotos que ya tiene
   await prisma.FotoProducto.deleteMany({
     where: { ProductoId: idProducto },
-  });
+  }); */
 
   const newProducto = await prisma.producto.update({
     where: {
       id: idProducto,
     },
     data: {
-      Nombre: producto.Nombre,
-      Descripcion: producto.Descripcion,
-      Precio: producto.Precio,
-      Cantidad: producto.Cantidad,
-      CategoriaId: producto.CategoriaId,
-      EstadoId: producto.EstadoId,
-      VendedorId: producto.VendedorId,
+      Nombre: producto.nombre,
+        Descripcion: producto.descripcion,
+        Precio: producto.precio,
+        Cantidad: parseInt(producto.cantidad),
+        CategoriaId: producto.categoria,
+        EstadoId: 1,
+        VendedorId: producto.vendedorId,
       /* FotoProducto: {
         connect: producto.generos,
       }, */

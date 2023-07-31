@@ -63,9 +63,9 @@ export class ProductoEditComponent implements OnInit {
               cantidad: this.productoInfo.Cantidad,
               vendedorId: this.productoInfo.VendedorId,
               borrado: this.productoInfo.Borrado,
-              categoria: this.productoInfo.categoria.map(({ id }) => id),
+              categoria: this.productoInfo.CategoriaId,
 
-              FotoProducto: this.productoInfo.FotoProducto.map(({ id }) => id),
+              //FotoProducto: this.productoInfo.FotoProducto.map(({ id }) => id),
             });
           });
       }
@@ -110,22 +110,15 @@ export class ProductoEditComponent implements OnInit {
     //Verificar validación
     this.productoForm.patchValue({ id: 0 });
     ////////////////////////////////////////////////////////PONER AQUI EL USUARIO QUE LO CREA
-    this.productoForm.patchValue({ VendedorId: 4 });
+    this.productoForm.patchValue({ vendedorId: 4 });
 
+    console.log(this.productoForm);
+    
     if (this.productoForm.invalid) {
-      console.log(this.productoForm);
       return;
     }
 
-    /* //Obtener id Fo del Formulario y Crear arreglo con {id: value}
-    let gFormat: any = this.productoForm
-      .get('categoria')
-      .value.map((x) => ({ ['id']: x }));
-      
-     */
-    //Asignar valor al formulario
-
-    console.log(this.productoForm.value);
+  
 
     //Accion API create enviando toda la informacion del formulario
     this.gService
@@ -139,6 +132,7 @@ export class ProductoEditComponent implements OnInit {
         });
       });
   }
+
   //Actualizar Videojuego
   actualizarVideojuego() {
     //Establecer submit verdadero
@@ -155,7 +149,7 @@ export class ProductoEditComponent implements OnInit {
       .subscribe((data: any) => {
         //Obtener respuesta
         this.respProducto = data;
-        this.router.navigate(['/producto'], {
+        this.router.navigate(['/producto/' + this.productoForm.value.id], {
           queryParams: { update: 'true' },
         });
       });

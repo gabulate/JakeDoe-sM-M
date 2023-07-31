@@ -104,11 +104,17 @@ export class MensajeAllByProductoComponent {
     .pipe(takeUntil(this.destroy$)).subscribe((data: any) => {
       this.respMensaje=data;
       console.log(this.respMensaje);
+
+      this.router.navigate(['/producto/' + this.productoId], {
+        queryParams: { update: 'true' },
+      });
     },
     (error:any)=>{
       console.error(error);
     }
     );
+
+
   }
   
   ngOnDestroy() {

@@ -57,7 +57,7 @@
         <mat-grid-list [cols]="1" class="grid-list">
           <h3>Preguntas de usuarios</h3>
           <br />
-          <div>
+          <div id="Preguntas">
             <mat-card class="dashboard-card" *ngFor="let item of datosMensaje">
               <mat-card-subtitle>
                 <p>Pregunta</p>
@@ -115,6 +115,7 @@
         >
           <img
             mat-card-image
+            *ngIf="item.FotoProducto[0] !== undefined"
             [src]="getImageUrl(item.FotoProducto[0].Foto.data)"
             alt="{{ item.Nombre }}"
           />

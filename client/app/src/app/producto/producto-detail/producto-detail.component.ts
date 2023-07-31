@@ -21,7 +21,7 @@ export class ProductoDetailComponent implements OnInit {
   submitted = false;
   respMensaje: any;
   productoId: any;
-  clienteId=1;
+  clienteId = 1;
 
   constructor(
     private fb: FormBuilder,
@@ -29,14 +29,14 @@ export class ProductoDetailComponent implements OnInit {
     private route: ActivatedRoute,
     private gService: GenericService,
     private sanitizer: DomSanitizer,
-    private authService:AuthenticationService
+    private authService: AuthenticationService
   ) {
     this.formularioReactive();
   }
   ngOnInit(): void {
     let id = this.route.snapshot.paramMap.get('id');
     if (!isNaN(Number(id))) {
-      this.productoId= Number(id);
+      this.productoId = Number(id);
       this.obtenerProducto(Number(id));
       this.listarMensajes(Number(id));
       //this.obtenerFotosProducto(Number(id));
@@ -76,7 +76,7 @@ export class ProductoDetailComponent implements OnInit {
   }
 
   //Para el listado de productos recomendados
-  //Quiero hacer que muestre solo productos de la misma categoría pero ya despuééés lo hago 
+  //Quiero hacer que muestre solo productos de la misma categoría pero ya despuééés lo hago
   listarProductos() {
     this.gService
       .list('producto/')
@@ -94,49 +94,67 @@ export class ProductoDetailComponent implements OnInit {
   }
   formularioReactive() {
     //[null, Validators.required]
-    this.preguntaForm=this.fb.group({
-      id:[null,null],
-      clienteId:[null,null],
-      pregunta:[null, Validators.compose([
-        Validators.required,
-        Validators.minLength(3)
-      ])]
-    })
+    this.preguntaForm = this.fb.group({
+      id: [null, null],
+      clienteId: [null, null],
+      pregunta: [
+        null,
+        Validators.compose([Validators.required, Validators.minLength(3)]),
+      ],
+    });
   }
 
-  crearPregunta(){
+  crearPregunta() {
     this.submitted = true;
-    if(this.preguntaForm.invalid){
+    if (this.preguntaForm.invalid) {
       return;
     }
     this.preguntaForm.patchValue({
       id: this.productoId,
-      clienteId:1
+      clienteId: 1,
     });
     console.log(this.preguntaForm.value);
-    this.gService.create('mensaje',this.preguntaForm.value)
-    .pipe(takeUntil(this.destroy$)) 
-    .subscribe((data: any) => {
-      this.respMensaje=data;
-      /* this.router.navigate(['/producto', this.productoId], {
-        queryParams: {update:'true'}
-      }); */
-    });
+    this.gService
+      .create('mensaje', this.preguntaForm.value)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((data: any) => {
+        this.respMensaje = data;
+        /* this.router
+      .navigateByUrl('/', { skipLocationChange: true })
+      .then(() => this.router.navigate(['/producto/' + this.datos.id])); */
+
+        let pre = document.getElementById('Preguntas');
+
+        pre.innerHTML =
+        "<mat-card class='mat-mdc-card mdc-card dashboard-card ng-star-inserted'>"
+        +'   <mat-card-subtitle class="mat-mdc-card-subtitle">'
+       + '    <p>Pregunta</p>'
+       + '  </mat-card-subtitle>'
+       + "     <mat-card-content class='mat-mdc-card-content dashboard-card-content'>"
+       + '    <div> '+ this.respMensaje.Pregunta + '</div>'
+       + '     </mat-card-content>'
+       + '    </mat-card>'
+       + ' <br> </br>'
+        + pre.innerHTML;
+
+        
+      });
+
     this.listarMensajes(this.productoId);
+
     this.preguntaForm.reset();
   }
 
-//let ClienteId= this.authService.currentUser.subscribe((x)=>(this.currentUser=x));
+  //let ClienteId= this.authService.currentUser.subscribe((x)=>(this.currentUser=x));
   onReset() {
     this.submitted = false;
     this.preguntaForm.reset();
   }
-  onBack(){
-      this.router.navigate(
-        ['/producto', this.productoId], 
-        {state:{datos:this.datos}}
-      );
-    }
+  onBack() {
+    this.router.navigate(['/producto', this.productoId], {
+      state: { datos: this.datos },
+    });
+  }
 
   ngOnDestroy() {
     this.destroy$.next(true);
