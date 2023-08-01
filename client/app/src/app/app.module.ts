@@ -29,8 +29,8 @@ import { HttpErrorInterceptorService } from './share/http-error-interceptor.serv
     HomeModule,
     UserModule,
     PedidoModule,
-    ProductoModule,
     MensajeModule,
+    ProductoModule,
 
     AppRoutingModule,
       

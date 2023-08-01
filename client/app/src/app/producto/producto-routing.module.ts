@@ -7,16 +7,38 @@ import { MensajeAllByProductoComponent } from '../mensaje/mensaje-all-by-product
 import { MensajeIndexComponent } from '../mensaje/mensaje-index/mensaje-index.component';
 import { ProductoAdminComponent } from './producto-admin/producto-admin.component';
 import { ProductoEditComponent } from './producto-edit/producto-edit.component';
+import { AuthGuard } from '../share/guards/auth.guard';
 
 const routes: Routes = [
   { path: 'producto', component: ProductoIndexComponent },
   { path: 'producto/:id', component: ProductoDetailComponent },
-  { path: 'admin/producto', component: ProductoAdminComponent },
+  {
+    path: 'admin/producto',
+    component: ProductoAdminComponent,
+    canActivate: [AuthGuard],
+    data: {
+      roles: [3],
+    },
+  },
   { path: 'admin/producto/update/:id', component: ProductoEditComponent },
   { path: 'admin/producto/create', component: ProductoEditComponent },
-  { path: 'producto/vendedor/:id', component: ProductoAllByVendedorComponent },
+  {
+    path: 'pedido/vendedor/:id',
+    canActivate: [AuthGuard],
+    data: {
+      roles: [3],
+    },
+    component: ProductoAllByVendedorComponent,
+  },
   { path: 'mensaje/producto/:id', component: MensajeAllByProductoComponent },
-  { path: 'mensaje/producto/vendedor/:id', component: MensajeIndexComponent },
+  {
+    path: 'mensaje/producto/vendedor/:id',
+    canActivate: [AuthGuard],
+    data: {
+      roles: [3],
+    },
+    component: MensajeIndexComponent,
+  },
 ];
 
 @NgModule({

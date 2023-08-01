@@ -20,14 +20,19 @@ export class AuthenticationService {
   private authenticated = new BehaviorSubject<boolean>(false);
   //Inyectar cliente HTTP para las solicitudes al API
 
+  UsuarioId: number;
 
-  constructor(private http: HttpClient, private cartService:CartService) {
+  constructor(private http: HttpClient, private cartService: CartService) {
     //Obtener los datos del usuario en localStorage, si existe
     this.currentUserSubject = new BehaviorSubject<any>(
       JSON.parse(localStorage.getItem('currentUser'))
     );
     //Establecer un observable para acceder a los datos del usuario
     this.currentUser = this.currentUserSubject.asObservable();
+
+    this.currentUser.subscribe((data) => {
+      this.UsuarioId = data.user.id;
+    });
   }
   //Obtener el valor del usuario actual
   public get currentUserValue(): any {
@@ -44,27 +49,24 @@ export class AuthenticationService {
   }
   //Crear usuario
   createUser(user: any): Observable<any> {
-    return this.http.post<any>(
-      this.ServerUrl + 'usuario/registrar',user);
+    return this.http.post<any>(this.ServerUrl + 'usuario/registrar', user);
   }
 
   //Login
   loginUser(user: any): Observable<any> {
     console.log(user);
-    return this.http
-      .post<any>(this.ServerUrl + 'usuario/login', user)
-      .pipe(
-        map((user) => {
-          console.log(user.data);
-          // almacene los detalles del usuario y el token jwt
-          // en el almacenamiento local para mantener al usuario conectado entre las actualizaciones de la página
-          localStorage.setItem('currentUser', JSON.stringify(user.data));
-          this.authenticated.next(true);
-          this.currentUserSubject.next(user.data);
-          console.log(user.data); 
-          return user;
-        })
-      );
+    return this.http.post<any>(this.ServerUrl + 'usuario/login', user).pipe(
+      map((user) => {
+        console.log(user.data);
+        // almacene los detalles del usuario y el token jwt
+        // en el almacenamiento local para mantener al usuario conectado entre las actualizaciones de la página
+        localStorage.setItem('currentUser', JSON.stringify(user.data));
+        this.authenticated.next(true);
+        this.currentUserSubject.next(user.data);
+        console.log(user.data);
+        return user;
+      })
+    );
   }
   //Logout de usuario autentificado
   logout() {
@@ -82,5 +84,4 @@ export class AuthenticationService {
     }
     return false;
   }
- 
 }

@@ -7,6 +7,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { DomSanitizer } from '@angular/platform-browser';
 import { GenericService } from 'src/app/share/generic.service';
 import { HttpClient } from '@angular/common/http';
+import { AuthenticationService } from 'src/app/share/authentication.service';
 
 @Component({
   selector: 'app-producto-admin',
@@ -22,6 +23,12 @@ export class ProductoAdminComponent implements AfterViewInit {
   //@ViewChild(MatTable) table!: MatTable<VideojuegoAllItem>;
   dataSource = new MatTableDataSource<any>();
 
+  isAutenticated: boolean;
+  //Usuario Actual
+  currentUser: any;
+  //USuario Id
+  clienteId: any;
+
   /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
   displayedColumns = ['foto', 'nombre', 'precio', 'acciones'];
 
@@ -30,17 +37,26 @@ export class ProductoAdminComponent implements AfterViewInit {
     private router: Router,
     private route: ActivatedRoute,
     private sanitizer: DomSanitizer,
-    private gService: GenericService
+    private gService: GenericService,
+    private authService: AuthenticationService
   ) {}
 
   ngAfterViewInit(): void {
+    this.authService.currentUser.subscribe((x) => (this.currentUser = x));
+    this.authService.isAuthenticated.subscribe(
+      (valor) => (this.isAutenticated = valor)
+    );
+
+    this.clienteId = this.authService.UsuarioId;
+    console.log('Cliente: ', this.currentUser.user.id);
+
     this.listaProductos();
   }
 
   listaProductos() {
     //localhost:3000/producto
     this.gService
-      .list('producto/')
+      .get('producto/vendedor', this.currentUser.user.id)
       .pipe(takeUntil(this.destroy$))
       .subscribe((data: any) => {
         console.log(data);
@@ -57,7 +73,7 @@ export class ProductoAdminComponent implements AfterViewInit {
   }
 
   getImageUrl(image) {
-    if(image == undefined){
+    if (image == undefined) {
       return this.sanitizer.bypassSecurityTrustUrl('assets/img/logov2.png');
     }
 

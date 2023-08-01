@@ -5,7 +5,7 @@
   </mat-card-title>
   <mat-card-content>
     <!-- Table -->
-    <div class="mat-elevation-z8" *ngIf="dataSource">
+    <div class="mat-elevation-z8" *ngIf="dataSource.data.length > 0">
       <table
         mat-table
         [dataSource]="dataSource"
@@ -63,6 +63,13 @@
         aria-label="Selecccione una página"
       >
       </mat-paginator>
+    </div>
+    <div class="" *ngIf="dataSource.data.length <= 0">
+      <h1 style="text-align: center;">
+        No ha comprado nada.
+      <br>
+      ¡Apurele!
+      </h1>
     </div>
     <!-- Table -->
   </mat-card-content>

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
-
+import { AuthenticationService } from 'src/app/share/authentication.service';
 import { GenericService } from 'src/app/share/generic.service';
 
 @Component({
@@ -28,18 +28,33 @@ export class ProductoEditComponent implements OnInit {
   idProducto: number = 0;
   //Sí es crear
   isCreate: boolean = true;
+  //Autenticación
+  isAutenticated: boolean;
+  //Usuario Actual
+  currentUser: any;
+  //USuario Id
+  clienteId: any;
 
   constructor(
     private fb: FormBuilder,
     private gService: GenericService,
     private router: Router,
-    private activeRouter: ActivatedRoute
+    private activeRouter: ActivatedRoute,
+    private authService: AuthenticationService,
   ) {
     this.formularioReactive();
     this.listaCategorias();
   }
 
   ngOnInit(): void {
+    this.authService.currentUser.subscribe((x) => (this.currentUser = x));
+    this.authService.isAuthenticated.subscribe(
+      (valor) => (this.isAutenticated = valor)
+    );
+
+    this.clienteId = this.authService.UsuarioId;
+    console.log('Cliente: ', this.currentUser.user.id);
+
     //Verificar si se envio un id por parametro para crear formulario para actualizar
     this.activeRouter.params.subscribe((params: Params) => {
       this.idProducto = params['id'];
@@ -129,13 +144,13 @@ export class ProductoEditComponent implements OnInit {
       const value = formValue[key];
 
       console.log(formValue);
-      
+
       if (key === 'fotos') {
         // If the key is 'fotos', it contains an array of files, so we need to handle it differently
         const files: File[] = value as File[];
         for (const file of files) {
           formData.append('fotos', file, file.name);
-        } 
+        }
       } else {
         // Agregar otros valores al FormData
         formData.append(key, value);
@@ -161,7 +176,6 @@ export class ProductoEditComponent implements OnInit {
     this.productoForm.patchValue({ id: this.idProducto });
     ////////////////////////////////////////////////////////PONER AQUI EL USUARIO QUE LO CREA
     this.productoForm.patchValue({ vendedorId: 0 });
-
 
     console.log(this.productoForm.value);
 

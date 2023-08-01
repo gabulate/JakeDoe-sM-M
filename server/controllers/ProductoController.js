@@ -207,6 +207,7 @@ module.exports.getByVendedor = async (request, response, next) => {
       id: "asc",
     },
     include: {
+      FotoProducto: true,
       categoria: {
         select: {
           Descripcion: true,
