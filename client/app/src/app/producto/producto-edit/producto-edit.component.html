@@ -2,6 +2,7 @@
   [formGroup]="productoForm"
   (ngSubmit)="isCreate ? crearProducto() : actualizarVideojuego()"
   novalidate
+  
 >
   <input type="hidden" formControlName="id" />
   <input type="hidden" formControlName="vendedorId" />
@@ -97,7 +98,7 @@
 
       <div class="row">
         <div class="col">
-          <input type="file" formControlName="fotos" accept="image/" (change)="onFileChange($event)" multiple>
+          <input type="file" formControlName="fotos" accept=".jpg" (change)="onFileChange($event)" multiple>
           Seleccione hasta 5 imágenes
           <mat-error *ngIf="errorHandling('fotos', 'required')"> Selecione al menos una imagen.</mat-error>
           <mat-error *ngIf="countSelectedImages() > 5">No puedes seleccionar más de 5 imágenes</mat-error>

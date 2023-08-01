@@ -52,7 +52,7 @@ export class ProductoEditComponent implements OnInit {
           .pipe(takeUntil(this.destroy$))
           .subscribe((data: any) => {
             this.productoInfo = data;
-            console.log(this.productoInfo.categoria);
+            console.log('AAAAAAAAAAAAAAAAAAAAAAAAAAAA', this.productoInfo);
 
             //Establecer los valores en cada una de las entradas del formulario
             this.productoForm.setValue({
@@ -65,8 +65,10 @@ export class ProductoEditComponent implements OnInit {
               borrado: this.productoInfo.Borrado,
               categoria: this.productoInfo.CategoriaId,
 
-              fotos: this.productoInfo.FotoProducto.map(({ id }) => id),
+              fotos: '',
             });
+
+            console.log(this.productoForm.value);
           });
       }
     });
@@ -126,12 +128,14 @@ export class ProductoEditComponent implements OnInit {
     Object.keys(formValue).forEach((key) => {
       const value = formValue[key];
 
+      console.log(formValue);
+      
       if (key === 'fotos') {
         // If the key is 'fotos', it contains an array of files, so we need to handle it differently
         const files: File[] = value as File[];
         for (const file of files) {
           formData.append('fotos', file, file.name);
-        }
+        } 
       } else {
         // Agregar otros valores al FormData
         formData.append(key, value);
@@ -153,14 +157,42 @@ export class ProductoEditComponent implements OnInit {
   actualizarVideojuego() {
     //Establecer submit verdadero
     this.submitted = true;
-    //Verificar validación
+
+    this.productoForm.patchValue({ id: this.idProducto });
+    ////////////////////////////////////////////////////////PONER AQUI EL USUARIO QUE LO CREA
+    this.productoForm.patchValue({ vendedorId: 0 });
+
+
+    console.log(this.productoForm.value);
+
     if (this.productoForm.invalid) {
       return;
     }
 
+    const formData = new FormData();
+    const formValue = this.productoForm.value;
+
+    console.log(formValue);
+
+    // Agregar los datos al FormData
+    Object.keys(formValue).forEach((key) => {
+      const value = formValue[key];
+
+      if (key === 'fotos') {
+        // If the key is 'fotos', it contains an array of files, so we need to handle it differently
+        const files: File[] = value as File[];
+        for (const file of files) {
+          formData.append('fotos', file, file.name);
+        }
+      } else {
+        // Agregar otros valores al FormData
+        formData.append(key, value);
+      }
+    });
+
     //Accion API create enviando toda la informacion del formulario
     this.gService
-      .update('producto', this.productoForm.value)
+      .update('producto', formData)
       .pipe(takeUntil(this.destroy$))
       .subscribe((data: any) => {
         //Obtener respuesta

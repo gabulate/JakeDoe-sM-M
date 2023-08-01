@@ -5,7 +5,7 @@ const multer = require("multer");
 const upload = multer({
   storage: multer.diskStorage({
     destination: function (req, file, cb) {
-      cb(null, 'uploads');
+      cb(null, "uploads");
     },
     filename: function (req, file, cb) {
       cb(null, `${Date.now()}-${file.originalname}`);
@@ -20,9 +20,9 @@ const productoController = require("../controllers/ProductoController");
 
 router.get("/", productoController.get);
 
-router.post("/", upload.array('fotos', 5), productoController.create);
+router.post("/", upload.array("fotos", 5), productoController.create);
 
-router.put("/:id", productoController.update);
+router.put("/:id", upload.array("fotos", 5), productoController.update);
 
 router.get("/:id", productoController.getById);
 

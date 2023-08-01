@@ -34,18 +34,19 @@ export class ProductoAdminComponent implements AfterViewInit {
   ) {}
 
   ngAfterViewInit(): void {
-    let id = this.route.snapshot.paramMap.get('id');
-    this.listaProductos(Number(id));
+    this.listaProductos();
   }
 
-  listaProductos(id: any) {
+  listaProductos() {
     //localhost:3000/producto
     this.gService
       .list('producto/')
       .pipe(takeUntil(this.destroy$))
       .subscribe((data: any) => {
         console.log(data);
-        this.datos = data;
+        this.dataSource = new MatTableDataSource<any>(data);
+        this.dataSource.sort = this.sort;
+        this.dataSource.paginator = this.paginator;
       });
   }
 

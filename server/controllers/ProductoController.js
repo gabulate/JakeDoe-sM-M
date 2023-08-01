@@ -1,4 +1,3 @@
-
 const { PrismaClient } = require("@prisma/client");
 const { readFileSync } = require("fs");
 const prisma = new PrismaClient();
@@ -77,7 +76,6 @@ module.exports.create = async (request, response, next) => {
     let producto = request.body;
 
     const fotos = request.files;
-    console.log(fotos);
 
     const newProducto = await prisma.producto.create({
       data: {
@@ -85,7 +83,7 @@ module.exports.create = async (request, response, next) => {
         Descripcion: producto.descripcion,
         Precio: producto.precio,
         Cantidad: parseInt(producto.cantidad),
-        CategoriaId: parseInt( producto.categoria),
+        CategoriaId: parseInt(producto.categoria),
         EstadoId: 1,
         VendedorId: parseInt(producto.vendedorId),
       },
@@ -94,15 +92,25 @@ module.exports.create = async (request, response, next) => {
       },
     });
 
-    if (fotos && fotos.length > 0) {
-      fotos.forEach(async foto => {
+    if (fotos) {
+      if (fotos.length > 0) {
+        for (let index = 0; index < fotos.length; index++) {
+          await prisma.FotoProducto.create({
+            data: {
+              ProductoId: newProducto.id,
+              Foto: readFileSync(fotos[index].path),
+            },
+          });
+          console.log(fotos.path);
+        }
+      } else {
         await prisma.FotoProducto.create({
           data: {
             ProductoId: newProducto.id,
-            Foto: readFileSync(foto.path),
+            Foto: readFileSync("images/424camisa.jpg"),
           },
         });
-      });
+      }
     }
 
     response.status(201).json({
@@ -112,7 +120,6 @@ module.exports.create = async (request, response, next) => {
     });
   } catch (error) {
     console.error(error);
-    console.error(producto);
     response
       .status(500)
       .json({ error: "Ha ocurrido un error al crear el producto." });
@@ -121,36 +128,71 @@ module.exports.create = async (request, response, next) => {
 
 //Actualizar un producto
 module.exports.update = async (request, response, next) => {
-  let producto = request.body;
-  let idProducto = parseInt(producto.id);
-  //Obtener videojuego viejo
-  const productoViejo = await prisma.producto.findUnique({
-    where: { id: idProducto },
-  });
+  try {
+    let producto = request.body;
+    let idProducto = parseInt(producto.id);
 
-  /* //Elimina las fotos que ya tiene
-  await prisma.FotoProducto.deleteMany({
-    where: { ProductoId: idProducto },
-  }); */
+    const fotos = request.files;
+    //Obtener videojuego viejo
+    const productoViejo = await prisma.producto.findUnique({
+      where: { id: idProducto },
+    });
 
-  const newProducto = await prisma.producto.update({
-    where: {
-      id: idProducto,
-    },
-    data: {
-      Nombre: producto.nombre,
-      Descripcion: producto.descripcion,
-      Precio: producto.precio,
-      Cantidad: parseInt(producto.cantidad),
-      CategoriaId: producto.categoria,
-      EstadoId: 1,
-      VendedorId: producto.vendedorId,
-      /* FotoProducto: {
+    const newProducto = await prisma.producto.update({
+      where: {
+        id: idProducto,
+      },
+      data: {
+        Nombre: producto.nombre,
+        Descripcion: producto.descripcion,
+        Precio: producto.precio,
+        Cantidad: parseInt(producto.cantidad),
+        CategoriaId: parseInt(producto.categoria),
+        EstadoId: 1,
+        VendedorId: parseInt(productoViejo.VendedorId),
+        /* FotoProducto: {
         connect: producto.generos,
       }, */
-    },
-  });
-  response.json(newProducto);
+      },
+    });
+
+    await prisma.fotoProducto.deleteMany({
+      where: { ProductoId: idProducto },
+    });
+
+    if (fotos) {
+      if (fotos.length > 0) {
+        for (let index = 0; index < fotos.length; index++) {
+          await prisma.FotoProducto.create({
+            data: {
+              ProductoId: newProducto.id,
+              Foto: readFileSync(fotos[index].path),
+            },
+          });
+          console.log(fotos.path);
+        }
+      } else {
+        await prisma.FotoProducto.create({
+          data: {
+            ProductoId: newProducto.id,
+            Foto: readFileSync("images/424camisa.jpg"),
+          },
+        });
+      }
+    }
+
+    response.status(201).json({
+      success: true,
+      message: "Producto Actualizado",
+      data: newProducto,
+    });
+  } catch (error) {
+    console.error(error);
+    console.error(producto);
+    response
+      .status(500)
+      .json({ error: "Ha ocurrido un error al actualizar el producto." });
+  }
 };
 
 //Obtener listado por vendedor

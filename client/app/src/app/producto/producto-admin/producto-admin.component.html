@@ -5,12 +5,13 @@
   </mat-card-title>
   <mat-card-content>
     <button mat-raised-button color="primary" (click)="crearProducto()">Nuevo Producto</button>
+    <br>
 
     <!-- Table -->
-    <div class="mat-elevation-z8" *ngIf="datos">
+    <div class="mat-elevation-z8" *ngIf="dataSource">
       <table
         mat-table
-        [dataSource]="datos"
+        [dataSource]="dataSource"
         class="full-width-table"
         matSort
         aria-label="Elements"
@@ -57,7 +58,7 @@
               color="primary"
               (click)="actualizarProducto(row.id)"
             >
-              <mat-icon>info</mat-icon>
+              <mat-icon>edit</mat-icon>
             </button>
           </td>
         </ng-container>
@@ -68,10 +69,10 @@
 
       <mat-paginator
         #paginator
-        [length]="datos?.data?.length"
+        [length]="dataSource?.data?.length"
         [pageIndex]="0"
-        [pageSize]="3"
-        [pageSizeOptions]="[3, 5, 10]"
+        [pageSize]="6"
+        [pageSizeOptions]="[6, 12, 24]"
         aria-label="Selecccione una página"
       >
       </mat-paginator>
