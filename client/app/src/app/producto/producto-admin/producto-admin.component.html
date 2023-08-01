@@ -19,7 +19,7 @@
         <ng-container matColumnDef="foto">
           <th mat-header-cell *matHeaderCellDef mat-sort-header>Orden No.</th>
           <td mat-cell *matCellDef="let row">
-            <img 
+            <img *ngIf="row.FotoProducto[0] !== undefined"
               mat-card-image
               class="fotoProducto"
               [src]="getImageUrl(row.FotoProducto[0].Foto.data)"

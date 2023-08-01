@@ -65,7 +65,7 @@ export class ProductoEditComponent implements OnInit {
               borrado: this.productoInfo.Borrado,
               categoria: this.productoInfo.CategoriaId,
 
-              //FotoProducto: this.productoInfo.FotoProducto.map(({ id }) => id),
+              fotos: this.productoInfo.FotoProducto.map(({ id }) => id),
             });
           });
       }
@@ -86,6 +86,7 @@ export class ProductoEditComponent implements OnInit {
       precio: [null, Validators.required],
       borrado: [false, Validators.required],
       cantidad: [null, Validators.required],
+      fotos: [null, Validators.required],
     });
   }
 
@@ -112,24 +113,39 @@ export class ProductoEditComponent implements OnInit {
     ////////////////////////////////////////////////////////PONER AQUI EL USUARIO QUE LO CREA
     this.productoForm.patchValue({ vendedorId: 4 });
 
-    console.log(this.productoForm);
-    
+    console.log(this.productoForm.value);
+
     if (this.productoForm.invalid) {
       return;
     }
 
-  
+    const formData = new FormData();
+    const formValue = this.productoForm.value;
+
+    // Agregar los datos al FormData
+    Object.keys(formValue).forEach((key) => {
+      const value = formValue[key];
+
+      if (key === 'fotos') {
+        // If the key is 'fotos', it contains an array of files, so we need to handle it differently
+        const files: File[] = value as File[];
+        for (const file of files) {
+          formData.append('fotos', file, file.name);
+        }
+      } else {
+        // Agregar otros valores al FormData
+        formData.append(key, value);
+      }
+    });
 
     //Accion API create enviando toda la informacion del formulario
     this.gService
-      .create('producto', this.productoForm.value)
+      .create('producto', formData)
       .pipe(takeUntil(this.destroy$))
       .subscribe((data: any) => {
         //Obtener respuesta
         this.respProducto = data;
-        this.router.navigate(['/producto/' + this.respProducto.id], {
-          queryParams: { create: 'true' },
-        });
+        this.router.navigate(['/producto/' + this.respProducto.data.id]);
       });
   }
 
@@ -154,6 +170,26 @@ export class ProductoEditComponent implements OnInit {
         });
       });
   }
+
+  onFileChange(event: any) {
+    const files = event.target.files;
+    if (files.length > 0) {
+      const imageArray: File[] = [];
+      for (const file of files) {
+        imageArray.push(file);
+      }
+      // Limitar la cantidad de imágenes a 5 antes de asignar al formulario
+      const maxImages = 5;
+      const imagesToUpload = imageArray.slice(0, maxImages);
+      this.productoForm.patchValue({ fotos: imagesToUpload });
+    }
+  }
+
+  countSelectedImages(): number {
+    const myFileControl = this.productoForm.get('fotos');
+    return myFileControl.value ? myFileControl.value.length : 0;
+  }
+
   onReset() {
     this.submitted = false;
     this.productoForm.reset();

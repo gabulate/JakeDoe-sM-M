@@ -1,4 +1,6 @@
+
 const { PrismaClient } = require("@prisma/client");
+const { readFileSync } = require("fs");
 const prisma = new PrismaClient();
 
 //Obtener listado
@@ -73,17 +75,36 @@ module.exports.getById = async (request, response, next) => {
 module.exports.create = async (request, response, next) => {
   try {
     let producto = request.body;
+
+    const fotos = request.files;
+    console.log(fotos);
+
     const newProducto = await prisma.producto.create({
       data: {
         Nombre: producto.nombre,
         Descripcion: producto.descripcion,
         Precio: producto.precio,
         Cantidad: parseInt(producto.cantidad),
-        CategoriaId: producto.categoria,
+        CategoriaId: parseInt( producto.categoria),
         EstadoId: 1,
-        VendedorId: producto.vendedorId,
+        VendedorId: parseInt(producto.vendedorId),
+      },
+      include: {
+        FotoProducto: true,
       },
     });
+
+    if (fotos && fotos.length > 0) {
+      fotos.forEach(async foto => {
+        await prisma.FotoProducto.create({
+          data: {
+            ProductoId: newProducto.id,
+            Foto: readFileSync(foto.path),
+          },
+        });
+      });
+    }
+
     response.status(201).json({
       success: true,
       message: "Producto creado",
@@ -118,12 +139,12 @@ module.exports.update = async (request, response, next) => {
     },
     data: {
       Nombre: producto.nombre,
-        Descripcion: producto.descripcion,
-        Precio: producto.precio,
-        Cantidad: parseInt(producto.cantidad),
-        CategoriaId: producto.categoria,
-        EstadoId: 1,
-        VendedorId: producto.vendedorId,
+      Descripcion: producto.descripcion,
+      Precio: producto.precio,
+      Cantidad: parseInt(producto.cantidad),
+      CategoriaId: producto.categoria,
+      EstadoId: 1,
+      VendedorId: producto.vendedorId,
       /* FotoProducto: {
         connect: producto.generos,
       }, */
