@@ -10,13 +10,14 @@ module.exports.verifyToken = async (req, res, next) => {
     res.status(403).json({
       status: false,
       message: "Acceso denegado",
-    });
+    }); 
   }
   if (token) {
     const verify = jwt.verify(token, process.env.SECRET_KEY);
+    
     const user = await prisma.usuario.findUnique({
-      where: {
-        Email: verify.Email,
+      where: { 
+        Email: verify.email,
       },
     });
     req.user = verify;

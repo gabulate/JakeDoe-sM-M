@@ -18,6 +18,7 @@ module.exports.get = async (request, response, next) => {
       Email: true,
       Calificacion: true,
       Deshabilitado: true,
+      Contrasenna:true,
       Roles: {
         select: {
           rol: true,
@@ -201,7 +202,7 @@ module.exports.login = async (request, response, next) => {
     },
   });
   //Sino lo encuentra según su email
-  if (!usuario) {
+  if (!usuario) { 
     response.status(401).send({
       success: false,
       message: "Usuario no registrado",

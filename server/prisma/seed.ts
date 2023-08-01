@@ -6,7 +6,7 @@ import { Categorias } from "./seeds/Categoria";
 import { EstadoProductos } from "./seeds/EstadoProducto";
 import { EstadoCompras } from "./seeds/EstadoCompra";
 import { TipoPagos } from "./seeds/TipoPago";
-import { Usuarios } from "./seeds/Usuario";
+//import { Usuarios } from "./seeds/Usuario";
 import { Direcciones } from "./seeds/Direccion";
 import { MetodoPago } from "./seeds/MetodoPago";
 import { Productos } from "./seeds/Producto";
