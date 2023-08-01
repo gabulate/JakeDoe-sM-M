@@ -22,6 +22,7 @@ import { MatRadioModule } from '@angular/material/radio';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
+import { MatError } from '@angular/material/form-field';
 import { ProductoAdminComponent } from './producto-admin/producto-admin.component';
 import { ProductoEditComponent } from './producto-edit/producto-edit.component';
 

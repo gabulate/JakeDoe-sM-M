@@ -86,12 +86,30 @@
         <div class="col" *ngIf="CategoriaList">
           <mat-form-field class="full-width">
             <mat-select placeholder="Categoria" formControlName="categoria">
-              <mat-option *ngFor="let g of CategoriaList" [value]="g.id" >
+              <mat-option *ngFor="let g of CategoriaList" [value]="g.id">
                 {{ g.Descripcion }}
               </mat-option>
             </mat-select>
             <mat-error> Categoria es <strong>requerido</strong> </mat-error>
           </mat-form-field>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <input type="file" formControlName="fotos" accept="image/" (change)="onFileChange($event)" multiple>
+          Seleccione hasta 5 imágenes
+          <mat-error *ngIf="errorHandling('fotos', 'required')"> Selecione al menos una imagen.</mat-error>
+          <mat-error *ngIf="countSelectedImages() > 5">No puedes seleccionar más de 5 imágenes</mat-error>
+        </div>
+      </div>
+      
+      <div class="row" *ngIf="productoForm.get('fotos').value && productoForm.get('fotos').value.length > 0">
+        <div class="col">
+          <strong>Archivos seleccionados:</strong>
+          <ul>
+            <li *ngFor="let file of productoForm.get('fotos').value">{{ file.name }}</li>
+          </ul>
         </div>
       </div>
 
