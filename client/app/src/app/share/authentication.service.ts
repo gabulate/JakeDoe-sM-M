@@ -45,22 +45,23 @@ export class AuthenticationService {
   //Crear usuario
   createUser(user: any): Observable<any> {
     return this.http.post<any>(
-      this.ServerUrl + 'user/registrar',
-      user
-    );
+      this.ServerUrl + 'usuario/registrar',user);
   }
 
   //Login
   loginUser(user: any): Observable<any> {
+    console.log(user);
     return this.http
-      .post<any>(this.ServerUrl + 'user/login', user)
+      .post<any>(this.ServerUrl + 'usuario/login', user)
       .pipe(
         map((user) => {
+          console.log(user.data);
           // almacene los detalles del usuario y el token jwt
           // en el almacenamiento local para mantener al usuario conectado entre las actualizaciones de la página
           localStorage.setItem('currentUser', JSON.stringify(user.data));
           this.authenticated.next(true);
           this.currentUserSubject.next(user.data);
+          console.log(user.data); 
           return user;
         })
       );

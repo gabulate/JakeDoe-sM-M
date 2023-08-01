@@ -10,9 +10,10 @@ import { HomeModule } from './home/home.module';
 import { UserModule } from './user/user.module';
 import { ProductoModule } from './producto/producto.module';
 import { ToastrModule } from 'ngx-toastr';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { PedidoModule } from './compra/compra.module';
 import { MensajeModule } from './mensaje/mensaje.module';
+import { HttpErrorInterceptorService } from './share/http-error-interceptor.service';
 
 @NgModule({
   declarations: [
@@ -29,11 +30,16 @@ import { MensajeModule } from './mensaje/mensaje.module';
     UserModule,
     PedidoModule,
     ProductoModule,
+    MensajeModule,
 
     AppRoutingModule,
-      MensajeModule,
+      
   ],
-  providers: [],
+  providers: [{ 
+    provide: HTTP_INTERCEPTORS, 
+    useClass: HttpErrorInterceptorService, 
+     multi: true 
+  } ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
