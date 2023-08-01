@@ -22,8 +22,7 @@ export class MensajeAllByProductoComponent {
   respMensaje: any;
   productoId: any;
   //clienteId=1;
-  usuarioId=1;
-  
+
   constructor(
     private fb: FormBuilder,
     private router: Router,
@@ -43,6 +42,7 @@ export class MensajeAllByProductoComponent {
       this.obtenerProducto(Number(id));
       this.listarMensajes(Number(id));
     }
+    
   }
 
   obtenerProducto(id: any) {
@@ -123,43 +123,3 @@ export class MensajeAllByProductoComponent {
   }
 }
 
-
-  /*  formularioReactive() {
-    //[null, Validators.required]
-    /* this.preguntaForm=this.fb.group({
-      id:[null,null],
-      clienteId:[null,null],
-      pregunta:[null, Validators.compose([
-        Validators.required,
-        Validators.minLength(3)
-      ])]
-    }) */
-    //Reiniciar el arreglo de formularios
-  /*   this.preguntaForms=[];
-  } */
-  
-  /*   crearRespuesta(i:number){
-    this.submitted = true;
-    const preguntaForm= this.preguntaForms[i];
-    if(preguntaForm.invalid){
-      return;
-    }
-    preguntaForm.patchValue({
-      mensajeId: parseInt(preguntaForm.get('mensajeId')?.value),
-      productoId: parseInt(preguntaForm.get('productoId')?.value),
-      clienteId: parseInt(preguntaForm.get('clienteId')?.value),
-      pregunta:preguntaForm.get('pregunta')?.value
-    });
-    console.log(preguntaForm.value);
-    this.gService.update('mensaje',preguntaForm.value)
-    .pipe(takeUntil(this.destroy$)).subscribe((data: any) => {
-      this.respMensaje=data; */
-      /*this.listarMensajes(this.productoId);
-      preguntaForm.reset();
-       this.router.navigate(['/producto', this.productoId], {
-        queryParams: {update:'true'}
-      }); */
-/*     });
-  }
- */
-//let ClienteId= this.authService.currentUser.subscribe((x)=>(this.currentUser=x));

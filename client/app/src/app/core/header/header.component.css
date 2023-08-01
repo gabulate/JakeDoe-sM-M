@@ -2,7 +2,8 @@
 .example-spacer {
     flex: 1 1 auto;
   }
-  section {
+
+  .section {
     display: table;
   }
   
@@ -42,4 +43,11 @@
 button{
   height: 100%;
 }
+/* .general{
+  display: flex;
   
+}
+.usuario{
+  align-self: center;
+  margin-left: auto;
+} */

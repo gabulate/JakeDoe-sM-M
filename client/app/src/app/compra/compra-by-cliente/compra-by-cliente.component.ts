@@ -12,6 +12,7 @@ import { GenericService } from 'src/app/share/generic.service';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTable, MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
+import { AuthenticationService } from 'src/app/share/authentication.service';
 
 @Component({
   selector: 'app-compra-by-cliente',
@@ -21,6 +22,8 @@ import { MatSort } from '@angular/material/sort';
 export class CompraByClienteComponent implements AfterViewInit {
   datos: any;
   destroy$: Subject<boolean> = new Subject<boolean>();
+  clienteId : any;
+  currentUser: any;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -33,12 +36,14 @@ export class CompraByClienteComponent implements AfterViewInit {
   constructor(
     private router: Router,
     private route: ActivatedRoute,
-    private gService: GenericService
+    private gService: GenericService,
+    private authService: AuthenticationService
   ) {}
 
   ngAfterViewInit(): void {
     let id=this.route.snapshot.paramMap.get('id');
     this.listaPedidos(Number(id));
+    
   }
   listaPedidos(id:any) {
     //localhost:3000/videojuego

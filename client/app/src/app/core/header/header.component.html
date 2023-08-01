@@ -1,21 +1,29 @@
 
-<mat-toolbar color="primary">
+<mat-toolbar class="general" color="primary">
 
 <button mat-button [routerLink]="['/']" routerLinkActive="mat-raised-button">
   <img mat-card-lg-image src="../../../assets/img/logov2.png"/>
 </button>
-<button mat-button [routerLink]="['/producto']" routerLinkActive="mat-raised-button">Productos</button>
+<!--  <button mat-button [routerLink]="['/producto']" routerLinkActive="mat-raised-button">Productos</button>
 <button mat-button [routerLink]="['/compra/cliente/1']" routerLinkActive="mat-raised-button">Compras</button>
 <button mat-button [routerLink]="['/pedido/vendedor/5']" routerLinkActive="mat-raised-button">Pedidos</button>
 <button mat-button [routerLink]="['/producto/vendedor/5']" routerLinkActive="mat-raised-button">Proveedor</button>
-<button mat-button [routerLink]="['/mensaje/producto/vendedor/5']" routerLinkActive="mat-raised-button">Mensajes</button>
+<button mat-button [routerLink]="['/mensaje/producto/vendedor/5']"  routerLinkActive="mat-raised-button">Mensajes</button> -->
 
-<span class="mat-caption" *ngIf="isAutenticated">{{currentUser.usuario.Email}}</span>
-    <button mat-icon-button [matMenuTriggerFor]="menu3">
-      <mat-icon [ngStyle]="{'color': isAutenticated ? 'white': '#9E9E9E' }">person</mat-icon>
-    </button>
+<button mat-button [routerLink]="['/producto']" routerLinkActive="mat-raised-button">Productos</button>
+<button mat-button (click)="comprasCliente()" routerLinkActive="mat-raised-button">Compras</button>
+<button mat-button routerLinkActive="mat-raised-button">Pedidos</button>
+<button mat-button routerLinkActive="mat-raised-button">Proveedor</button>
+<button mat-button routerLinkActive="mat-raised-button">Mensajes</button>
+
+
 <!--Menu usuario-->
-<mat-menu #menu3="matMenu">
+<ng-container class="usuario">
+  <span class="mat-caption" *ngIf="isAutenticated">{{currentUser.user.Email}}</span>
+  <button mat-icon-button [matMenuTriggerFor]="menu3">
+    <mat-icon [ngStyle]="{'color': isAutenticated ? 'white': '#9E9E9E' }">person</mat-icon>
+  </button>
+<mat-menu #menu3="matMenu" >
   <a mat-menu-item *ngIf="!(isAutenticated)" (click)="login()">
     <mat-icon>person_add</mat-icon>
     <span>Login</span>
@@ -25,6 +33,10 @@
     <span>Logout</span>
   </a>
 </mat-menu>
+</ng-container>
+  
+
+
 
 </mat-toolbar>
 

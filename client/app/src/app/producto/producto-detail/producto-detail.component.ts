@@ -21,7 +21,9 @@ export class ProductoDetailComponent implements OnInit {
   submitted = false;
   respMensaje: any;
   productoId: any;
-  clienteId = 1;
+  //clienteId = 1;
+  clienteId : any;
+  currentUser: any;
 
   constructor(
     private fb: FormBuilder,
@@ -31,6 +33,8 @@ export class ProductoDetailComponent implements OnInit {
     private sanitizer: DomSanitizer,
     private authService: AuthenticationService
   ) {
+      
+
     this.formularioReactive();
   }
   ngOnInit(): void {
@@ -42,6 +46,9 @@ export class ProductoDetailComponent implements OnInit {
       //this.obtenerFotosProducto(Number(id));
       this.listarProductos();
     }
+    this.authService.currentUser.subscribe((x)=>(this.currentUser=x));
+      this.clienteId=this.currentUser.user.id;
+      console.log("id usuario: "+ this.clienteId);
   }
 
   obtenerProducto(id: any) {
@@ -111,7 +118,7 @@ export class ProductoDetailComponent implements OnInit {
     }
     this.preguntaForm.patchValue({
       id: this.productoId,
-      clienteId: 1,
+      clienteId: this.clienteId,
     });
     console.log(this.preguntaForm.value);
     this.gService

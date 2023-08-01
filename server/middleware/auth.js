@@ -8,7 +8,7 @@ module.exports.verifyToken = async (req, res, next) => {
     token = bearerHeader.split(" ")[1].trim().toString();
   } else {
     res.status(403).json({
-      status: false,
+      status: false, 
       message: "Acceso denegado",
     }); 
   }
@@ -23,7 +23,7 @@ module.exports.verifyToken = async (req, res, next) => {
     req.user = verify;
     next();
   }
-};
+}; 
 
 //HAY QUE MODIFICARLO (creo)
 exports.grantRole = function (roles) {

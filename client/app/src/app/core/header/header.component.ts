@@ -10,16 +10,30 @@ import { AuthenticationService } from 'src/app/share/authentication.service';
 export class HeaderComponent implements OnInit{
   isAutenticated: boolean;
   currentUser: any;
+  clienteId : any;
     constructor(
       private router: Router,
       private authService: AuthenticationService
-    ){}
+    ){
+      /* this.authService.isAuthenticated.subscribe((valor)=>(this.isAutenticated=valor));
+      this.clienteId=this.currentUser.user.id;
+      console.log("id usuario: "+ this.clienteId); */
+
+    }
 
     ngOnInit():void{
       this.authService.currentUser.subscribe((x)=>(this.currentUser=x));
-      console.log(parseInt(this.currentUser.usuario.id));
-      this.authService.isAuthenticated.subscribe((valor)=>(this.isAutenticated=valor));
+      this.clienteId=this.currentUser.user.id;
+      console.log(parseInt(this.currentUser.user.id));
+      
     }
+
+    comprasCliente(){
+      this.router.navigate(['/compra/cliente', this.clienteId]);
+    }
+
+
+
     login(){
       this.router.navigate(['usuario/login'])
     }
