@@ -149,6 +149,52 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "Registrarse",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/user",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"Email\":\"mvargas@gmail.com\",\r\n    \"Contrasenna\":\"123456\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/usuario/login",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"usuario",
+								"login"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
@@ -169,6 +215,61 @@
 							"path": [
 								"mensaje",
 								"producto",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "fotos",
+			"item": [
+				{
+					"name": "Listar fotos por producto",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "roles",
+			"item": [
+				{
+					"name": "Listar roles",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/rol",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"rol"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Obtener rol por Id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/rol/1",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"rol",
 								"1"
 							]
 						}
