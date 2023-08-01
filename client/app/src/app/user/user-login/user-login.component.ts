@@ -67,6 +67,8 @@ export class UserLoginComponent implements OnInit {
     if(this.formulario.invalid){
      return;
     }
+
+    console.log(this.formulario.value);
     this.authService.loginUser(this.formulario.value)
     .subscribe((respuesta:any)=>{
       console.log(respuesta);

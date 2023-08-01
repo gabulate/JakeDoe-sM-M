@@ -198,7 +198,7 @@ module.exports.login = async (request, response, next) => {
   //Buscar el usuario según el email dado
   const usuario = await prisma.usuario.findUnique({
     where: {
-      Email: usuarioReq.Email,
+      Email: usuarioReq.email,
     },
   });
   //Sino lo encuentra según su email
@@ -210,7 +210,7 @@ module.exports.login = async (request, response, next) => {
   }
   //Verifica la contraseña
   const checkPassword = await bcrypt.compare(
-    usuarioReq.Contrasenna,
+    usuarioReq.password,
     usuario.Contrasenna
   );
   if (checkPassword === false) {
