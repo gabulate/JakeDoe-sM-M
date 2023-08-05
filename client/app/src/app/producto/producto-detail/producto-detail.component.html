@@ -46,7 +46,11 @@
           <h4>{{ datos.Precio | currency : "₡" }}</h4>
         </mat-dialog-content>
 
-        <mat-dialog-actions> </mat-dialog-actions>
+        <div class="botones">
+          <button mat-raised-button class="btnAccion" color="primary">
+            <mat-icon>add_shopping_cart</mat-icon>Añadir al carrito
+          </button>
+        </div>
       </div>
     </div>
 
@@ -125,9 +129,10 @@
             [src]="'data:image/jpeg;base64,' + item.FotoProducto[0].Foto"
             alt="Foto de + {{ item.Nombre }}"
           />
-          <div>{{ item.Nombre }}</div>
-
-          <div class="dk">{{ item.Precio | currency : "₡" }}</div>
+          <div>
+            {{ item.Nombre }}
+            <div class="dk">{{ item.Precio | currency : "₡" }}</div>
+          </div>
         </button>
       </div>
     </div>

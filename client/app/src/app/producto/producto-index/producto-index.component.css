@@ -70,5 +70,5 @@
   width: 50%;
   height: 3rem;
   text-align: center;
-  animation: all ease-in .1s;
+  transition: background-color 0.1s ease;
 }
