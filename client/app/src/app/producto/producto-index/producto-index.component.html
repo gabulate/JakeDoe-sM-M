@@ -6,8 +6,8 @@
       <mat-card class="dashboard-card">
         <img 
           mat-card-image class="fotoProducto" *ngIf="item.FotoProducto[0] !== undefined"
-          [src]="getImageUrl(item.FotoProducto[0].Foto.data)"
-          alt="photo"
+          [src]="'data:image/jpeg;base64,' + item.FotoProducto[0].Foto"
+          alt="Foto de + {{item.Nombre}}"
         />
         <mat-card-header>
           <mat-card-title>{{ item.Nombre }}</mat-card-title>

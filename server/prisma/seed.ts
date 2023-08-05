@@ -28,7 +28,8 @@ async function main() {
       Apellido: "Bodoque",
       Telefono: "8888 8888",
       Email: "juanbodoque@gmail.com",
-      Contrasenna: '$2b$10$Qmee6hXHmLE3LQtyIZV5OuwBBhZNl.iyTikoQalubE50vULOdryli',
+      Contrasenna:
+        "$2b$10$Qmee6hXHmLE3LQtyIZV5OuwBBhZNl.iyTikoQalubE50vULOdryli",
       Calificacion: "0",
       Roles: {
         createMany: {
@@ -44,7 +45,8 @@ async function main() {
       Apellido: "Ulate",
       Telefono: "8888 8888",
       Email: "gulate@gmail.com",
-      Contrasenna: '$2b$10$Qmee6hXHmLE3LQtyIZV5OuwBBhZNl.iyTikoQalubE50vULOdryli',
+      Contrasenna:
+        "$2b$10$Qmee6hXHmLE3LQtyIZV5OuwBBhZNl.iyTikoQalubE50vULOdryli",
       Calificacion: "5",
       Roles: {
         createMany: {
@@ -60,7 +62,8 @@ async function main() {
       Apellido: "Vargas",
       Telefono: "8888 8888",
       Email: "mvargas@gmail.com",
-      Contrasenna: '$2b$10$Qmee6hXHmLE3LQtyIZV5OuwBBhZNl.iyTikoQalubE50vULOdryli',
+      Contrasenna:
+        "$2b$10$Qmee6hXHmLE3LQtyIZV5OuwBBhZNl.iyTikoQalubE50vULOdryli",
       Calificacion: "5",
       Roles: {
         createMany: {
@@ -76,7 +79,8 @@ async function main() {
       Apellido: "Doe",
       Telefono: "8888 8888",
       Email: "jdoe@gmail.com",
-      Contrasenna: '$2b$10$Qmee6hXHmLE3LQtyIZV5OuwBBhZNl.iyTikoQalubE50vULOdryli',
+      Contrasenna:
+        "$2b$10$Qmee6hXHmLE3LQtyIZV5OuwBBhZNl.iyTikoQalubE50vULOdryli",
       Calificacion: "3",
       Roles: {
         createMany: {
@@ -92,7 +96,8 @@ async function main() {
       Apellido: "Doe",
       Telefono: "8888 8888",
       Email: "jakedoe@gmail.com",
-      Contrasenna: '$2b$10$Qmee6hXHmLE3LQtyIZV5OuwBBhZNl.iyTikoQalubE50vULOdryli',
+      Contrasenna:
+        "$2b$10$Qmee6hXHmLE3LQtyIZV5OuwBBhZNl.iyTikoQalubE50vULOdryli",
       Calificacion: "4",
       Roles: {
         createMany: {
@@ -138,17 +143,21 @@ async function main() {
   await prisma.compra.createMany({
     data: Compras,
   });
-
+/* 
   await prisma.fotoProducto.createMany({
     data: FotoProductos,
-  });
-
-/*   await prisma.fotoProducto.create({
-    data: {
-      ProductoId: 6,
-      Foto: fs.readFileSync("images/erasTourPoster.jpg"),
-    },
   }); */
+
+  //TUVE QUE HACERLO CON UN FOR, SI NO ME DA ERROR Y NO TENGO IDEA POR QUÉ
+  //TE ODIO PRISMA
+  for (let index = 0; index < FotoProductos.length; index++) {
+    await prisma.fotoProducto.create({
+      data: {
+        ProductoId: FotoProductos[index].ProductoId,
+        Foto: FotoProductos[index].Foto,
+      },
+    });
+  }
 
   await prisma.compraDetalle.createMany({
     data: CompraDetalles,

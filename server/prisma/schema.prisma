@@ -130,7 +130,7 @@ model FotoProducto {
   ProductoId Int
   producto   Producto @relation(fields: [ProductoId], references: [id])
 
-  Foto Bytes
+  Foto String @db.LongText
 
   Borrado Boolean @default(false)
 }

@@ -28,6 +28,9 @@ export class ProductoEditComponent implements OnInit {
   idProducto: number = 0;
   //Sí es crear
   isCreate: boolean = true;
+  //Lista de fotos
+  fotos: any = [];
+  foto: any;
   //Autenticación
   isAutenticated: boolean;
   //Usuario Actual
@@ -40,7 +43,7 @@ export class ProductoEditComponent implements OnInit {
     private gService: GenericService,
     private router: Router,
     private activeRouter: ActivatedRoute,
-    private authService: AuthenticationService,
+    private authService: AuthenticationService
   ) {
     this.formularioReactive();
     this.listaCategorias();
@@ -80,10 +83,11 @@ export class ProductoEditComponent implements OnInit {
               borrado: this.productoInfo.Borrado,
               categoria: this.productoInfo.CategoriaId,
 
-              fotos: '',
+              fotos: this.productoInfo.FotoProducto,
             });
 
-            console.log(this.productoForm.value);
+            this.fotos = this.productoForm.value.fotos;
+            console.log('EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE', this.fotos);
           });
       }
     });
@@ -126,9 +130,11 @@ export class ProductoEditComponent implements OnInit {
     //Establecer submit verdadero
     this.submitted = true;
     //Verificar validación
+
     this.productoForm.patchValue({ id: 0 });
+    this.productoForm.patchValue({ fotos: this.fotos });
     ////////////////////////////////////////////////////////PONER AQUI EL USUARIO QUE LO CREA
-    this.productoForm.patchValue({ vendedorId: 4 });
+    this.productoForm.patchValue({ vendedorId: this.currentUser.user.id });
 
     console.log(this.productoForm.value);
 
@@ -136,30 +142,9 @@ export class ProductoEditComponent implements OnInit {
       return;
     }
 
-    const formData = new FormData();
-    const formValue = this.productoForm.value;
-
-    // Agregar los datos al FormData
-    Object.keys(formValue).forEach((key) => {
-      const value = formValue[key];
-
-      console.log(formValue);
-
-      if (key === 'fotos') {
-        // If the key is 'fotos', it contains an array of files, so we need to handle it differently
-        const files: File[] = value as File[];
-        for (const file of files) {
-          formData.append('fotos', file, file.name);
-        }
-      } else {
-        // Agregar otros valores al FormData
-        formData.append(key, value);
-      }
-    });
-
     //Accion API create enviando toda la informacion del formulario
     this.gService
-      .create('producto', formData)
+      .create('producto', this.productoForm.value)
       .pipe(takeUntil(this.destroy$))
       .subscribe((data: any) => {
         //Obtener respuesta
@@ -174,6 +159,7 @@ export class ProductoEditComponent implements OnInit {
     this.submitted = true;
 
     this.productoForm.patchValue({ id: this.idProducto });
+    this.productoForm.patchValue({ fotos: this.fotos });
     ////////////////////////////////////////////////////////PONER AQUI EL USUARIO QUE LO CREA
     this.productoForm.patchValue({ vendedorId: 0 });
 
@@ -183,30 +169,9 @@ export class ProductoEditComponent implements OnInit {
       return;
     }
 
-    const formData = new FormData();
-    const formValue = this.productoForm.value;
-
-    console.log(formValue);
-
-    // Agregar los datos al FormData
-    Object.keys(formValue).forEach((key) => {
-      const value = formValue[key];
-
-      if (key === 'fotos') {
-        // If the key is 'fotos', it contains an array of files, so we need to handle it differently
-        const files: File[] = value as File[];
-        for (const file of files) {
-          formData.append('fotos', file, file.name);
-        }
-      } else {
-        // Agregar otros valores al FormData
-        formData.append(key, value);
-      }
-    });
-
     //Accion API create enviando toda la informacion del formulario
     this.gService
-      .update('producto', formData)
+      .update('producto', this.productoForm.value)
       .pipe(takeUntil(this.destroy$))
       .subscribe((data: any) => {
         //Obtener respuesta
@@ -217,18 +182,43 @@ export class ProductoEditComponent implements OnInit {
       });
   }
 
-  onFileChange(event: any) {
-    const files = event.target.files;
-    if (files.length > 0) {
-      const imageArray: File[] = [];
-      for (const file of files) {
-        imageArray.push(file);
+  //Codigo robado, no me pregunte como funciona
+  onFileChange(event): any {
+    this.fotos = [];
+
+    if (event.target.files) {
+      const files = event.target.files;
+      for (let i = 0; i < files.length; i++) {
+        const reader = new FileReader();
+        reader.readAsDataURL(files[i]);
+        reader.onload = () => {
+          // Comprimir imagenes para que no crashee el server
+          if (!this.foto) this.foto = new Image();
+
+          this.foto.src = reader.result as string;
+          const canvas = document.createElement('canvas');
+          const ctx = canvas.getContext('2d');
+          const img = new Image();
+          img.onload = () => {
+            canvas.width = img.width;
+            canvas.height = img.height;
+            ctx.drawImage(img, 0, 0);
+            const dataURL = canvas.toDataURL('image/jpeg', 0.5);
+            // console.log(dataURL);
+            if (!this.isCreate) {
+              // If in update mode, push an object with the image property
+              this.fotos.push({ Foto: dataURL.split(',')[1] });
+            } else {
+              // If not in update mode, push the base64 string directly
+              this.fotos.push(dataURL);
+            }
+          };
+          img.src = reader.result as string;
+        };
       }
-      // Limitar la cantidad de imágenes a 5 antes de asignar al formulario
-      const maxImages = 5;
-      const imagesToUpload = imageArray.slice(0, maxImages);
-      this.productoForm.patchValue({ fotos: imagesToUpload });
     }
+
+    console.log('Fotos subidas: ', this.fotos);
   }
 
   countSelectedImages(): number {

@@ -104,7 +104,7 @@ CREATE TABLE `EstadoProducto` (
 CREATE TABLE `FotoProducto` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
     `ProductoId` INTEGER NOT NULL,
-    `Foto` LONGBLOB NOT NULL,
+    `Foto` LONGTEXT NOT NULL,
     `Borrado` BOOLEAN NOT NULL DEFAULT false,
 
     PRIMARY KEY (`id`)

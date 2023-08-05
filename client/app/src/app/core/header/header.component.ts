@@ -54,7 +54,6 @@ export class HeaderComponent implements OnInit {
       for (let index = 0; index < this.currentUser.user.Roles.length; index++) {
         userRole[index] = this.currentUser.user.Roles[index].RolId;
       }
-      console.log(userRole);
     }
 
     for (let index = 0; index < userRole.length; index++) {

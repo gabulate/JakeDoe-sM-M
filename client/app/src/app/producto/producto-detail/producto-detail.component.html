@@ -9,7 +9,7 @@
         <c-carousel-inner>
           <c-carousel-item *ngFor="let item of datos.FotoProducto">
             <img
-              [src]="getImageUrl(item.Foto.data)"
+              [src]="'data:image/jpeg;base64,' + item.Foto"
               class="d-block w-100"
               loading="lazy"
             />
@@ -49,11 +49,9 @@
         <mat-dialog-actions> </mat-dialog-actions>
       </div>
     </div>
-    
+
     <div class="reviews">
-      
       <div class="dialog-left-questions">
-       
         <mat-grid-list [cols]="1" class="grid-list">
           <h3>Preguntas de usuarios</h3>
           <br />
@@ -79,35 +77,43 @@
       </div>
 
       <div class="dialog-right-questions">
-        <form [formGroup]="preguntaForm" (ngSubmit)="crearPregunta()" > 
+        <form [formGroup]="preguntaForm" (ngSubmit)="crearPregunta()">
           <h4>¿Tiene alguna pregunta para el proveedor?</h4>
           <input type="hidden" formControlName="id" />
           <input type="hidden" formControlName="clienteId" />
-              <mat-form-field class="full-width">
-                <mat-label>Escriba aquí</mat-label>
-                <textarea matInput formControlName="pregunta" maxlength="500" >  </textarea>
-                <mat-hint align="end"> / 500</mat-hint>
-                 <!-- <mat-error *ngIf="errorHandling('pregunta','required')">
+          <mat-form-field class="full-width">
+            <mat-label>Escriba aquí</mat-label>
+            <textarea matInput formControlName="pregunta" maxlength="500">
+            </textarea>
+            <mat-hint align="end"> / 500</mat-hint>
+            <!-- <mat-error *ngIf="errorHandling('pregunta','required')">
                   Nombre es <strong>requerido</strong>
                 </mat-error>
                 <mat-error *ngIf="errorHandling('pregunta','minlength')">
                   Nombre debe tener <strong>3 caracteres</strong>
-                </mat-error> -->  
-              </mat-form-field> 
-              <mat-card-actions>
-                <button mat-raised-button class="btnGuardar" color="primary" type="submit">Guardar</button>
-              </mat-card-actions>
-        </form> 
+                </mat-error> -->
+          </mat-form-field>
+          <mat-card-actions>
+            <button
+              mat-raised-button
+              class="btnGuardar"
+              color="primary"
+              type="submit"
+            >
+              Guardar
+            </button>
+          </mat-card-actions>
+        </form>
       </div>
     </div>
-
   </div>
 
   <!-- Contenido de la segunda parte de la página -->
   <div class="dialog-right">
     <div class="recommended">
       <div *ngFor="let item of listaRecomendados">
-        <button *ngIf="item.id !== datos.id"
+        <button
+          *ngIf="item.id !== datos.id"
           atTooltip="Detalle Producto"
           aria-label="Detalle Producto"
           (click)="detalleProducto(item.id)"
@@ -116,8 +122,8 @@
           <img
             mat-card-image
             *ngIf="item.FotoProducto[0] !== undefined"
-            [src]="getImageUrl(item.FotoProducto[0].Foto.data)"
-            alt="{{ item.Nombre }}"
+            [src]="'data:image/jpeg;base64,' + item.FotoProducto[0].Foto"
+            alt="Foto de + {{ item.Nombre }}"
           />
           <div>{{ item.Nombre }}</div>
 
