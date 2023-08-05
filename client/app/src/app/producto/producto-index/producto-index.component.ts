@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { Subject, takeUntil } from 'rxjs';
 import { GenericService } from 'src/app/share/generic.service';
@@ -15,11 +16,18 @@ export class ProductoIndexComponent {
   datos: any;
   destroy$: Subject<boolean> = new Subject<boolean>();
 
-  constructor(private gService: GenericService, private dialog: MatDialog, 
-    private sanitizer: DomSanitizer,private router: Router,
-    private route: ActivatedRoute,) {
+  gridCols: number = 3;
+
+  constructor(
+    private gService: GenericService,
+    private dialog: MatDialog,
+    private sanitizer: DomSanitizer,
+    private router: Router,
+    private route: ActivatedRoute,
+    private breakpointObserver: BreakpointObserver
+  ) {
     this.listarProductos();
-    
+    this.observeBreakpoints();
   }
   listarProductos() {
     this.gService
@@ -37,17 +45,21 @@ export class ProductoIndexComponent {
     });
   }
 
-/* 
-  detalleProducto(id: number) {
-    const dialogConfig = new MatDialogConfig();
-    dialogConfig.disableClose = false;
-    dialogConfig.data = {
-      id: id,
-    };
-    //"abra el elemento q se va a convertir en el dialogo"
-    this.dialog.open(ProductoDiagComponent, dialogConfig);
+  observeBreakpoints() {
+    this.breakpointObserver
+      .observe([Breakpoints.XSmall, Breakpoints.Small, Breakpoints.Medium])
+      .subscribe((result) => {
+        if (result.breakpoints[Breakpoints.XSmall]) {
+          this.gridCols = 1;
+        } else if (result.breakpoints[Breakpoints.Small]) {
+          this.gridCols = 2;
+        } else if (result.breakpoints[Breakpoints.Medium]) {
+          this.gridCols = 3;
+        } else {
+          this.gridCols = 4;
+        }
+      });
   }
- */
 
   getImageUrl(image) {
     let binary = '';

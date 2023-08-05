@@ -8,6 +8,10 @@
   left: 15px;
   right: 15px;
   bottom: 15px;
+  min-height: 10rem;
+  min-width: 10rem;
+  object-fit: contain;
+
 }
 .more-button {
   position: absolute;
@@ -17,6 +21,8 @@
 .dashboard-card-content {
   text-align: center;
   margin-left: 50%;
+  width: 10rem;
+  height: 10rem;
 }
 
 .dashboard-card img {
@@ -26,8 +32,10 @@
         max-height: 45%;
         border-radius: 15%; */
   width: 100%;
-  height: 55%;
+  height: 100%;
   object-fit: contain;
+  min-height: 5rem;
+  min-width: 5rem;
 }
 .mat-h1 {
   margin: 1%;
@@ -36,11 +44,31 @@
 }
 .fotoProducto {
   margin-top: 5%;
+ 
 }
+
+.precio{
+  color: #52a539;
+}
+
+
+.dk:hover{
+  background-color: #bb5757;
+}
+
 .dk {
-  right: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   border-radius: 5px;
-  background-color: #22333b;
+  background-color: #383838;
   color: white;
-  padding: 1%;
+  padding: 0.5rem;
+  margin: 0.1rem;
+  margin-bottom: 0.5rem;
+  margin-top: 0.5rem;
+  width: 50%;
+  height: 3rem;
+  text-align: center;
+  animation: all ease-in .1s;
 }

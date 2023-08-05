@@ -1,45 +1,30 @@
 <!-- <p>producto-index works!</p> -->
-<div class="grid-container">
-  <h1 class="mat-h1">Productos</h1>
-  <mat-grid-list [cols]="4" rowHeights="12em" gutterSize="10px">
+<div class="grid-container" fxLayout="row" fxLayoutAlign="start start">
+  <mat-grid-list [cols]="gridCols">
     <mat-grid-tile *ngFor="let item of datos">
       <mat-card class="dashboard-card">
-        <img 
-          mat-card-image class="fotoProducto" *ngIf="item.FotoProducto[0] !== undefined"
+        <img
+          mat-card-image
+          class="fotoProducto"
+          *ngIf="item.FotoProducto[0] !== undefined"
           [src]="'data:image/jpeg;base64,' + item.FotoProducto[0].Foto"
-          alt="Foto de + {{item.Nombre}}"
+          alt="Foto de + {{ item.Nombre }}"
         />
         <mat-card-header>
           <mat-card-title>{{ item.Nombre }}</mat-card-title>
 
-          <mat-card-subtitle>{{
-            item.categoria.Descripcion + " - " + item.estado.Descripcion
-          }}</mat-card-subtitle>
+          <mat-card-subtitle
+            >{{ item.categoria.Descripcion + " - " + item.estado.Descripcion }}
+            <h3 class="precio">{{ item.Precio | currency : "₡" }}</h3>
+          </mat-card-subtitle>
         </mat-card-header>
-        <!-- <mat-divider inset></mat-divider> -->
-          <mat-card-content class="dashboard-card-content ">
-            <div class="dk">{{item.Precio | currency : "₡" }}</div>
-          </mat-card-content>
-        <!-- <mat-divider inset></mat-divider> -->
+        <mat-divider inset></mat-divider>
         <mat-card-actions>
-          <button
-            mat-mini-fab
-            color="accent"
-            matTooltip="Detalle Producto"
-            aria-label="Detalle Producto"
-            color="primary"
-            (click)="detalleProducto(item.id)"
-          >
-            <mat-icon class="mat-18">info</mat-icon>
-          </button>
-          <button
-            mat-mini-fab
-            color="accent"
-            matTooltip="Comprar"
-            aria-label="Comprar"
-            color="primary"
-          >
-            <mat-icon class="mat-18">add_shopping_cart</mat-icon>
+          <div class="dk">
+            <mat-icon>add_shopping_cart</mat-icon>Añadir al carrito
+          </div>
+          <button class="dk" (click)="detalleProducto(item.id)">
+            Ver Producto
           </button>
         </mat-card-actions>
       </mat-card>
