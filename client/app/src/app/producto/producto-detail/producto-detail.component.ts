@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
 import { GenericService } from 'src/app/share/generic.service';
@@ -104,7 +104,11 @@ export class ProductoDetailComponent implements OnInit {
       clienteId: [null, null],
       pregunta: [
         null,
-        Validators.compose([Validators.required, Validators.minLength(3)]),
+        Validators.compose([
+          Validators.required, 
+          Validators.minLength(3),
+          this.noWhitespaceValidator
+        ]),
       ],
     });
   }
@@ -124,9 +128,7 @@ export class ProductoDetailComponent implements OnInit {
       .pipe(takeUntil(this.destroy$))
       .subscribe((data: any) => {
         this.respMensaje = data;
-        /* this.router
-      .navigateByUrl('/', { skipLocationChange: true })
-      .then(() => this.router.navigate(['/producto/' + this.datos.id])); */
+  
 
         let pre = document.getElementById('Preguntas');
 
@@ -149,7 +151,7 @@ export class ProductoDetailComponent implements OnInit {
     this.preguntaForm.reset();
   }
 
-  //let ClienteId= this.authService.currentUser.subscribe((x)=>(this.currentUser=x));
+
   onReset() {
     this.submitted = false;
     this.preguntaForm.reset();
@@ -158,6 +160,14 @@ export class ProductoDetailComponent implements OnInit {
     this.router.navigate(['/producto', this.productoId], {
       state: { datos: this.datos },
     });
+  }
+
+  public errorHandling = (control: string, error: string) => {
+    return this.preguntaForm.controls[control].hasError(error);
+  };
+
+  public noWhitespaceValidator(control: FormControl) {
+    return (control.value || '').trim().length? null : { 'whitespace': true };       
   }
 
   ngOnDestroy() {

@@ -11,7 +11,7 @@
 <button mat-button [routerLink]="['/mensaje/producto/vendedor/5']"  routerLinkActive="mat-raised-button">Mensajes</button> -->
 
 <button mat-button [routerLink]="['/producto']" routerLinkActive="mat-raised-button">Productos</button>
-<button mat-button (click)="comprasCliente()" routerLinkActive="mat-raised-button">Compras</button>
+<button *ngIf="isCliente() || isVendedor()" mat-button (click)="comprasCliente()" routerLinkActive="mat-raised-button">Compras</button>
 <button *ngIf="isVendedor()" mat-button (click)="pedidosCliente()" routerLinkActive="mat-raised-button">Pedidos</button>
 <button *ngIf="isVendedor()" mat-button (click)="proveedor()" routerLinkActive="mat-raised-button">Proveedor</button>
 <button *ngIf="isVendedor()" mat-button (click)="mensajes()" routerLinkActive="mat-raised-button">Mensajes</button>

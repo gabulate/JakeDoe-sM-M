@@ -22,14 +22,17 @@
                   <input type="hidden" formControlName="productoId"/>
                   <input type="hidden" formControlName="clienteId"  />
                   <input type="hidden" formControlName="pregunta" />
-                  <!-- <input type="hidden" formControlName="productoId" [value] = "item.ProductoId"/>
-                  <input type="hidden" formControlName="clienteId" [value] = "item.ClienteId" />
-                  <input type="hidden" formControlName="pregunta" [value] = "item.Pregunta"/> -->
-                      <mat-form-field class="full-width">
+                  
+                  <mat-form-field class="full-width">
                         <mat-label>Responder aquí</mat-label>
                         <textarea matInput formControlName="respuesta" maxlength="500" >  </textarea>
                         <mat-hint align="end"> / 500</mat-hint>
-                      </mat-form-field> 
+                        <mat-error >
+                          La respuesta es <strong>requerida</strong>
+                        </mat-error>
+
+
+                  </mat-form-field> 
                   <button mat-raised-button class="btnResponder" color="accent" type="submit" color="primary" >
                     Responder
                   </button>

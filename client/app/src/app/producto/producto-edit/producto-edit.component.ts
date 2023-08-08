@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
 import { AuthenticationService } from 'src/app/share/authentication.service';
@@ -14,8 +14,9 @@ export class ProductoEditComponent implements OnInit {
   destroy$: Subject<boolean> = new Subject<boolean>();
   //Titulo
   titleForm: string = 'Crear';
-  //Lista de generos
+  //Listas
   CategoriaList: any;
+  EstadoList: any;
   //producto a actualizar
   productoInfo: any;
   //Respuesta del API crear/modificar
@@ -47,6 +48,7 @@ export class ProductoEditComponent implements OnInit {
   ) {
     this.formularioReactive();
     this.listaCategorias();
+    this.listaEstados();
   }
 
   ngOnInit(): void {
@@ -99,11 +101,22 @@ export class ProductoEditComponent implements OnInit {
       id: [null, null],
       nombre: [
         null,
-        Validators.compose([Validators.required, Validators.minLength(3)]),
+        Validators.compose([
+          Validators.required, 
+          Validators.minLength(3),
+          this.noWhitespaceValidator
+        ]),
       ],
       vendedorId: [null, Validators.required],
       categoria: [null, Validators.required],
-      descripcion: [null, Validators.required],
+      descripcion: [
+        null, 
+          Validators.compose([
+          Validators.required, 
+          Validators.minLength(3),
+          this.noWhitespaceValidator
+        ]),
+      ],
       precio: [null, Validators.required],
       borrado: [false, Validators.required],
       cantidad: [null, Validators.required],
@@ -122,9 +135,18 @@ export class ProductoEditComponent implements OnInit {
       });
   }
 
-  public errorHandling = (control: string, error: string) => {
-    return this.productoForm.controls[control].hasError(error);
-  };
+  listaEstados() {
+    this.EstadoList = null;
+    this.gService
+      .list('estadoProducto')
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((data: any) => {
+        // console.log(data);
+        this.EstadoList = data;
+      });
+  }
+
+
   //Crear Videojueogo
   crearProducto(): void {
     //Establecer submit verdadero
@@ -233,6 +255,14 @@ export class ProductoEditComponent implements OnInit {
   onBack() {
     this.router.navigate(['/admin/producto']);
   }
+
+  public errorHandling = (control: string, error: string) => {
+    return this.productoForm.controls[control].hasError(error);
+  };
+  public noWhitespaceValidator(control: FormControl) {
+    return (control.value || '').trim().length? null : { 'whitespace': true };       
+  }
+
   ngOnDestroy() {
     this.destroy$.next(true);
     // Desinscribirse

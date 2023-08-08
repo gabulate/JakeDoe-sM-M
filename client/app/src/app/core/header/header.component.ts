@@ -64,6 +64,22 @@ export class HeaderComponent implements OnInit {
     return false;
   }
 
+  isCliente() {
+    let userRole = [];
+    if (this.currentUser) {
+      for (let index = 0; index < this.currentUser.user.Roles.length; index++) {
+        userRole[index] = this.currentUser.user.Roles[index].RolId;
+      }
+    }
+
+    for (let index = 0; index < userRole.length; index++) {
+      if (userRole[index] === 2) {
+        return true;
+      }
+    }    
+    return false;
+  }
+
   login() {
     this.router.navigate(['usuario/login']);
   }

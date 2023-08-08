@@ -37,7 +37,8 @@ import { PedidoDiagComponent } from './pedido-diag/pedido-diag.component';
     MatIconModule,
     MatCardModule,
     MatPaginatorModule,
-    MatTableModule
+    MatTableModule,
+    MatButtonModule
   ],
 })
 export class PedidoModule {}
