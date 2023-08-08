@@ -65,4 +65,15 @@ export const Productos = [
     EstadoId: 1,
     VendedorId: 4,
   },
+  //7
+  {
+    Nombre: "El violín más pequeño del mundo",
+    Descripcion:
+      "El violín más pequeño del mundo, como visto en el popular show Bob Esponja.",
+    Precio: "50000",
+    Cantidad: 1,
+    CategoriaId: 4,
+    EstadoId: 1,
+    VendedorId: 5,
+  },
 ];

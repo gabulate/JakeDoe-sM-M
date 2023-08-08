@@ -143,7 +143,7 @@ async function main() {
   await prisma.compra.createMany({
     data: Compras,
   });
-/* 
+  /* 
   await prisma.fotoProducto.createMany({
     data: FotoProductos,
   }); */
@@ -151,12 +151,18 @@ async function main() {
   //TUVE QUE HACERLO CON UN FOR, SI NO ME DA ERROR Y NO TENGO IDEA POR QUÉ
   //TE ODIO PRISMA
   for (let index = 0; index < FotoProductos.length; index++) {
-    await prisma.fotoProducto.create({
-      data: {
-        ProductoId: FotoProductos[index].ProductoId,
-        Foto: FotoProductos[index].Foto,
-      },
-    });
+    try {
+      await prisma.fotoProducto.create({
+        data: {
+          ProductoId: FotoProductos[index].ProductoId,
+          Foto: FotoProductos[index].Foto,
+        },
+      });
+    } catch(e) {
+      console.log(e);
+      console.log("Error al insertar la imagen:");
+      console.log(index);
+    }
   }
 
   await prisma.compraDetalle.createMany({

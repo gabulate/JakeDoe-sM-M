@@ -22,7 +22,7 @@ export class ProductoDetailComponent implements OnInit {
   respMensaje: any;
   productoId: any;
   //clienteId = 1;
-  clienteId : any;
+  clienteId: any;
   currentUser: any;
 
   constructor(
@@ -33,8 +33,6 @@ export class ProductoDetailComponent implements OnInit {
     private sanitizer: DomSanitizer,
     private authService: AuthenticationService
   ) {
-      
-
     this.formularioReactive();
   }
   ngOnInit(): void {
@@ -46,9 +44,9 @@ export class ProductoDetailComponent implements OnInit {
       //this.obtenerFotosProducto(Number(id));
       this.listarProductos();
     }
-    this.authService.currentUser.subscribe((x)=>(this.currentUser=x));
-      this.clienteId=this.currentUser.user.id;
-      console.log("id usuario: "+ this.clienteId);
+    this.authService.currentUser.subscribe((x) => (this.currentUser = x));
+    this.clienteId = this.currentUser.user.id;
+    console.log('id usuario: ' + this.clienteId);
   }
 
   obtenerProducto(id: any) {
@@ -132,7 +130,9 @@ export class ProductoDetailComponent implements OnInit {
 
         let pre = document.getElementById('Preguntas');
 
-        pre.innerHTML =
+        this.listarMensajes(this.productoId);
+        this.datosMensaje.next();
+        /* pre.innerHTML =
         "<mat-card class='mat-mdc-card mdc-card dashboard-card ng-star-inserted'>"
         +'   <mat-card-subtitle class="mat-mdc-card-subtitle">'
        + '    <p>Pregunta</p>'
@@ -143,11 +143,8 @@ export class ProductoDetailComponent implements OnInit {
        + '    </mat-card>'
        + ' <br> </br>'
         + pre.innerHTML;
-
-        
+ */
       });
-
-    this.listarMensajes(this.productoId);
 
     this.preguntaForm.reset();
   }

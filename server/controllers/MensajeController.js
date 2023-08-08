@@ -10,7 +10,7 @@ module.exports.getByProducto = async (request, response, next) => {
         ProductoId: idProducto,
        },
       orderBy: {
-        id: "asc",
+        id: "desc",
       },
     });
     response.json(mensajes);

@@ -44,10 +44,7 @@ export class AuthGuard implements CanActivate {
       let userRole = [];
       if (this.currentUser) {
         for (
-          let index = 0;
-          index < this.currentUser.user.Roles.length;
-          index++
-        ) {
+          let index = 0; index < this.currentUser.user.Roles.length; index++) {
           userRole[index] = this.currentUser.user.Roles[index].RolId;
         }
         console.log(userRole);
@@ -58,12 +55,6 @@ export class AuthGuard implements CanActivate {
           return true;
         }
       }
-      this.router.navigate(['/usuario/login'], {
-        //Parametro para mostrar mensaje en login
-        queryParams: { auth: 'no' },
-      });
-      console.log('Roles permitidos: ', route.data['roles'][0]);
-      console.log('Roles usuario: ', userRole);
     }
 
     this.router.navigate(['/usuario/login'], {

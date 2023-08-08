@@ -18,7 +18,7 @@ module.exports.get = async (request, response, next) => {
       Email: true,
       Calificacion: true,
       Deshabilitado: true,
-      Contrasenna: true,
+      //Contrasenna: true,
       Roles: {
         select: {
           rol: true,
