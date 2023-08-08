@@ -8,15 +8,15 @@ const app = express();
 const prism = new PrismaClient();
 
 //---Archivos de rutas---
-const usuarioRouter = require('./routes/UsuarioRoutes');
-const productoRouter = require('./routes/ProductoRoutes');
-const compraRouter = require('./routes/CompraRoutes');
-const mensajeRouter = require('./routes/MensajeRoutes');
-const fotoRouter = require('./routes/FotoProductoRoutes'); 
-const metodoPagoRouter = require('./routes/MetodoPagoRoutes'); 
-const direccionRouter = require('./routes/DireccionRoutes'); 
-const categoriaRoutes = require('./routes/CategoriaRoutes');
-const rolRoutes = require('./routes/RolRoutes'); 
+const usuarioRouter = require("./routes/UsuarioRoutes");
+const productoRouter = require("./routes/ProductoRoutes");
+const compraRouter = require("./routes/CompraRoutes");
+const mensajeRouter = require("./routes/MensajeRoutes");
+const fotoRouter = require("./routes/FotoProductoRoutes");
+const metodoPagoRouter = require("./routes/MetodoPagoRoutes");
+const direccionRouter = require("./routes/DireccionRoutes");
+const categoriaRoutes = require("./routes/CategoriaRoutes");
+const rolRoutes = require("./routes/RolRoutes");
 // Acceder a la configuracion del archivo .env
 dotEnv.config();
 
@@ -30,7 +30,11 @@ app.use(cors());
 app.use(logger("dev"));
 
 // Middleware para gestionar Requests y Response json
-app.use(express.json());
+app.use(
+  express.json({
+    limit: "50mb",
+  })
+);
 
 app.use(
   express.urlencoded({
