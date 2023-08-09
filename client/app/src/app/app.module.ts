@@ -15,6 +15,7 @@ import { PedidoModule } from './compra/compra.module';
 import { MensajeModule } from './mensaje/mensaje.module';
 import { HttpErrorInterceptorService } from './share/http-error-interceptor.service';
 
+
 @NgModule({
   declarations: [
     AppComponent
@@ -31,7 +32,6 @@ import { HttpErrorInterceptorService } from './share/http-error-interceptor.serv
     PedidoModule,
     MensajeModule,
     ProductoModule,
-
     AppRoutingModule,
       
   ],
