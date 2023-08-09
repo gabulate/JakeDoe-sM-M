@@ -17,6 +17,7 @@ export class ProductoEditComponent implements OnInit {
   //Listas
   CategoriaList: any;
   EstadoList: any;
+
   //producto a actualizar
   productoInfo: any;
   //Respuesta del API crear/modificar
@@ -84,7 +85,7 @@ export class ProductoEditComponent implements OnInit {
               vendedorId: this.productoInfo.VendedorId,
               borrado: this.productoInfo.Borrado,
               categoria: this.productoInfo.CategoriaId,
-
+              estado: this.productoInfo.EstadoId,
               fotos: this.productoInfo.FotoProducto,
             });
 
@@ -109,6 +110,7 @@ export class ProductoEditComponent implements OnInit {
       ],
       vendedorId: [null, Validators.required],
       categoria: [null, Validators.required],
+      estado: [null, Validators.required],
       descripcion: [
         null, 
           Validators.compose([

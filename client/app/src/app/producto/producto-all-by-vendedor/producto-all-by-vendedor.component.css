@@ -6,3 +6,33 @@
     color: #22333B;
     margin: 1%;
   }
+  .full-width-table {
+    width: 100%;
+  }
+  body {
+    background-color: #c6ac8f !important;
+    margin-bottom: 5rem;
+  
+  }
+  .color {
+    background-color: #c6ac8f !important;
+    margin-bottom: 5rem;
+  
+  }
+  .titulo {
+    text-align: center;
+    color: #22333b;
+    margin: 1%;
+  }
+  .btnDetalle:hover {
+    background-color: #c44536;
+  }
+  
+  .fotoProducto {
+    margin-top: 5%;
+    height: 5rem;
+    width: 5rem;
+    object-fit: contain;
+  
+  }
+  

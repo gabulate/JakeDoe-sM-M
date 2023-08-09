@@ -54,9 +54,9 @@ export class ProductoAdminComponent implements AfterViewInit {
   }
 
   listaProductos() {
-    //localhost:3000/producto
     this.gService
-      .get('producto/vendedor', this.currentUser.user.id)
+      //.get('producto/vendedor', this.currentUser.user.id)
+      .list('producto/')
       .pipe(takeUntil(this.destroy$))
       .subscribe((data: any) => {
         console.log(data);
@@ -67,7 +67,7 @@ export class ProductoAdminComponent implements AfterViewInit {
   }
 
   detalle(id: number) {
-    this.router.navigate(['/admin/producto', id], {
+    this.router.navigate(['/producto', id], {
       relativeTo: this.route,
     });
   }

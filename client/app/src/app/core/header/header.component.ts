@@ -39,7 +39,8 @@ export class HeaderComponent implements OnInit {
   }
 
   proveedor() {
-    this.router.navigate(['/admin/producto/']);
+    // this.router.navigate(['/admin/producto/']);
+    this.router.navigate(['/producto/vendedor/' + this.currentUser.user.id]);
   }
 
   mensajes() {

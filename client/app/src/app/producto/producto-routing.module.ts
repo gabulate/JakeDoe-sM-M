@@ -17,13 +17,13 @@ const routes: Routes = [
     component: ProductoAdminComponent,
     canActivate: [AuthGuard],
     data: {
-      roles: [3],
+      roles: [1],
     },
   },
   { path: 'admin/producto/update/:id', component: ProductoEditComponent },
   { path: 'admin/producto/create', component: ProductoEditComponent },
   {
-    path: 'pedido/vendedor/:id',
+    path: 'producto/vendedor/:id',
     canActivate: [AuthGuard],
     data: {
       roles: [3],

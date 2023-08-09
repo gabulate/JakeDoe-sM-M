@@ -69,3 +69,25 @@ button{
   --cui-nav-link-hover-color: var(--cui-navbar-hover-color);
   --cui-nav-link-disabled-color: var(--cui-navbar-disabled-color);
 }
+c-navbar-nav{
+  margin-top: 1%;
+  }
+  .mat-mdc-button[disabled][disabled] {
+    --mdc-text-button-disabled-label-text-color: rgb(255, 248, 248);
+  }
+  
+  .navbar-nav {
+    --cui-nav-link-padding-x: 0;
+    --cui-nav-link-padding-y: 0rem;
+    
+  }
+  c-navbar-nav[_ngcontent-ng-c2598991299] {
+    margin-top: 1.5%;
+  }
+  
+  .btnEmail{
+    height: 90%;
+  }
+  .material-icons {
+    font-size: 28px;
+  }
