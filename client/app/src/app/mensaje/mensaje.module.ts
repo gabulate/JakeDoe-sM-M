@@ -14,12 +14,14 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
+import { MensajeIndexAdminComponent } from './mensaje-index-admin/mensaje-index-admin.component';
 
 
 @NgModule({
   declarations: [
     MensajeAllByProductoComponent,
-    MensajeIndexComponent
+    MensajeIndexComponent,
+    MensajeIndexAdminComponent
   ],
   imports: [
     CommonModule,

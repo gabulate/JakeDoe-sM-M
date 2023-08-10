@@ -74,11 +74,7 @@ export class ProductoAllByVendedorComponent implements AfterViewInit {
         this.dataSource.paginator = this.paginator;
       });
   }
-  detalle(id: number) {
-    this.router.navigate(['/producto', id], {
-      relativeTo: this.route,
-    });
-  }
+
 
   getImageUrl(image) {
     if (image == undefined) {
@@ -101,7 +97,11 @@ export class ProductoAllByVendedorComponent implements AfterViewInit {
       relativeTo: this.route,
     });
   }
-
+  detalle(id: number) {
+    this.router.navigate(['/producto', id], {
+      relativeTo: this.route,
+    });
+  }
   crearProducto() {
     this.router.navigate(['/admin/producto/create'], {
       relativeTo: this.route,

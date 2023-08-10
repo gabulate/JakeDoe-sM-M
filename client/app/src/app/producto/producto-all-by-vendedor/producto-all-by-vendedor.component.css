@@ -35,4 +35,14 @@
     object-fit: contain;
   
   }
+  .btnAcciones{
+    margin-left: 2%;
+    margin-right: 2%;
+  }
+  .btnAcciones:hover{
+    background-color: #C44536;
+  }
+  .btnCrear{
+    margin-bottom: 1%;
+  }
   

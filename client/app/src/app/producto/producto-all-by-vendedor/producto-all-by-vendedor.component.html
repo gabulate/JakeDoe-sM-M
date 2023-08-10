@@ -5,7 +5,7 @@
     <h1 class="titulo">Inventario de proveedor</h1>
   </mat-card-title>
   <mat-card-content>
-    <button mat-raised-button color="primary" (click)="crearProducto()">
+    <button mat-raised-button class="btnAcciones btnCrear" color="primary" (click)="crearProducto()">
       Nuevo Producto
     </button>
     <!-- Table -->
@@ -50,6 +50,7 @@
           <th mat-header-cell *matHeaderCellDef>Acciones</th>
           <td mat-cell *matCellDef="let row">
             <button
+            class="btnAcciones"
               mat-mini-fab
               class="btnDetalle"
               color="accent"
@@ -60,6 +61,18 @@
             >
               <mat-icon>edit</mat-icon>
             </button>
+            <button
+            class="btnAcciones"
+              mat-mini-fab
+              color="accent"
+              matTooltip="Detalle Producto"
+              aria-label="Detalle Producto"
+              color="primary"
+              (click)="detalle(row.id)"
+            >
+            <mat-icon class="mat-18">info</mat-icon>
+            </button>
+
           </td>
         </ng-container>
      

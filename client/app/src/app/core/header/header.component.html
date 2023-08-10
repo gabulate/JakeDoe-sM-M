@@ -47,8 +47,17 @@
         <c-nav-item>
           <button *ngIf="isAdmin()" mat-button [routerLink]="['/admin/producto/']" routerLinkActive="mat-raised-button"> Productos</button>
         </c-nav-item>
+        <c-nav-item>
+          <button *ngIf="isAdmin()" mat-button [routerLink]="['/usuario/all']" routerLinkActive="mat-raised-button"> Usuarios</button>
+        </c-nav-item>
+        <c-nav-item>
+          <button *ngIf="isAdmin()" mat-button [routerLink]="['/orden']" routerLinkActive="mat-raised-button"> Órdenes</button>
+        </c-nav-item>
+        <c-nav-item>
+          <button *ngIf="isAdmin()" mat-button [routerLink]="['/mensaje/all']" routerLinkActive="mat-raised-button"> Mensajes</button>
+        </c-nav-item>
 
-        
+
         <c-nav-item>
           <button *ngIf="isCliente() || isVendedor()" mat-button class="navbar-text" [routerLink]="['/producto']" routerLinkActive="mat-raised-button">Productos</button>
         </c-nav-item>
