@@ -1,0 +1,33 @@
+.full-width-table {
+    width: 100%;
+  }
+  body {
+    background-color: #c6ac8f !important;
+    margin-bottom: 5rem;
+  
+  }
+  .color {
+    background-color: #c6ac8f !important;
+    margin-bottom: 5rem;
+  
+  }
+  .titulo {
+    text-align: center;
+    color: #22333b;
+    margin: 1%;
+  }
+  .btnAcciones{
+    margin-left: 2%;
+    margin-right: 2%;
+  }
+  .btnAcciones:hover{
+    background-color: #C44536;
+  }
+
+  .fotoProducto {
+    margin-top: 5%;
+    height: 5rem;
+    width: 5rem;
+    object-fit: contain;
+  
+  }

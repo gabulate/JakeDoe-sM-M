@@ -111,4 +111,7 @@ export class HeaderComponent implements OnInit {
     this.authService.logout();
     this.router.navigate(['inicio']);
   }
+  register(){
+    this.router.navigate(['']);
+  }
 }

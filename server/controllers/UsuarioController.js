@@ -14,8 +14,10 @@ module.exports.get = async (request, response, next) => {
       id: true,
       Nombre: true,
       Apellido: true,
+      NombreVendedor:true,
       Telefono: true,
       Email: true,
+      Identificacion:true,
       Calificacion: true,
       Deshabilitado: true,
       //Contrasenna: true,
@@ -39,8 +41,10 @@ module.exports.getById = async (request, response, next) => {
       id: true,
       Nombre: true,
       Apellido: true,
+      NombreVendedor:true,
       Telefono: true,
       Email: true,
+      Identificacion:true,
       Calificacion: true,
       Deshabilitado: true,
       Roles: {
@@ -74,8 +78,10 @@ module.exports.create = async (request, response, next) => {
       data: {
         Nombre: usuario.Nombre,
         Apellido: usuario.Apellido,
+        NombreVendedor: usuario.NombreVendedor,
         Telefono: usuario.Telefono,
         Email: usuario.Email,
+        Identificacion: usuario.Identificacion,
         Contrasenna: hash, //Se guarda la contraseña encriptada
         Calificacion: "5", //5 por defecto
 
@@ -163,7 +169,9 @@ module.exports.update = async (request, response, next) => {
         data: {
           Nombre: usuario.Nombre,
           Apellido: usuario.Apellido,
+          NombreVendedor: usuario.NombreVendedor,
           Telefono: usuario.Telefono,
+          Identificacion:usuario.Identificacion,
           Contrasenna: hash, //Envía la contraseña encriptada
           Calificacion: usuario.Calificacion,
 
@@ -181,7 +189,7 @@ module.exports.update = async (request, response, next) => {
 
       response.status(201).json({
         success: true,
-        message: "Usuario actualizada.",
+        message: "Usuario actualizado.",
         data: newUsuario,
       });
     } catch (error) {
@@ -192,6 +200,34 @@ module.exports.update = async (request, response, next) => {
     }
   }
 };
+
+module.exports.cambiarActivacion = async (request, response, next) => {
+  let id = parseInt(request.params.id);
+
+  const usuarioOriginal = await prisma.usuario.findUnique({
+    where: { id: id },
+  });
+
+  try {
+    const usuarioActualizado = await prisma.usuario.update({
+      where: {
+        id: id,
+      },
+      data: {
+        Deshabilitado: usuarioOriginal.Deshabilitado? false : true,
+      },
+    });
+
+    response.json(usuarioActualizado);
+  } catch (error) {
+    response.status(500).json({
+      status: false,
+      message: "Error: " + error,
+      data: error,
+    });
+  }
+};
+
 
 module.exports.login = async (request, response, next) => {
   let usuarioReq = request.body;
@@ -220,7 +256,16 @@ module.exports.login = async (request, response, next) => {
       success: false,
       message: "Credenciales no validas",
     });
-  } else {
+  } 
+  //Verifica si está deshabilitado
+  else if(usuario.Deshabilitado){
+    response.status(403).send({
+      success: false,
+      message: "Acceso denegado. Su cuenta está deshabilitada.",
+    });
+  }
+  
+  else {
     //Usuario correcto
     //Crear el payload
     const payload = {

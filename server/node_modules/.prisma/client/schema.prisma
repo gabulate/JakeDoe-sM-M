@@ -15,8 +15,10 @@ model Usuario {
   id            Int     @id @default(autoincrement())
   Nombre        String
   Apellido      String
+  NombreVendedor String?
   Telefono      String
   Email         String  @unique
+  Identificacion String
   Contrasenna   String
   Calificacion  Decimal @db.Decimal(10, 2)
   Deshabilitado Boolean @default(false)

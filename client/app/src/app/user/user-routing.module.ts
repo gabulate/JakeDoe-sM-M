@@ -3,8 +3,9 @@ import { RouterModule, Routes } from '@angular/router';
 import { UserIndexComponent } from './user-index/user-index.component';
 import { UserCreateComponent } from './user-create/user-create.component';
 import { UserLoginComponent } from './user-login/user-login.component';
-import { UserAllComponent } from './user-all/user-all.component';
+import { UserAllActivosComponent } from './user-all-activos/user-all-activos.component';
 import { AuthGuard } from '../share/guards/auth.guard';
+import { UserAllDeshabilitadosComponent } from './user-all-deshabilitados/user-all-deshabilitados.component';
 
 const routes: Routes = [
   {
@@ -17,15 +18,15 @@ const routes: Routes = [
   },
  
 
-  {
-    path: 'usuario/all',
-    component:UserAllComponent ,
-    canActivate: [AuthGuard],
-    data: {
-      roles: [1],
+  
+    {
+      path: 'usuario/activos', component:UserAllActivosComponent, canActivate: [AuthGuard],
+      data: {roles: [1],},
     },
-  },
-
+    {
+      path: 'usuario/deshabilitados', component: UserAllDeshabilitadosComponent, canActivate: [AuthGuard],
+      data: {roles: [1],},
+    },
 
 ];
 

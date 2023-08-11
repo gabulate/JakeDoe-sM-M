@@ -16,13 +16,20 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatTabsModule} from '@angular/material/tabs';
-import { UserAllComponent } from './user-all/user-all.component';
+import { UserAllActivosComponent } from './user-all-activos/user-all-activos.component';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { MatTableModule } from '@angular/material/table';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSortModule } from '@angular/material/sort';
+import { UserAllDeshabilitadosComponent } from './user-all-deshabilitados/user-all-deshabilitados.component';
 
 @NgModule({
   declarations: [
     UserCreateComponent, 
     UserLoginComponent, 
-    UserIndexComponent, UserAllComponent
+    UserIndexComponent, 
+    UserAllActivosComponent, 
+    UserAllDeshabilitadosComponent
   ],
   imports: [
     CommonModule,
@@ -37,7 +44,10 @@ import { UserAllComponent } from './user-all/user-all.component';
     MatSelectModule,
     MatRadioModule,
     ReactiveFormsModule,
-
+    MatGridListModule, 
+    MatTableModule,
+    MatPaginatorModule,
+    MatSortModule,
     UserRoutingModule
   ]
 })

@@ -1,38 +1,4 @@
-<!--NAVBAR ANTERIOR-->
-<!-- <mat-toolbar class="general" color="primary">
 
-<button mat-button [routerLink]="['/']" routerLinkActive="mat-raised-button">
-  <img mat-card-lg-image src="../../../assets/img/logov2.png"/>
-</button> -->
-<!--  <button mat-button [routerLink]="['/producto']" routerLinkActive="mat-raised-button">Productos</button>
-<button mat-button [routerLink]="['/compra/cliente/1']" routerLinkActive="mat-raised-button">Compras</button>
-<button mat-button [routerLink]="['/pedido/vendedor/5']" routerLinkActive="mat-raised-button">Pedidos</button>
-<button mat-button [routerLink]="['/producto/vendedor/5']" routerLinkActive="mat-raised-button">Proveedor</button>
-<button mat-button [routerLink]="['/mensaje/producto/vendedor/5']"  routerLinkActive="mat-raised-button">Mensajes</button> -->
-<!-- <button mat-button [routerLink]="['/producto']" routerLinkActive="mat-raised-button">Productos</button>
-<button *ngIf="isCliente() || isVendedor()" mat-button (click)="comprasCliente()" routerLinkActive="mat-raised-button">Compras</button>
-<button *ngIf="isVendedor()" mat-button (click)="pedidosCliente()" routerLinkActive="mat-raised-button">Pedidos</button>
-<button *ngIf="isVendedor()" mat-button (click)="proveedor()" routerLinkActive="mat-raised-button">Proveedor</button>
-<button *ngIf="isVendedor()" mat-button (click)="mensajes()" routerLinkActive="mat-raised-button">Mensajes</button> -->
-<!--Menu usuario-->
-<!-- <ng-container class="usuario">
-  <span class="mat-caption" *ngIf="isAutenticated">{{currentUser.user.Email}}</span>
-  <button mat-icon-button [matMenuTriggerFor]="menu3">
-    <mat-icon [ngStyle]="{'color': isAutenticated ? 'white': '#9E9E9E' }">person</mat-icon>
-  </button>
-<mat-menu #menu3="matMenu" >
-  <a mat-menu-item *ngIf="!(isAutenticated)" (click)="login()">
-    <mat-icon>person_add</mat-icon>
-    <span>Login</span>
-  </a>
-  <a mat-menu-item *ngIf="isAutenticated" (click)="logout()">
-    <mat-icon>person_remove</mat-icon>
-    <span>Logout</span>
-  </a>
-</mat-menu>
-</ng-container>
-  
-</mat-toolbar> -->
 
 <c-navbar expand="lg" class="navbar-style">
   <c-container fluid>
@@ -48,44 +14,23 @@
       <c-navbar-nav class="me-auto mb-2 mb-lg-0">
         <!--ADMIN NAVBAR-->
         <c-nav-item>
-          <button
-            *ngIf="isAdmin()"
-            mat-button
-            [routerLink]="['/admin/producto/']"
-            routerLinkActive="mat-raised-button"
-          >
-            Productos
-          </button>
+          <button *ngIf="isAdmin()" mat-button [routerLink]="['/admin/producto/']" routerLinkActive="mat-raised-button"> Productos</button>
         </c-nav-item>
+        
+        <c-dropdown *ngIf="isAdmin()" variant="nav-item" [popper]="false" >
+          <button cDropdownToggle >Usuarios </button>
+          <ul cDropdownMenu>
+            <li><button cDropdownItem [routerLink]="['/usuario/activos']"> Usuarios activos </button></li>
+            <li><button cDropdownItem [routerLink]="['/usuario/deshabilitados']"> Usuarios deshabilitados </button></li>
+          </ul >
+        </c-dropdown> 
+
         <c-nav-item>
-          <button
-            *ngIf="isAdmin()"
-            mat-button
-            [routerLink]="['/usuario/all']"
-            routerLinkActive="mat-raised-button"
-          >
-            Usuarios
-          </button>
+          <button *ngIf="isAdmin()" mat-button [routerLink]="['/orden']" routerLinkActive="mat-raised-button"> Órdenes</button>
         </c-nav-item>
+
         <c-nav-item>
-          <button
-            *ngIf="isAdmin()"
-            mat-button
-            [routerLink]="['/orden']"
-            routerLinkActive="mat-raised-button"
-          >
-            Órdenes
-          </button>
-        </c-nav-item>
-        <c-nav-item>
-          <button
-            *ngIf="isAdmin()"
-            mat-button
-            [routerLink]="['/mensaje/all']"
-            routerLinkActive="mat-raised-button"
-          >
-            Mensajes
-          </button>
+          <button *ngIf="isAdmin()" mat-button [routerLink]="['/mensaje/all']" routerLinkActive="mat-raised-button"> Mensajes</button>
         </c-nav-item>
 
         <c-nav-item>
@@ -144,34 +89,31 @@
           </button>
         </c-nav-item>
 
-        <!-- <c-nav-item *ngIf="isAutenticated" class="btnEmail">
-          <button mat-button disabled *ngIf="isAutenticated"  class="btnEmail">{{currentUser.user.Email}}</button>
-        </c-nav-item> -->
-
         <c-dropdown variant="nav-item" [popper]="false">
           <button cDropdownToggle cNavLink class="btnEmail">
             <c-navbar-text *ngIf="isAutenticated"
               >{{ currentUser.user.Email }}
-              <mat-icon
-                [ngStyle]="{ color: isAutenticated ? 'white' : '#9E9E9E' }"
-                >person</mat-icon
-              >
             </c-navbar-text>
+            <mat-icon [ngStyle]="{ color: isAutenticated ? 'white' : '#9E9E9E' }"
+            >person</mat-icon>
           </button>
           <ul cDropdownMenu>
-            <li>
-              <button cDropdownItem (click)="login()" *ngIf="!isAutenticated">
-                <mat-icon>person_add</mat-icon>
-                Login
-              </button>
-            </li>
-            <li>
-              <button cDropdownItem (click)="logout()" *ngIf="isAutenticated">
-                <mat-icon>person_remove</mat-icon>
-                Logout
-              </button>
-            </li>
-          </ul>
+            <c-container fluid *ngIf="!(isAutenticated)">
+              <li><button cDropdownItem (click)="login()"  >
+                 <!-- <mat-icon>person_add</mat-icon> -->
+                 Iniciar sesión
+              </button></li>
+              <li><button cDropdownItem (click)="register()"  >
+                 <!-- <mat-icon>person_add</mat-icon>  -->
+                 Registrarse
+              </button></li>
+            </c-container>
+
+            <li><button cDropdownItem (click)="logout()" *ngIf="isAutenticated">
+              <mat-icon>person_remove</mat-icon>
+             Cerrar sesión
+            </button></li>
+          </ul >
         </c-dropdown>
 
         <!--Carrito-->

@@ -21,13 +21,14 @@ async function main() {
   await prisma.rol.createMany({
     data: Roles,
   });
-
+//1
   await prisma.usuario.create({
     data: {
       Nombre: "Juan Carlos",
       Apellido: "Bodoque",
       Telefono: "8888 8888",
-      Email: "juanbodoque@gmail.com",
+      Email: "juanbodoque@gmail.com", 
+      Identificacion: "2 5630 6327",
       Contrasenna:
         "$2b$10$Qmee6hXHmLE3LQtyIZV5OuwBBhZNl.iyTikoQalubE50vULOdryli",
       Calificacion: "0",
@@ -38,13 +39,14 @@ async function main() {
       },
     },
   });
-
+//2
   await prisma.usuario.create({
     data: {
       Nombre: "Gabriel",
       Apellido: "Ulate",
       Telefono: "8888 8888",
       Email: "gulate@gmail.com",
+      Identificacion: "2 0630 6934",
       Contrasenna:
         "$2b$10$Qmee6hXHmLE3LQtyIZV5OuwBBhZNl.iyTikoQalubE50vULOdryli",
       Calificacion: "5",
@@ -55,13 +57,14 @@ async function main() {
       },
     },
   });
-
+//3
   await prisma.usuario.create({
     data: {
       Nombre: "Melanny",
       Apellido: "Vargas",
       Telefono: "8888 8888",
       Email: "mvargas@gmail.com",
+      Identificacion: "2 0808 0192",
       Contrasenna:
         "$2b$10$Qmee6hXHmLE3LQtyIZV5OuwBBhZNl.iyTikoQalubE50vULOdryli",
       Calificacion: "5",
@@ -72,13 +75,15 @@ async function main() {
       },
     },
   });
-
+//4
   await prisma.usuario.create({
     data: {
       Nombre: "Jane",
       Apellido: "Doe",
+      NombreVendedor: "Jane Doe",
       Telefono: "8888 8888",
       Email: "jdoe@gmail.com",
+      Identificacion: "1 0253 6948",
       Contrasenna:
         "$2b$10$Qmee6hXHmLE3LQtyIZV5OuwBBhZNl.iyTikoQalubE50vULOdryli",
       Calificacion: "3",
@@ -89,13 +94,15 @@ async function main() {
       },
     },
   });
-
+//5
   await prisma.usuario.create({
     data: {
       Nombre: "Jake",
       Apellido: "Doe",
+      NombreVendedor: "Jake Doe",
       Telefono: "8888 8888",
       Email: "jakedoe@gmail.com",
+      Identificacion: "1 0253 6948",
       Contrasenna:
         "$2b$10$Qmee6hXHmLE3LQtyIZV5OuwBBhZNl.iyTikoQalubE50vULOdryli",
       Calificacion: "4",
@@ -106,6 +113,85 @@ async function main() {
       },
     },
   });
+
+//6
+await prisma.usuario.create({
+  data: {
+    Nombre: "Johnny",
+    Apellido: "Dollar",
+    Telefono: "8888 8888",
+    Email: "johnydolar@gmail.com",
+    Identificacion: "1 0253 6948",
+    Contrasenna:
+      "$2b$10$Qmee6hXHmLE3LQtyIZV5OuwBBhZNl.iyTikoQalubE50vULOdryli",
+    Calificacion: "1",
+    Roles: {
+      createMany: {
+        data: [{ RolId: 2 }],
+      },
+    },
+    Deshabilitado: true,
+  },
+});
+//7
+await prisma.usuario.create({
+data: {
+  Nombre: "Carlota",
+  Apellido: "Dulce",
+  Telefono: "8888 8888",
+  Email: "carlotadulce@gmail.com",
+  Identificacion: "1 0253 6948",
+  Contrasenna:
+    "$2b$10$Qmee6hXHmLE3LQtyIZV5OuwBBhZNl.iyTikoQalubE50vULOdryli",
+  Calificacion: "5",
+  Roles: {
+    createMany: {
+      data: [{ RolId: 2 }],
+    },
+  },
+  Deshabilitado: true,
+},
+});
+//8
+await prisma.usuario.create({
+data: {
+  Nombre: "Florencio",
+  Apellido: "Aromático",
+  NombreVendedor: "Fan de Floricienta forever",
+  Telefono: "8888 8888",
+  Email: "florencioaromatico@gmail.com",
+  Identificacion: "1 0253 6948",
+  Contrasenna:
+    "$2b$10$Qmee6hXHmLE3LQtyIZV5OuwBBhZNl.iyTikoQalubE50vULOdryli",
+  Calificacion: "1",
+  Roles: {
+    createMany: {
+      data: [{ RolId: 3 }],
+    },
+  },
+  Deshabilitado: true,
+},
+});
+//9
+await prisma.usuario.create({
+data: {
+  Nombre: "Estela",
+  Apellido: "Infinita",
+  NombreVendedor: "Forever Starlight",
+  Telefono: "8888 8888",
+  Email: "estelainfinita@gmail.com",
+  Identificacion: "1 0253 6948",
+  Contrasenna:
+    "$2b$10$Qmee6hXHmLE3LQtyIZV5OuwBBhZNl.iyTikoQalubE50vULOdryli",
+  Calificacion: "1",
+  Roles: {
+    createMany: {
+      data: [{ RolId: 3 }],
+    },
+  },
+  Deshabilitado: true,
+},
+});
 
   /*await prisma.usuario.createMany({
     data: Usuarios,

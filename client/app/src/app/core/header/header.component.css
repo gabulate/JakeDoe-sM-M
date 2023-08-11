@@ -85,7 +85,7 @@ c-navbar-nav[_ngcontent-ng-c2598991299] {
 }
 
 .btnEmail {
-  height: 90%;
+  height: 70%;
   background-color: transparent;
   border: transparent;
 }
@@ -93,6 +93,9 @@ c-navbar-nav[_ngcontent-ng-c2598991299] {
   font-size: 28px;
 }
 
+.nav-link:focus, .nav-link:hover {
+  color: white;
+}
 .carrito{
   display: flex;
   font-size: 25px;
@@ -103,8 +106,13 @@ c-navbar-nav[_ngcontent-ng-c2598991299] {
   color: white;
   text-align: right;
   transition: background-color 0.1s ease;
+  
 }
 
 .bolita{
   font-size: medium;
+}
+
+.mat-mdc-icon-button.mat-mdc-button-base {
+  padding: 8px;
 }
