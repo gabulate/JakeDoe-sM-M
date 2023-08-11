@@ -8,6 +8,7 @@ import { MensajeIndexComponent } from '../mensaje/mensaje-index/mensaje-index.co
 import { ProductoAdminComponent } from './producto-admin/producto-admin.component';
 import { ProductoEditComponent } from './producto-edit/producto-edit.component';
 import { AuthGuard } from '../share/guards/auth.guard';
+import { MensajeIndexAdminComponent } from '../mensaje/mensaje-index-admin/mensaje-index-admin.component';
 
 const routes: Routes = [
   { path: 'producto', component: ProductoIndexComponent },
@@ -17,13 +18,13 @@ const routes: Routes = [
     component: ProductoAdminComponent,
     canActivate: [AuthGuard],
     data: {
-      roles: [3],
+      roles: [1],
     },
   },
   { path: 'admin/producto/update/:id', component: ProductoEditComponent },
   { path: 'admin/producto/create', component: ProductoEditComponent },
   {
-    path: 'pedido/vendedor/:id',
+    path: 'producto/vendedor/:id',
     canActivate: [AuthGuard],
     data: {
       roles: [3],
@@ -39,6 +40,15 @@ const routes: Routes = [
     },
     component: MensajeIndexComponent,
   },
+  {
+    path: 'mensaje/all',
+    canActivate: [AuthGuard],
+    data: {
+      roles: [1],
+    },
+    component: MensajeIndexAdminComponent,
+  },
+
 ];
 
 @NgModule({

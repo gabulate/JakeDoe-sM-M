@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
 import { GenericService } from 'src/app/share/generic.service';
@@ -81,7 +81,8 @@ export class MensajeAllByProductoComponent {
         pregunta:[item.Pregunta],
         respuesta:[null,Validators.compose([
           Validators.required,
-          Validators.minLength(3)
+          Validators.minLength(3),
+          this.noWhitespaceValidator
         ])]
       });
       console.log(preguntaForm);
@@ -95,28 +96,43 @@ export class MensajeAllByProductoComponent {
   crearRespuesta(i:number){
     this.submitted = true;
     const preguntaForm= this.preguntaForms[i];
-    if(isNaN(preguntaForm.value.mensajeId)){
-      console.log("mensajeId es NaN");
+    if(preguntaForm.valid){
+      if(isNaN(preguntaForm.value.mensajeId)){
+        console.log("mensajeId es NaN");
+      }
+      console.log(preguntaForm.value);
+      this.gService.update('mensaje',preguntaForm.value)
+      .pipe(takeUntil(this.destroy$)).subscribe((data: any) => {
+        this.respMensaje=data;
+        console.log(this.respMensaje);
+  
+        this.btnResponder();
+      },
+      (error:any)=>{
+        console.error(error);
+      }
+      )
+    }else{
+      console.log('El formulario no es válido. No se enviará la respuesta.');
     }
-    
-    console.log(preguntaForm.value);
-    this.gService.update('mensaje',preguntaForm.value)
-    .pipe(takeUntil(this.destroy$)).subscribe((data: any) => {
-      this.respMensaje=data;
-      console.log(this.respMensaje);
-
-      this.router.navigate(['/producto/' + this.productoId], {
-        queryParams: { update: 'true' },
-      });
-    },
-    (error:any)=>{
-      console.error(error);
-    }
-    );
-
-
   }
   
+  btnResponder(){
+    this.router.navigate(['/producto/' + this.productoId], {
+      queryParams: { update: 'true' },
+    });
+  }
+  
+  public errorHandling = (i:number, control: string, error: string) => {
+    return this.preguntaForms[i].get(control)?.hasError(error);
+  };
+  
+  public noWhitespaceValidator(control: FormControl) {
+    return (control.value || '').trim().length? null : { 'whitespace': true };       
+  }
+
+
+
   ngOnDestroy() {
     this.destroy$.next(true);
     this.destroy$.unsubscribe();

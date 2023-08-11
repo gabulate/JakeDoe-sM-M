@@ -27,6 +27,8 @@
         ></c-carousel-control>
       </c-carousel>
 
+
+
       <div class="productInfo" *ngIf="datos">
         <h2 mat-dialog-title class="titulo">{{ datos.Nombre }}</h2>
         <mat-dialog-content>
@@ -90,6 +92,8 @@
             <textarea matInput formControlName="pregunta" maxlength="500">
             </textarea>
             <mat-hint align="end"> / 500</mat-hint>
+            <mat-error> La pregunta es <strong>requerida</strong>
+            </mat-error>
             <!-- <mat-error *ngIf="errorHandling('pregunta','required')">
                   Nombre es <strong>requerido</strong>
                 </mat-error>

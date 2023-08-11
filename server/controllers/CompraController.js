@@ -7,7 +7,7 @@ module.exports.get = async (request, response, next) => {
     orderBy: {
       id: "asc",
     },
-    select: {
+     select: {
       id: true,
       cliente: {
         select: {
@@ -18,7 +18,10 @@ module.exports.get = async (request, response, next) => {
       },
       Total: true,
       Fecha: true,
-    },
+    }, 
+
+
+    
   });
   response.json(compras);
 };

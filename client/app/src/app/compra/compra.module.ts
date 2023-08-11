@@ -22,13 +22,17 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { CompraDetalleComponent } from './compra-detalle/compra-detalle.component';
 import { PedidoDetalleComponent } from './pedido-detalle/pedido-detalle.component';
 import { PedidoDiagComponent } from './pedido-diag/pedido-diag.component';
+import { OrdenAllComponent } from './orden-all/orden-all.component';
+import { OrdenDiagComponent } from './orden-diag/orden-diag.component';
 
 @NgModule({
   declarations: [
     CompraByClienteComponent, 
     CompraDetalleComponent, 
     PedidoByVendedorComponent, 
-    PedidoDetalleComponent, PedidoDiagComponent
+    PedidoDetalleComponent, 
+    PedidoDiagComponent, 
+    OrdenAllComponent, OrdenDiagComponent
   ],
   imports: [
     CommonModule,
@@ -37,7 +41,8 @@ import { PedidoDiagComponent } from './pedido-diag/pedido-diag.component';
     MatIconModule,
     MatCardModule,
     MatPaginatorModule,
-    MatTableModule
+    MatTableModule,
+    MatButtonModule
   ],
 })
 export class PedidoModule {}

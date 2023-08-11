@@ -16,9 +16,6 @@ body {
   color: #22333b;
   margin: 1%;
 }
-.btnDetalle:hover {
-  background-color: #c44536;
-}
 
 .fotoProducto {
   margin-top: 5%;
@@ -26,4 +23,14 @@ body {
   width: 5rem;
   object-fit: contain;
 
+}
+.btnAcciones{
+  margin-left: 2%;
+  margin-right: 2%;
+}
+.btnAcciones:hover{
+  background-color: #C44536;
+}
+.btnCrear{
+  margin-bottom: 1%;
 }

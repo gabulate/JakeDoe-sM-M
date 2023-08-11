@@ -6,6 +6,7 @@ import { GenericService } from 'src/app/share/generic.service';
 import { ProductoDiagComponent } from '../producto-diag/producto-diag.component';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
+import { AuthenticationService } from 'src/app/share/authentication.service';
 
 @Component({
   selector: 'app-producto-index',
@@ -15,7 +16,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class ProductoIndexComponent {
   datos: any;
   destroy$: Subject<boolean> = new Subject<boolean>();
-
+  isAutenticated: boolean;
+  currentUser: any;
+  clienteId: any;
   gridCols: number = 3;
 
   constructor(
@@ -24,10 +27,21 @@ export class ProductoIndexComponent {
     private sanitizer: DomSanitizer,
     private router: Router,
     private route: ActivatedRoute,
-    private breakpointObserver: BreakpointObserver
+    private breakpointObserver: BreakpointObserver,
+    private authService: AuthenticationService
   ) {
     this.listarProductos();
     this.observeBreakpoints();
+
+    this.authService.currentUser.subscribe((x) => (this.currentUser = x));
+    this.authService.isAuthenticated.subscribe(
+      (valor) => (this.isAutenticated = valor)
+    );
+
+    this.clienteId = this.authService.UsuarioId;
+    console.log('Cliente: ', this.currentUser.user.id);
+
+
   }
   listarProductos() {
     this.gService
@@ -72,4 +86,22 @@ export class ProductoIndexComponent {
     const imageUrl = 'data:image/jpeg;base64,' + base64Image;
     return this.sanitizer.bypassSecurityTrustUrl(imageUrl);
   }
+
+  /* 
+  isAdmin() {
+    let userRole = [];
+    if (this.currentUser) {
+      for (let index = 0; index < this.currentUser.user.Roles.length; index++) {
+        userRole[index] = this.currentUser.user.Roles[index].RolId;
+      }
+    }
+
+    for (let index = 0; index < userRole.length; index++) {
+      if (userRole[index] === 1) {
+        return true;
+      }
+    }    
+    return false;
+  } */
+
 }

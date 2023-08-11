@@ -51,3 +51,43 @@ button{
   align-self: center;
   margin-left: auto;
 } */
+
+.navbar-style{
+  background-color: black;
+}
+
+.mat-mdc-button:not(:disabled) {
+  color: white;
+}
+.navbar{
+  --cui-navbar-toggler-icon-bg: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='white' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+  --cui-navbar-color: white;
+}
+
+.navbar-nav{
+  --cui-nav-link-color:white;
+  --cui-nav-link-hover-color: var(--cui-navbar-hover-color);
+  --cui-nav-link-disabled-color: var(--cui-navbar-disabled-color);
+}
+c-navbar-nav{
+  margin-top: 1%;
+  }
+  .mat-mdc-button[disabled][disabled] {
+    --mdc-text-button-disabled-label-text-color: rgb(255, 248, 248);
+  }
+  
+  .navbar-nav {
+    --cui-nav-link-padding-x: 0;
+    --cui-nav-link-padding-y: 0rem;
+    
+  }
+  c-navbar-nav[_ngcontent-ng-c2598991299] {
+    margin-top: 1.5%;
+  }
+  
+  .btnEmail{
+    height: 90%;
+  }
+  .material-icons {
+    font-size: 28px;
+  }

@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { CarouselModule } from '@coreui/angular';
+import { CarouselModule, NavbarModule } from '@coreui/angular';
 
 
 import { ProductoRoutingModule } from './producto-routing.module';
@@ -53,7 +53,10 @@ import { ProductoEditComponent } from './producto-edit/producto-edit.component';
     ReactiveFormsModule,
     MatRadioModule,
     MatInputModule,
-    MatSelectModule
+    MatSelectModule,
+
+
+    NavbarModule,
   ]
 })
 export class ProductoModule { }

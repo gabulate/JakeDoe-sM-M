@@ -1,18 +1,19 @@
-import {  AfterViewInit,  Component,  Inject,  OnInit,  ViewChild,} from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Component, ViewChild } from '@angular/core';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { MatTableDataSource } from '@angular/material/table';
 import { Subject, takeUntil } from 'rxjs';
+import { ActivatedRoute, Router } from '@angular/router';
 import { GenericService } from 'src/app/share/generic.service';
 import { MatPaginator } from '@angular/material/paginator';
-import { MatTable, MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
+import { OrdenDiagComponent } from '../orden-diag/orden-diag.component';
 
 @Component({
-  selector: 'app-mensaje-index',
-  templateUrl: './mensaje-index.component.html',
-  styleUrls: ['./mensaje-index.component.css']
+  selector: 'app-orden-all',
+  templateUrl: './orden-all.component.html',
+  styleUrls: ['./orden-all.component.css']
 })
-export class MensajeIndexComponent {
+export class OrdenAllComponent {
   datos: any;
   destroy$: Subject<boolean> = new Subject<boolean>();
 
@@ -22,23 +23,25 @@ export class MensajeIndexComponent {
   dataSource = new MatTableDataSource<any>();
 
   /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
-  displayedColumns = ['producto',  'acciones' ];
+  displayedColumns = ['orden', 'cliente', 'total' ,'acciones'];
+ // displayedColumns = ['orden', 'cliente', 'total' ];
 
   constructor(
     private router: Router,
     private route: ActivatedRoute,
-    private gService: GenericService
-  ) {}
+    private gService: GenericService,
+    private dialog:MatDialog
+  ) {
+  }
 
   ngAfterViewInit(): void {
     let id=this.route.snapshot.paramMap.get('id');
-    this.listaProductos(Number(id));
+    this.listaOrdenes();
   }
-  
-  listaProductos(id:any) {
+  listaOrdenes() {
     //localhost:3000/videojuego
     this.gService
-      .get('producto/vendedor', id)
+      .list('compra/')
       .pipe(takeUntil(this.destroy$))
       .subscribe((data: any) => {
         console.log(data);
@@ -48,10 +51,15 @@ export class MensajeIndexComponent {
         this.dataSource.paginator = this.paginator;
       });
   }
-  mensajes(id:number){
-    this.router.navigate(['/mensaje/producto', id], {
-      relativeTo: this.route,
-    });
+  detalle(id: number) {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.disableClose = false;
+    dialogConfig.data = {
+      id: id,
+    };
+  //"abra el elemento q se va a convertir en el dialogo"  
+  this.dialog.open(OrdenDiagComponent, dialogConfig); 
+
   }
 
   ngOnDestroy() {
