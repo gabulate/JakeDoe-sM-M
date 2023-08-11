@@ -80,7 +80,7 @@
         </mat-grid-list>
       </div>
 
-      <div class="dialog-right-questions">
+      <div *ngIf="currentUser" class="dialog-right-questions">
         <form [formGroup]="preguntaForm" (ngSubmit)="crearPregunta()">
           <h4>¿Tiene alguna pregunta para el proveedor?</h4>
           <input type="hidden" formControlName="id" />
@@ -109,6 +109,11 @@
           </mat-card-actions>
         </form>
       </div>
+      <div *ngIf="!currentUser">
+        <h4>¿Tiene alguna pregunta para el proveedor?</h4>
+        <h5>Inicia sesión para dejar un comentario.</h5>
+      </div>
+
     </div>
   </div>
 
