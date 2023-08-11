@@ -17,7 +17,7 @@ const metodoPagoRouter = require("./routes/MetodoPagoRoutes");
 const direccionRouter = require("./routes/DireccionRoutes");
 const categoriaRoutes = require("./routes/CategoriaRoutes");
 const rolRoutes = require("./routes/RolRoutes");
-const estadoProductoRoutes = require('./routes/EstadoProductoRoutes.js'); 
+const estadoProductoRoutes = require('./routes/EstadoProductoRoutes.js');
 
 // Acceder a la configuracion del archivo .env
 dotEnv.config();

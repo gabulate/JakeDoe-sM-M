@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthenticationService } from 'src/app/share/authentication.service';
+import { CartService } from 'src/app/share/cart.service';
 
 @Component({
   selector: 'app-header',
@@ -11,10 +12,13 @@ export class HeaderComponent implements OnInit {
   isAutenticated: boolean;
   currentUser: any;
   clienteId: any;
+  qtyItems: Number = 0;
   constructor(
+    private cartService: CartService,
     private router: Router,
     private authService: AuthenticationService
   ) {
+    this.qtyItems = this.cartService.quantityItems();
     /* this.authService.isAuthenticated.subscribe((valor)=>(this.isAutenticated=valor));
       this.clienteId=this.currentUser.user.id;
       console.log("id usuario: "+ this.clienteId); */
@@ -28,6 +32,10 @@ export class HeaderComponent implements OnInit {
 
     this.clienteId = this.authService.UsuarioId;
     console.log('Cliente: ', this.currentUser.user.id);
+
+    this.cartService.countItems.subscribe((value) => {
+      this.qtyItems = value;
+    });
   }
 
   comprasCliente() {
@@ -61,11 +69,11 @@ export class HeaderComponent implements OnInit {
       if (userRole[index] === 3) {
         return true;
       }
-    }    
+    }
     return false;
   }
 
-    isCliente() {
+  isCliente() {
     let userRole = [];
     if (this.currentUser) {
       for (let index = 0; index < this.currentUser.user.Roles.length; index++) {
@@ -77,7 +85,7 @@ export class HeaderComponent implements OnInit {
       if (userRole[index] === 2) {
         return true;
       }
-    }    
+    }
     return false;
   }
 
@@ -93,7 +101,7 @@ export class HeaderComponent implements OnInit {
       if (userRole[index] === 1) {
         return true;
       }
-    }    
+    }
     return false;
   }
   login() {

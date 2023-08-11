@@ -1,0 +1,35 @@
+.btnAccion {
+  padding: 2rem;
+  font-size: large;
+}
+
+.btnAccion:hover {
+  background-color: #c44536;
+}
+
+.botones {
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  margin: 1rem;
+  width: 100%;
+}
+
+.footer-row {
+  font-weight: bold;
+}
+.box {
+  margin: 2em 2em;
+  padding: 2em 2em;
+}
+.header {
+  background-color: #b4aca4;
+  color: white;
+}
+.footer-row {
+  background-color: #e8e8e8;
+}
+.footer-total {
+  font-size: 1.2em;
+  font-weight: bolder;
+}

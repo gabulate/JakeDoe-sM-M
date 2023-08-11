@@ -1,12 +1,17 @@
 import { Component } from '@angular/core';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { CartService } from 'src/app/share/cart.service';
 import { Subject, takeUntil } from 'rxjs';
 import { GenericService } from 'src/app/share/generic.service';
 import { ProductoDiagComponent } from '../producto-diag/producto-diag.component';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthenticationService } from 'src/app/share/authentication.service';
+import {
+  NotificacionService,
+  TipoMessage,
+} from 'src/app/share/notification.service';
 
 @Component({
   selector: 'app-producto-index',
@@ -27,6 +32,8 @@ export class ProductoIndexComponent {
     private sanitizer: DomSanitizer,
     private router: Router,
     private route: ActivatedRoute,
+    private cartService: CartService,
+    private notificacion: NotificacionService,
     private breakpointObserver: BreakpointObserver,
     private authService: AuthenticationService
   ) {
@@ -40,8 +47,6 @@ export class ProductoIndexComponent {
 
     this.clienteId = this.authService.UsuarioId;
     console.log('Cliente: ', this.currentUser.user.id);
-
-
   }
   listarProductos() {
     this.gService
@@ -87,6 +92,31 @@ export class ProductoIndexComponent {
     return this.sanitizer.bypassSecurityTrustUrl(imageUrl);
   }
 
+  comprar(idProducto) {
+    try {
+      this.gService
+        .get('producto', idProducto)
+        .pipe(takeUntil(this.destroy$))
+        .subscribe((data: any) => {
+          //Agregar videojuego obtenido del API al carrito
+          this.cartService.addToCart(data);
+          //Notificar al usuario
+          this.notificacion.mensaje(
+            'Orden',
+            'Se ha agregado: ' + data.Nombre + ' al carrito de compras.',
+            TipoMessage.success
+          );
+          console.log('CARRITO: ', this.cartService.getItems);
+        });
+    } catch {
+      this.notificacion.mensaje(
+        'Orden',
+        'Ha ocurrido un error al añadir el producto al carrito :(.',
+        TipoMessage.error
+      );
+    }
+  }
+
   /* 
   isAdmin() {
     let userRole = [];
@@ -103,5 +133,4 @@ export class ProductoIndexComponent {
     }    
     return false;
   } */
-
 }

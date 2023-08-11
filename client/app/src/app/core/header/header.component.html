@@ -34,77 +34,169 @@
   
 </mat-toolbar> -->
 
-
-<c-navbar  expand="lg" class="navbar-style">
+<c-navbar expand="lg" class="navbar-style">
   <c-container fluid>
-    <button mat-button [routerLink]="['/']" routerLinkActive="mat-raised-button">
-      <img mat-card-lg-image src="../../../assets/img/logov2.png"/>
+    <button
+      mat-button
+      [routerLink]="['/']"
+      routerLinkActive="mat-raised-button"
+    >
+      <img mat-card-lg-image src="../../../assets/img/logov2.png" />
     </button>
-     <button [cNavbarToggler]="collapseRef"></button> 
+    <button [cNavbarToggler]="collapseRef"></button>
     <div #collapseRef="cCollapse" cCollapse navbar>
       <c-navbar-nav class="me-auto mb-2 mb-lg-0">
         <!--ADMIN NAVBAR-->
         <c-nav-item>
-          <button *ngIf="isAdmin()" mat-button [routerLink]="['/admin/producto/']" routerLinkActive="mat-raised-button"> Productos</button>
+          <button
+            *ngIf="isAdmin()"
+            mat-button
+            [routerLink]="['/admin/producto/']"
+            routerLinkActive="mat-raised-button"
+          >
+            Productos
+          </button>
         </c-nav-item>
         <c-nav-item>
-          <button *ngIf="isAdmin()" mat-button [routerLink]="['/usuario/all']" routerLinkActive="mat-raised-button"> Usuarios</button>
+          <button
+            *ngIf="isAdmin()"
+            mat-button
+            [routerLink]="['/usuario/all']"
+            routerLinkActive="mat-raised-button"
+          >
+            Usuarios
+          </button>
         </c-nav-item>
         <c-nav-item>
-          <button *ngIf="isAdmin()" mat-button [routerLink]="['/orden']" routerLinkActive="mat-raised-button"> Órdenes</button>
+          <button
+            *ngIf="isAdmin()"
+            mat-button
+            [routerLink]="['/orden']"
+            routerLinkActive="mat-raised-button"
+          >
+            Órdenes
+          </button>
         </c-nav-item>
         <c-nav-item>
-          <button *ngIf="isAdmin()" mat-button [routerLink]="['/mensaje/all']" routerLinkActive="mat-raised-button"> Mensajes</button>
+          <button
+            *ngIf="isAdmin()"
+            mat-button
+            [routerLink]="['/mensaje/all']"
+            routerLinkActive="mat-raised-button"
+          >
+            Mensajes
+          </button>
         </c-nav-item>
 
-
         <c-nav-item>
-          <button *ngIf="isCliente() || isVendedor()" mat-button class="navbar-text" [routerLink]="['/producto']" routerLinkActive="mat-raised-button">Productos</button>
+          <button
+            *ngIf="isCliente() || isVendedor()"
+            mat-button
+            class="navbar-text"
+            [routerLink]="['/producto']"
+            routerLinkActive="mat-raised-button"
+          >
+            Productos
+          </button>
         </c-nav-item>
 
         <c-nav-item>
-          <button *ngIf="isCliente() || isVendedor()" mat-button (click)="comprasCliente()" routerLinkActive="mat-raised-button">Compras</button>
+          <button
+            *ngIf="isCliente() || isVendedor()"
+            mat-button
+            (click)="comprasCliente()"
+            routerLinkActive="mat-raised-button"
+          >
+            Compras
+          </button>
         </c-nav-item>
 
         <c-nav-item>
-          <button *ngIf="isVendedor()" mat-button (click)="pedidosCliente()" routerLinkActive="mat-raised-button">Pedidos</button>
+          <button
+            *ngIf="isVendedor()"
+            mat-button
+            (click)="pedidosCliente()"
+            routerLinkActive="mat-raised-button"
+          >
+            Pedidos
+          </button>
         </c-nav-item>
 
         <c-nav-item>
-          <button *ngIf="isVendedor()" mat-button (click)="proveedor()" routerLinkActive="mat-raised-button">Proveedor</button>
+          <button
+            *ngIf="isVendedor()"
+            mat-button
+            (click)="proveedor()"
+            routerLinkActive="mat-raised-button"
+          >
+            Proveedor
+          </button>
         </c-nav-item>
 
         <c-nav-item>
-          <button *ngIf="isVendedor()" mat-button (click)="mensajes()" routerLinkActive="mat-raised-button">Mensajes</button>
+          <button
+            *ngIf="isVendedor()"
+            mat-button
+            (click)="mensajes()"
+            routerLinkActive="mat-raised-button"
+          >
+            Mensajes
+          </button>
         </c-nav-item>
 
         <!-- <c-nav-item *ngIf="isAutenticated" class="btnEmail">
           <button mat-button disabled *ngIf="isAutenticated"  class="btnEmail">{{currentUser.user.Email}}</button>
         </c-nav-item> -->
 
-        <c-dropdown variant="nav-item" [popper]="false" >
+        <c-dropdown variant="nav-item" [popper]="false">
           <button cDropdownToggle cNavLink class="btnEmail">
-            <c-navbar-text *ngIf="isAutenticated">{{currentUser.user.Email}}</c-navbar-text>
-            <mat-icon [ngStyle]="{'color': isAutenticated ? 'white': '#9E9E9E' }">person</mat-icon>
+            <c-navbar-text *ngIf="isAutenticated"
+              >{{ currentUser.user.Email }}
+              <mat-icon
+                [ngStyle]="{ color: isAutenticated ? 'white' : '#9E9E9E' }"
+                >person</mat-icon
+              >
+            </c-navbar-text>
           </button>
           <ul cDropdownMenu>
-            <li><button cDropdownItem (click)="login()" *ngIf="!(isAutenticated)" >
-              <mat-icon>person_add</mat-icon>
-               Login
-            </button></li>
-            <li><button cDropdownItem (click)="logout()" *ngIf="isAutenticated">
-              <mat-icon>person_remove</mat-icon>
-             Logout
-            </button></li>
-          </ul >
-        </c-dropdown> 
+            <li>
+              <button cDropdownItem (click)="login()" *ngIf="!isAutenticated">
+                <mat-icon>person_add</mat-icon>
+                Login
+              </button>
+            </li>
+            <li>
+              <button cDropdownItem (click)="logout()" *ngIf="isAutenticated">
+                <mat-icon>person_remove</mat-icon>
+                Logout
+              </button>
+            </li>
+          </ul>
+        </c-dropdown>
+
+        <!--Carrito-->
+        <c-nav-item align="end">
+          <button
+            *ngIf="isCliente()"
+            class="carrito"
+            mat-icon-button
+            [routerLink]="'/facturacion/carrito'"
+          >
+            <mat-icon>shopping_cart</mat-icon>
+            <div
+            matBadgeColor="warn"
+              class="bolita"
+              [matBadge]="qtyItems.toString()"
+              matBadgeSize="medium"
+            ></div>
+          </button>
+        </c-nav-item>
       </c-navbar-nav>
     </div>
   </c-container>
 </c-navbar>
 
-
-     <!-- 
+<!-- 
       <ng-container class="usuario">
           <c-navbar-text *ngIf="isAutenticated">{{currentUser.user.Email}}</c-navbar-text>
           

@@ -13,6 +13,7 @@ import { ToastrModule } from 'ngx-toastr';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { PedidoModule } from './compra/compra.module';
 import { MensajeModule } from './mensaje/mensaje.module';
+import { FacturacionModule } from './facturacion/facturacion.module';
 import { HttpErrorInterceptorService } from './share/http-error-interceptor.service';
 
 
@@ -32,8 +33,8 @@ import { HttpErrorInterceptorService } from './share/http-error-interceptor.serv
     PedidoModule,
     MensajeModule,
     ProductoModule,
-    AppRoutingModule,
-      
+    FacturacionModule,
+    AppRoutingModule
   ],
   providers: [
 /*     { 

@@ -153,6 +153,10 @@
   font-size: large;
 }
 
+.btnAccion:hover{
+  background-color: #C44536;
+}
+
 .dk {
   padding: 1%;
   margin: 1%;

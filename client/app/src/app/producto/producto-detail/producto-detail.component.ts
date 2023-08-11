@@ -1,10 +1,20 @@
 import { Component, Inject, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
+import { CartService } from 'src/app/share/cart.service';
 import { GenericService } from 'src/app/share/generic.service';
 import { DomSanitizer } from '@angular/platform-browser';
 import { AuthenticationService } from 'src/app/share/authentication.service';
+import {
+  NotificacionService,
+  TipoMessage,
+} from 'src/app/share/notification.service';
 
 @Component({
   selector: 'app-producto-detail',
@@ -31,6 +41,8 @@ export class ProductoDetailComponent implements OnInit {
     private route: ActivatedRoute,
     private gService: GenericService,
     private sanitizer: DomSanitizer,
+    private cartService: CartService,
+    private notificacion: NotificacionService,
     private authService: AuthenticationService
   ) {
     this.formularioReactive();
@@ -105,9 +117,9 @@ export class ProductoDetailComponent implements OnInit {
       pregunta: [
         null,
         Validators.compose([
-          Validators.required, 
+          Validators.required,
           Validators.minLength(3),
-          this.noWhitespaceValidator
+          this.noWhitespaceValidator,
         ]),
       ],
     });
@@ -128,7 +140,6 @@ export class ProductoDetailComponent implements OnInit {
       .pipe(takeUntil(this.destroy$))
       .subscribe((data: any) => {
         this.respMensaje = data;
-  
 
         let pre = document.getElementById('Preguntas');
 
@@ -151,6 +162,33 @@ export class ProductoDetailComponent implements OnInit {
     this.preguntaForm.reset();
   }
 
+  comprar(idProducto) {
+    try {
+      this.gService
+        .get('producto', idProducto)
+        .pipe(takeUntil(this.destroy$))
+        .subscribe((data: any) => {
+          //Agregar videojuego obtenido del API al carrito
+          this.cartService.addToCart(data);
+          //Notificar al usuario
+          this.notificacion.mensaje(
+            'Orden',
+            'Se ha agregado: ' + data.Nombre + ' al carrito de compras.',
+            TipoMessage.success
+          );
+          //console.log('CARRITO: ', this.cartService.getItems);
+          this.router.navigate(['/facturacion/carrito'], {
+            relativeTo: this.route,
+          });
+        });
+    } catch {
+      this.notificacion.mensaje(
+        'Orden',
+        'Ha ocurrido un error al añadir el producto al carrito :(.',
+        TipoMessage.error
+      );
+    }
+  }
 
   onReset() {
     this.submitted = false;
@@ -167,7 +205,7 @@ export class ProductoDetailComponent implements OnInit {
   };
 
   public noWhitespaceValidator(control: FormControl) {
-    return (control.value || '').trim().length? null : { 'whitespace': true };       
+    return (control.value || '').trim().length ? null : { whitespace: true };
   }
 
   ngOnDestroy() {

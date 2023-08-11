@@ -21,9 +21,9 @@
         <mat-divider inset></mat-divider>
         
         <mat-card-actions>
-          <div class="dk">
+          <button class="dk" (click)="comprar(item.id)">
             <mat-icon>add_shopping_cart</mat-icon>Añadir al carrito
-          </div>
+          </button>
           <button class="dk" (click)="detalleProducto(item.id)">
             Ver Producto
           </button>

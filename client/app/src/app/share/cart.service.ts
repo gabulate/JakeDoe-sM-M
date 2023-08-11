@@ -3,7 +3,7 @@ import { BehaviorSubject, Observable, Subject } from 'rxjs';
 // Definir clase con las propiedades que es necesario que gestione el carrito
 export class ItemCart {
   idItem: number;
-  product: any;
+  producto: any;
   cantidad: number;
   precio: number;
   subtotal: number;
@@ -32,10 +32,10 @@ export class CartService {
     //Armar instancia de ItemCart con los valores respectivos del producto
     //producto.id es cuando viene desde el boton comprar y trae la información del API
     newItem.idItem = producto.id | producto.idItem;
-    newItem.precio = producto.precio;
+    newItem.precio = producto.Precio;
     newItem.cantidad = 1;
     newItem.subtotal = this.calculoSubtotal(newItem);
-    newItem.product = producto;
+    newItem.producto = producto;
     //Obtenemos el valor actual
     let listCart = this.cart.getValue();
     //Si no es el primer item del carrito
