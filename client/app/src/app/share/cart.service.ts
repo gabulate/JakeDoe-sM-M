@@ -4,7 +4,7 @@ import { BehaviorSubject, Observable, Subject } from 'rxjs';
 export class ItemCart {
   idItem: number;
   producto: any;
-  cantidad: number;
+  Cantidad: number;
   precio: number;
   subtotal: number;
 }
@@ -33,7 +33,7 @@ export class CartService {
     //producto.id es cuando viene desde el boton comprar y trae la información del API
     newItem.idItem = producto.id | producto.idItem;
     newItem.precio = producto.Precio;
-    newItem.cantidad = 1;
+    newItem.Cantidad = 1;
     newItem.subtotal = this.calculoSubtotal(newItem);
     newItem.producto = producto;
     //Obtenemos el valor actual
@@ -45,20 +45,20 @@ export class CartService {
       //Si ya cargamos uno aumentamos su cantidad
       if (objIndex != -1) {
         //Verificar que el producto tenga la propiedad cantidad
-        if (producto.hasOwnProperty('cantidad')) {
+        if (producto.hasOwnProperty('Cantidad')) {
           //Si la cantidad es menor o igual a 0 se elimina del carrito
           if (producto.cantidad <= 0) {
             this.removeFromCart(newItem);
             return;
           } else {
             //Actualizar cantidad
-            listCart[objIndex].cantidad = producto.cantidad;
+            listCart[objIndex].Cantidad = producto.Cantidad;
           }
         } else {
           //Actualizar la cantidad de un producto existente
-          listCart[objIndex].cantidad += 1;
+          listCart[objIndex].Cantidad += 1;
         }
-        newItem.cantidad = listCart[objIndex].cantidad;
+        newItem.Cantidad = listCart[objIndex].Cantidad;
         listCart[objIndex].subtotal = this.calculoSubtotal(newItem);
       }
       //Si es el primer item de ese tipo se agrega al carrito
@@ -79,7 +79,7 @@ export class CartService {
   }
   //Calcula el subtotal del item del carrito que se indique
   private calculoSubtotal(item: ItemCart) {
-    return item.precio * item.cantidad;
+    return item.precio * item.Cantidad;
   }
   //Elimina un elemento del carrito
   public removeFromCart(newData: ItemCart) {
@@ -99,6 +99,7 @@ export class CartService {
   }
   //Obtener todos los items del carrito
   get getItems() {
+    
     return this.cart.getValue();
   }
   //Gestiona el conteo de los items del carrito como un Observable
@@ -106,28 +107,29 @@ export class CartService {
     this.qtyItems.next(this.quantityItems());
     return this.qtyItems.asObservable();
   }
-  setItems() {
+  setItems(){
     return this.cart.getValue();
   }
-  quantityItems() {
+  quantityItems(){
     let listCart = this.cart.getValue();
     let sum = 0;
     if (listCart != null) {
+      
       //Sumando las cantidades de cada uno de los items del carrito
-      listCart.forEach((obj) => {
-        sum += obj.cantidad;
-      });
+     listCart.forEach((obj) => {
+       sum +=  obj.Cantidad;
+     });
+      
     }
     return sum;
   }
   //Calcula y retorna el total de los items del carrito
-  public getTotal(): number {
-    //Total antes de impuestos
+  public getTotal(): number {//Total antes de impuestos
     let total = 0;
     let listCart = this.cart.getValue();
     if (listCart != null) {
-      //Sumando los subtotales de cada uno de los items del carrito
-
+       //Sumando los subtotales de cada uno de los items del carrito
+     
       listCart.forEach((item: ItemCart, index) => {
         total += item.subtotal;
       });
@@ -135,6 +137,7 @@ export class CartService {
 
     return total;
   }
+  
   //Borra toda los items del carrito
   public deleteCart() {
     this.cart.next(null); //Enviamos el valor al Observable

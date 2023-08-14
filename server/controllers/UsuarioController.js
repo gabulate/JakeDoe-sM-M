@@ -14,10 +14,10 @@ module.exports.get = async (request, response, next) => {
       id: true,
       Nombre: true,
       Apellido: true,
-      NombreVendedor:true,
+      NombreVendedor: true,
       Telefono: true,
       Email: true,
-      Identificacion:true,
+      Identificacion: true,
       Calificacion: true,
       Deshabilitado: true,
       //Contrasenna: true,
@@ -41,10 +41,10 @@ module.exports.getById = async (request, response, next) => {
       id: true,
       Nombre: true,
       Apellido: true,
-      NombreVendedor:true,
+      NombreVendedor: true,
       Telefono: true,
       Email: true,
-      Identificacion:true,
+      Identificacion: true,
       Calificacion: true,
       Deshabilitado: true,
       Roles: {
@@ -171,7 +171,7 @@ module.exports.update = async (request, response, next) => {
           Apellido: usuario.Apellido,
           NombreVendedor: usuario.NombreVendedor,
           Telefono: usuario.Telefono,
-          Identificacion:usuario.Identificacion,
+          Identificacion: usuario.Identificacion,
           Contrasenna: hash, //Envía la contraseña encriptada
           Calificacion: usuario.Calificacion,
 
@@ -214,7 +214,7 @@ module.exports.cambiarActivacion = async (request, response, next) => {
         id: id,
       },
       data: {
-        Deshabilitado: usuarioOriginal.Deshabilitado? false : true,
+        Deshabilitado: usuarioOriginal.Deshabilitado ? false : true,
       },
     });
 
@@ -228,61 +228,66 @@ module.exports.cambiarActivacion = async (request, response, next) => {
   }
 };
 
-
 module.exports.login = async (request, response, next) => {
-  let usuarioReq = request.body;
-  //Buscar el usuario según el email dado
-  const usuario = await prisma.usuario.findUnique({
-    where: {
-      Email: usuarioReq.email,
-    },
-    include: { Roles: true },
-  });
-  //Sino lo encuentra según su email
-  if (!usuario) {
-    response.status(401).send({
-      success: false,
-      message: "Usuario no registrado",
-    });
-    return;
-  }
-  //Verifica la contraseña
-  const checkPassword = await bcrypt.compare(
-    usuarioReq.password,
-    usuario.Contrasenna
-  );
-  if (checkPassword === false) {
-    response.status(401).send({
-      success: false,
-      message: "Credenciales no validas",
-    });
-  } 
-  //Verifica si está deshabilitado
-  else if(usuario.Deshabilitado){
-    response.status(403).send({
-      success: false,
-      message: "Acceso denegado. Su cuenta está deshabilitada.",
-    });
-  }
-  
-  else {
-    //Usuario correcto
-    //Crear el payload
-    const payload = {
-      Email: usuario.Email,
-      Roles: usuario.Roles,
-    };
-    //Crear el token
-    const token = jwt.sign(payload, process.env.SECRET_KEY, {
-      expiresIn: process.env.JWT_EXPIRE,
-    });
-    response.json({
-      success: true,
-      message: "Usuario registrado",
-      data: {
-        user: usuario,
-        token,
+  try {
+    let usuarioReq = request.body;
+    //Buscar el usuario según el email dado
+    const usuario = await prisma.usuario.findUnique({
+      where: {
+        Email: usuarioReq.email,
       },
+      include: { Roles: true },
+    });
+    //Sino lo encuentra según su email
+    if (!usuario) {
+      response.status(401).send({
+        success: false,
+        message: "Usuario no registrado",
+      });
+      return;
+    }
+    //Verifica la contraseña
+    const checkPassword = await bcrypt.compare(
+      usuarioReq.password,
+      usuario.Contrasenna
+    );
+    if (checkPassword === false) {
+      response.status(401).send({
+        success: false,
+        message: "Credenciales no validas",
+      });
+    }
+    //Verifica si está deshabilitado
+    else if (usuario.Deshabilitado) {
+      response.status(403).send({
+        success: false,
+        message: "Acceso denegado. Su cuenta está deshabilitada.",
+      });
+    } else {
+      //Usuario correcto
+      //Crear el payload
+      const payload = {
+        Email: usuario.Email,
+        Roles: usuario.Roles,
+      };
+      //Crear el token
+      const token = jwt.sign(payload, process.env.SECRET_KEY, {
+        expiresIn: process.env.JWT_EXPIRE,
+      });
+      response.json({
+        success: true,
+        message: "Usuario registrado",
+        data: {
+          user: usuario,
+          token,
+        },
+      });
+    }
+  } catch (error) {
+    response.status(500).json({
+      status: false,
+      message: "Error: " + error,
+      data: error,
     });
   }
 };

@@ -8,15 +8,17 @@ import {
   NotificacionService,
   TipoMessage,
 } from 'src/app/share/notification.service';
+import { Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-carrito',
   templateUrl: './carrito.component.html',
   styleUrls: ['./carrito.component.css'],
 })
-export class CarritoComponent {  
+export class CarritoComponent {
   total = 0;
   fecha = Date.now();
+  destroy$: Subject<boolean> = new Subject<boolean>();
   qtyItems = 0;
   isAutenticated: boolean;
   currentUser: any;
@@ -39,8 +41,8 @@ export class CarritoComponent {
     private authService: AuthenticationService
   ) {}
 
-  ngOnInit(): void { 
-    this.qtyItems=this.cartService.quantityItems();
+  ngOnInit(): void {
+    this.qtyItems = this.cartService.quantityItems();
     this.authService.currentUser.subscribe((x) => (this.currentUser = x));
     this.authService.isAuthenticated.subscribe(
       (valor) => (this.isAutenticated = valor)
@@ -50,37 +52,55 @@ export class CarritoComponent {
 
     this.cartService.currentDataCart$.subscribe((data) => {
       this.dataSource = new MatTableDataSource(data);
+      //console.log('carrito', data);
     });
+
     this.total = this.cartService.getTotal();
   }
+
   actualizarCantidad(item: any) {
-    this.cartService.addToCart(item);
-    this.total = this.cartService.getTotal();
-    this.cartService.currentDataCart$.subscribe((data) => {
-      this.dataSource = new MatTableDataSource(data);
-    });
-    /*  this.noti.mensaje('Orden',
-    'Cantidad actualizada: '+item.cantidad,
-    TipoMessage.info) */
+    this.gService
+      .get('producto', item.producto.id)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((data: any) => {
+        //console.log('item carrito', data);
+        data.Cantidad = item.Cantidad;
+
+        this.cartService.addToCart(data);
+        this.total = this.cartService.getTotal();
+        this.cartService.currentDataCart$.subscribe((data) => {
+          this.dataSource = new MatTableDataSource(data);
+        });
+      });
   }
+
   eliminarItem(item: any) {
     this.cartService.removeFromCart(item);
     this.total = this.cartService.getTotal();
     this.noti.mensaje('Orden', 'Producto eliminado.', TipoMessage.warning);
   }
   comprar() {
-    if(this.qtyItems > 0){
+    if (this.qtyItems > 0) {
       this.router.navigate(['/facturacion/confirmar'], {
         relativeTo: this.route,
       });
     } else {
-    this.noti.mensaje('Orden', 'No hay productos a comprar.', TipoMessage.error);
+      this.noti.mensaje(
+        'Orden',
+        'No hay productos a comprar.',
+        TipoMessage.error
+      );
     }
   }
 
-  Productos(){
+  Productos() {
     this.router.navigate(['/producto'], {
       relativeTo: this.route,
     });
+  }
+
+  ngOnDestroy() {
+    this.destroy$.next(true);
+    this.destroy$.unsubscribe();
   }
 }
