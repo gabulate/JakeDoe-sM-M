@@ -168,6 +168,7 @@ export class ProductoDetailComponent implements OnInit {
         .get('producto', idProducto)
         .pipe(takeUntil(this.destroy$))
         .subscribe((data: any) => {
+          data.Cantidad = 1;
           //Agregar videojuego obtenido del API al carrito
           this.cartService.addToCart(data);
           //Notificar al usuario

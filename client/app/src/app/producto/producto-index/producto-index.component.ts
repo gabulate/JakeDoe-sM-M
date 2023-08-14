@@ -98,6 +98,8 @@ export class ProductoIndexComponent {
         .get('producto', idProducto)
         .pipe(takeUntil(this.destroy$))
         .subscribe((data: any) => {
+          data.Cantidad = Number.MIN_VALUE;
+
           //Agregar videojuego obtenido del API al carrito
           this.cartService.addToCart(data);
           //Notificar al usuario

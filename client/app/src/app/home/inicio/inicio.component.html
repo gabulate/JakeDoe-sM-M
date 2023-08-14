@@ -1,1 +1,27 @@
-<p>inicio works!</p>
+<div class="jake">
+  <br /><br />
+  <h1>¡Bienvenido a Jake Doe's!</h1>
+  <br /><br />
+
+  <mat-card-actions>
+    <div align="center" class="botones">
+      <button
+        *ngIf="!isAutenticated"
+        mat-flat-button
+        class="btnAccion"
+        color="primary"
+        [routerLink]="['/usuario/login']"
+      >
+        Iniciar Sesión
+      </button>
+      <button *ngIf="isAutenticated"
+        mat-flat-button
+        class="btnAccion"
+        color="primary"
+        [routerLink]="['/producto/']"
+      >
+        Ver Productos
+      </button>
+    </div>
+  </mat-card-actions>
+</div>

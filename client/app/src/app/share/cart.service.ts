@@ -47,7 +47,10 @@ export class CartService {
         //Verificar que el producto tenga la propiedad cantidad
         if (producto.hasOwnProperty('Cantidad')) {
           //Si la cantidad es menor o igual a 0 se elimina del carrito
-          if (producto.cantidad <= 0) {
+          if(producto.Cantidad == Number.MIN_VALUE){
+            listCart[objIndex].Cantidad += 1;
+          }
+          else if (producto.Cantidad <= 0) {
             this.removeFromCart(newItem);
             return;
           } else {

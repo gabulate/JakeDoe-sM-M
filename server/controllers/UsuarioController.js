@@ -256,6 +256,7 @@ module.exports.login = async (request, response, next) => {
         success: false,
         message: "Credenciales no validas",
       });
+      return;
     }
     //Verifica si está deshabilitado
     else if (usuario.Deshabilitado) {
@@ -263,6 +264,7 @@ module.exports.login = async (request, response, next) => {
         success: false,
         message: "Acceso denegado. Su cuenta está deshabilitada.",
       });
+      return;
     } else {
       //Usuario correcto
       //Crear el payload

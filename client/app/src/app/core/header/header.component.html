@@ -18,7 +18,7 @@
         </c-nav-item>
         
         <c-dropdown *ngIf="isAdmin()" variant="nav-item" [popper]="false" >
-          <button cDropdownToggle >Usuarios </button>
+          <button cDropdownToggle class="dropdown">Usuarios </button>
           <ul cDropdownMenu>
             <li><button cDropdownItem [routerLink]="['/usuario/activos']"> Usuarios activos </button></li>
             <li><button cDropdownItem [routerLink]="['/usuario/deshabilitados']"> Usuarios deshabilitados </button></li>
@@ -90,7 +90,7 @@
         </c-nav-item>
 
         <c-dropdown variant="nav-item" [popper]="false">
-          <button cDropdownToggle cNavLink class="btnEmail">
+          <button cDropdownToggle cNavLink class="dropdown">
             <c-navbar-text *ngIf="isAutenticated"
               >{{ currentUser.user.Email }}
             </c-navbar-text>
