@@ -1,0 +1,34 @@
+.main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 50vh; /* Opcional: Ajusta la altura de acuerdo a tus necesidades */
+    padding: 20px;
+    text-align: center;
+}
+
+.text {
+    margin-bottom: 20px;
+}
+
+.btn {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.btn button {
+    margin-top: 10px;
+    margin-left: 3px;
+    margin-right: 3px;
+}
+
+.bold-big {
+    font-weight: bold;
+    font-size: 1.2em; /* Ajusta el tamaño de fuente según tus preferencias */
+}
+
+.small {
+    font-size: 0.9em; /* Ajusta el tamaño de fuente según tus preferencias */
+}

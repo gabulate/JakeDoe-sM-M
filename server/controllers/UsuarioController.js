@@ -62,51 +62,97 @@ module.exports.getById = async (request, response, next) => {
 //Crear un usuario
 module.exports.create = async (request, response, next) => {
   let usuario = request.body;
-
-  //Salt es una cadena aleatoria.
-  //"salt round" factor de costo controla cuánto tiempo se necesita para calcular un solo hash de BCrypt
-  // salt es un valor aleatorio y debe ser diferente para cada cálculo, por lo que el resultado casi nunca debe ser el mismo, incluso para contraseñas iguales
   let salt = bcrypt.genSaltSync(10);
-
   // Hash password
-  let hash = bcrypt.hashSync(usuario.Contrasenna, salt);
-
-  const selectedRoleIds = usuario.RolesSeleccionados; // Arreglo de los identificadores de los roles seleccionados por el usuario
-
-  try {
-    const newUsuario = await prisma.usuario.create({
-      data: {
-        Nombre: usuario.Nombre,
-        Apellido: usuario.Apellido,
-        NombreVendedor: usuario.NombreVendedor,
-        Telefono: usuario.Telefono,
-        Email: usuario.Email,
-        Identificacion: usuario.Identificacion,
-        Contrasenna: hash, //Se guarda la contraseña encriptada
-        Calificacion: "5", //5 por defecto
-
-        Roles: {
-          create: selectedRoleIds.map((RolId) => ({
-            rol: {
-              connect: {
-                id: RolId,
+  let hash = bcrypt.hashSync(usuario.password, salt);
+  const selectedRoleIds = usuario.rolesSeleccionados; // Arreglo de los identificadores de los roles seleccionados por el usuario
+  if(usuario.NombreVendedor !== null){
+    try {
+      const newUsuario = await prisma.usuario.create({
+        
+        data: {
+          Nombre: usuario.nombre,
+          Apellido: usuario.apellido,
+          NombreVendedor: usuario.nombreVendedor,
+          Telefono: usuario.telefono.toString(),
+          Email: usuario.email,
+          Identificacion: usuario.identificacion.toString(),
+          Contrasenna: hash, //Se guarda la contraseña encriptada
+          Calificacion: "5", //5 por defecto 
+           
+  
+          Roles: {
+            create: selectedRoleIds.map((RolId) => ({ 
+              rol: {
+                connect: {
+                  id: RolId,
+                }, 
               },
-            },
-          })),
+            })),
+          },
         },
-      },
-    });
-    response.status(201).json({
-      success: true,
-      message: "Usuario creado",
-      data: newUsuario,
-    });
-  } catch (error) {
-    console.error(error);
-    response
-      .status(500)
-      .json({ error: "Ha ocurrido un error al crear el usuario." });
+  
+  
+      });
+      response.status(201).json({
+        success: true,
+        message: "Usuario creado",
+        data: newUsuario,
+      });
+    } catch (error) {
+      console.error(error);
+      if(error.code ==='P2002'){
+        console.error('Error con el correo. constraint unique dando problemaas');
+      }
+      response
+        .status(500)
+        .json({ error: "Ha ocurrido un error al crear el usuario." });
+    }
   }
+  else{
+    try {
+      const newUsuario = await prisma.usuario.create({
+        
+        data: {
+          Nombre: usuario.nombre,
+          Apellido: usuario.apellido,
+          Telefono: usuario.telefono,
+          Email: usuario.email,
+          Identificacion: usuario.identificacion,
+          Contrasenna: hash, //Se guarda la contraseña encriptada
+          Calificacion: "5", //5 por defecto 
+           
+  
+          Roles: {
+            create: selectedRoleIds.map((RolId) => ({ 
+              rol: {
+                connect: {
+                  id: RolId,
+                }, 
+              },
+            })),
+          },
+        },
+  
+  
+      });
+      response.status(201).json({
+        success: true,
+        message: "Usuario creado",
+        data: newUsuario,
+      });
+    } catch (error) {
+      console.error(error);
+      if(error.code ==='P2002'){
+        console.error('Error con el correo. constraint unique dando problemaas');
+      }
+      response
+        .status(500)
+        .json({ error: "Ha ocurrido un error al crear el usuario." });
+    }
+  }
+  
+
 };
 
 //Actualizar un usuario

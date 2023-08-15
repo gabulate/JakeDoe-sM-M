@@ -12,11 +12,12 @@ const routes: Routes = [
     path: 'usuario',
     component: UserIndexComponent,
     children: [
-      { path: 'registrar', component: UserCreateComponent },
       { path: 'login', component: UserLoginComponent },
     ],
   },
- 
+  {path: 'usuario/registrar',component: UserCreateComponent},
+  //{path: 'usuario/direccionpago/:id',component: UserCreateDireccionPagoComponent},
+
 
   
     {

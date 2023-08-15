@@ -1,0 +1,16 @@
+<div class="main">
+    <div class="text">
+        <p>Va a ser redirigido para completar su formulario de registro</p>
+        <p class="bold-big">¿Desea completar su formulario de registro ahora o más tarde?</p>
+        <p class="small">Tenga previsto que no podrá completar sus compras si su registro no está completo</p>  
+    </div>
+    
+    <mat-card-actions class="btn">
+        <button mat-raised-button color="primary" (click)="continuarRegistro()">
+          Completar formulario
+        </button>
+        <button mat-raised-button color="warn" type="reset" (click)="detenerRegistro()">
+          Más tarde
+        </button>
+    </mat-card-actions>
+</div>

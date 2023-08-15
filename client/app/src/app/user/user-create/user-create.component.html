@@ -1,62 +1,181 @@
-<form [formGroup]="formCreate"  novalidate>
-<mat-card class="shipping-card">
-  <mat-card-header>
-    <mat-card-title>Crear Usuario </mat-card-title>
-  </mat-card-header> 
-  <mat-card-content>
-    <div class="row">
-      <div class="col">
-        <mat-form-field class="full-width">
-          <mat-label>Nombre</mat-label>
-          <input matInput type="text" placeholder="Nombre usuario" formControlName="nombre" />
-         <mat-error *ngIf="errorHandling('nombre', 'required')">
-            Nombre es <strong>requerido</strong>
-          </mat-error>
-        </mat-form-field>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col">
-        <mat-form-field class="full-width">
-          <mat-label>Email</mat-label>
-          <input matInput type="text" placeholder="Email usuario" formControlName="email" />
-         <mat-error *ngIf="errorHandling('email', 'required')">
-            Email es <strong>requerido</strong>
-          </mat-error>
-        </mat-form-field>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col">
-        <mat-form-field class="full-width">
-          <mat-label>Password</mat-label>
-          <input matInput [type]="hide ? 'password' : 'text'" placeholder="Password usuario" formControlName="password" />
-          <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
-            <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
-          </button>
-         <mat-error *ngIf="errorHandling('password', 'required')">
-            Password es <strong>requerido</strong>
-          </mat-error>
-        </mat-form-field>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col">
-        <mat-form-field  class="full-width">
-          <mat-label>Rol</mat-label>
-            <mat-select placeholder="Rol" formControlName="role">
-              <mat-option *ngFor="let r of roles" [value]="r.id">
-                {{ r.nombre }}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
-      </div>
-    </div>
-  </mat-card-content>
-  <mat-card-actions>
-    <button mat-raised-button color="primary" (click)="submitForm()">Registrar</button>
-    <button mat-raised-button color="accent" type="reset" (click)="onReset()">Cancelar</button>
-  </mat-card-actions>
-</mat-card>
-</form>
+<mat-card class="main-div">
 
+<form [formGroup]="formCreate" (ngSubmit)="submitForm()" novalidate>
+  <div class="divTitular">
+    <mat-card-header>
+      <mat-card-title>Registro de usuario </mat-card-title>
+    </mat-card-header>
+  </div>
+  
+    <div class="dialog-content borde">
+      <div id="izquierda" class="dialog-left">
+          
+          <!--Columna Nombre-->
+          <div class="row">
+            <div class="col">
+              <mat-form-field class="full-width">
+                <mat-label>Nombre</mat-label>
+                <input
+                  matInput
+                  type="text"
+                  placeholder="Nombre usuario"
+                  formControlName="nombre"
+                />
+                <mat-error *ngIf="errorHandling('nombre', 'required')">
+                  Nombre es <strong>requerido</strong>
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+          <!--Columna Apellido-->
+          <div class="row">
+            <div class="col">
+              <mat-form-field class="full-width">
+                <mat-label>Apellido</mat-label>
+                <input
+                  matInput
+                  type="text"
+                  placeholder="Apellido usuario"
+                  formControlName="apellido"
+                />
+                <mat-error *ngIf="errorHandling('apellido', 'required')">
+                  Apellido es <strong>requerido</strong>
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+          <!--Columna Identificación-->
+          <div class="row">
+            <div class="col">
+              <mat-form-field class="full-width">
+                <mat-label>Identificación</mat-label>
+                <input
+                  matInput
+                  type="number"
+                  placeholder="999999999"
+                  formControlName="identificacion"
+
+                />
+                <mat-error *ngIf="errorHandling('identificacion', 'required')">
+                  Identificación es <strong>requerido</strong>
+                </mat-error>
+                <mat-error *ngIf="errorHandling('identificacion', 'minLength(9)')">
+                  Teléfono debe tener mínimo <strong>9 números</strong>
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+          <!--Columna Email-->
+          <div class="row">
+            <div class="col">
+              <mat-form-field class="full-width">
+                <mat-label>Email</mat-label>
+                <input
+                  matInput
+                  type="text"
+                  placeholder="Email usuario"
+                  formControlName="email"
+                />
+                <mat-error *ngIf="errorHandling('email', 'email')">
+                  Email es <strong>requerido</strong>
+                </mat-error>
+                <mat-error *ngIf="errorHandling('email','email')">
+                  Verifique el <strong>formato</strong> del email
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+        
+          
+      </div>
+
+      <div class="dialog-right">
+          <!--Columna Teléfono-->
+          <div class="row">
+            <div class="col">
+              <mat-form-field class="full-width">
+                <mat-label>Teléfono</mat-label>
+                <input
+                  matInput
+                  type="number"
+                  placeholder="99999999"
+                  formControlName="telefono"
+                />
+                <mat-error *ngIf="errorHandling('telefono', 'required')">
+                  Teléfono es <strong>requerido</strong>
+                </mat-error>
+                <mat-error *ngIf="errorHandling('telefono', 'maxLength(8)')">
+                  Teléfono debe tener <strong>8 números</strong>
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+          <!--Columna Password-->
+          <div class="row">
+            <div class="col">
+              <mat-form-field class="full-width">
+                <mat-label>Password</mat-label>
+                <input
+                  matInput
+                  [type]="hide ? 'password' : 'text'"
+                  placeholder="Password usuario"
+                  formControlName="password"
+                />
+                <button
+                  mat-icon-button
+                  matSuffix
+                  (click)="hide = !hide"
+                  [attr.aria-label]="'Hide password'"
+                  [attr.aria-pressed]="hide"
+                >
+                  <mat-icon>{{
+                    hide ? "visibility_off" : "visibility"
+                  }}</mat-icon>
+                </button>
+                <mat-error *ngIf="errorHandling('password', 'required')">
+                  Password es <strong>requerido</strong>
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+          <!--Columna Rol-->
+          <div class="row">
+            <div class="col">
+              <mat-form-field class="full-width">
+                <mat-label>Rol</mat-label>
+                <mat-select placeholder="Rol" formControlName="rolesSeleccionados" multiple>
+                  <mat-option *ngFor="let r of roles" [value]="r.id">
+                    {{ r.Descripcion }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          </div>
+          <!--Columna NombreVendedor-->
+          <div class="row" *ngIf="formCreate.get('rolesSeleccionados').value.includes(3)">
+            <div class="col">
+              <mat-form-field class="full-width">
+                <mat-label>Nombre como vendedor</mat-label>
+                <input
+                  matInput
+                  type="text"
+                  placeholder="Nombre como vendedor"
+                  formControlName="nombreVendedor"/>
+                <mat-error *ngIf="errorHandling('nombreVendedor', 'required')">
+                  Nombre como vendedor es <strong>requerido</strong>
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+      </div>
+    </div>
+    <mat-card-actions>
+      <button mat-raised-button color="primary" (click)="submitForm()">
+        Siguiente >
+      </button>
+      <button mat-raised-button color="accent" type="reset" (click)="onReset()">
+        Cancelar
+      </button>
+    </mat-card-actions>
+  </form>
+</mat-card>

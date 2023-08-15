@@ -22,6 +22,9 @@ import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { UserAllDeshabilitadosComponent } from './user-all-deshabilitados/user-all-deshabilitados.component';
+import { UserCreateDiagComponent } from './user-create-diag/user-create-diag.component';
+import { UserCreatePagoComponent } from './user-create-pago/user-create-pago.component';
+import { UserCreateDireccionComponent } from './user-create-direccion/user-create-direccion.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +32,11 @@ import { UserAllDeshabilitadosComponent } from './user-all-deshabilitados/user-a
     UserLoginComponent, 
     UserIndexComponent, 
     UserAllActivosComponent, 
-    UserAllDeshabilitadosComponent
+    UserAllDeshabilitadosComponent,
+    UserCreateDiagComponent,
+    UserCreatePagoComponent, 
+    UserCreateDireccionComponent, 
+    
   ],
   imports: [
     CommonModule,
