@@ -261,6 +261,7 @@ export class ProductoEditComponent implements OnInit {
   public errorHandling = (control: string, error: string) => {
     return this.productoForm.controls[control].hasError(error);
   };
+  
   public noWhitespaceValidator(control: FormControl) {
     return (control.value || '').trim().length? null : { 'whitespace': true };       
   }

@@ -48,7 +48,7 @@
           {{ element.subtotal |currency : "₡"  }}
         </mat-cell>
         <mat-footer-cell *matFooterCellDef class="footer-total">{{
-          total | currency
+          total | currency : "₡" 
         }}</mat-footer-cell>
       </ng-container>
 

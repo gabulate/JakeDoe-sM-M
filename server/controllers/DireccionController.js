@@ -3,14 +3,21 @@ const prisma = new PrismaClient();
 
 //Obtener listado
 module.exports.getByUsuario = async (request, response, next) => {
-  let UsuarioId = parseInt(request.params.id);
+  try {
+    let UsuarioId = parseInt(request.params.id);
 
-  const metodos = await prisma.direccion.findMany({
-    where: {
-      UsuarioId: UsuarioId,
-    },
-  });
-  response.json(metodos);
+    const metodos = await prisma.direccion.findMany({
+      where: {
+        UsuarioId: UsuarioId,
+      },
+    });
+    response.json(metodos);
+  } catch (error) {
+    console.error(error);
+    response
+      .status(500)
+      .json({ error: "Ha ocurrido un error al traer las direcciones." });
+  }
 };
 
 module.exports.create = async (request, response, next) => {
@@ -44,14 +51,14 @@ module.exports.update = async (request, response, next) => {
       id: idDireccion,
     },
     data: {
-        UsuarioId: direccion.UsuarioId,
-        Provincia: direccion.Provincia,
-        Canton: direccion.Canton,
-        Distrito: direccion.Distrito,
-        Detalle: direccion.Detalle,
-        CodigoPostal: direccion.CodigoPostal,
-        Telefono: direccion.Telefono,
-        Titulo: direccion.Titulo,
+      UsuarioId: direccion.UsuarioId,
+      Provincia: direccion.Provincia,
+      Canton: direccion.Canton,
+      Distrito: direccion.Distrito,
+      Detalle: direccion.Detalle,
+      CodigoPostal: direccion.CodigoPostal,
+      Telefono: direccion.Telefono,
+      Titulo: direccion.Titulo,
     },
   });
   response.json(newDireccion);
