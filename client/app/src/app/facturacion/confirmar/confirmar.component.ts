@@ -24,12 +24,14 @@ import {
 export class ConfirmarComponent implements OnInit {
   compraForm: FormGroup;
   total = 0;
+  subtotal = 0;
   fecha = Date.now();
   destroy$: Subject<boolean> = new Subject<boolean>();
   qtyItems = 0;
   isAutenticated: boolean;
   currentUser: any;
   clienteId: any;
+  detalles: any;
 
   DireccionList: any;
   Direccion: any;
@@ -47,9 +49,7 @@ export class ConfirmarComponent implements OnInit {
     private gService: GenericService,
     private router: Router,
     private authService: AuthenticationService
-  ) {
-    
-  }
+  ) {}
 
   ngOnInit(): void {
     this.qtyItems = this.cartService.quantityItems();
@@ -66,29 +66,60 @@ export class ConfirmarComponent implements OnInit {
     });
 
     this.total = this.cartService.getTotal();
+    this.subtotal = this.cartService.getSubTotal();
 
-    this.Direccion = "hola"
+    this.Direccion = '';
 
     this.formularioReactive();
     this.listaDirecciones();
     this.listaMetodoPagos();
+
+    //Obtener los items del carrito de compras
+    let itemsCarrito = this.cartService.getItems;
+    //Armar la estructura de la tabla intermedia
+
+    this.detalles = [];
+    for (let index = 0; index < itemsCarrito.length; index++) {
+      let p;
+      this.gService
+        .get('producto', itemsCarrito[index].producto.id)
+        .pipe(takeUntil(this.destroy$))
+        .subscribe((data: any) => {
+          p = data;
+          if (itemsCarrito[index].Cantidad <= p.Cantidad) {
+            this.detalles[index] = {
+              ProductoId: itemsCarrito[index].idItem,
+              Cantidad: itemsCarrito[index].Cantidad,
+              Subtotal: itemsCarrito[index].subtotal,
+            };
+          } else {
+            this.noti.mensaje(
+              'Orden',
+              'Se ha excedido la cantidad disponible del producto: ' +
+                p.Nombre +
+                '. Se trató de añadir ' +
+                itemsCarrito[index].Cantidad +
+                ' de los cuales hay ' +
+                p.Cantidad +
+                ' disponibles.',
+              TipoMessage.warning
+            );
+
+            itemsCarrito[index].Cantidad = parseInt(p.cantidad);
+            this.cartService.addToCart(p);
+            this.detalles[index] = {
+              ProductoId: itemsCarrito[index].idItem,
+              Cantidad: p.Cantidad,
+              Subtotal: itemsCarrito[index].subtotal,
+            };
+          }
+        });
+    }
   }
 
   registrarOrden() {
     if (this.cartService.getItems != null) {
-      //Obtener los items del carrito de compras
-      let itemsCarrito = this.cartService.getItems;
-      //Armar la estructura de la tabla intermedia
-
-      let detalles = [];
-      for (let index = 0; index < itemsCarrito.length; index++) {
-        detalles[index] = {
-          ProductoId: itemsCarrito[index].idItem,
-          Cantidad: itemsCarrito[index].Cantidad,
-          Subtotal: itemsCarrito[index].subtotal,
-        };
-      }
-
+      
       //let detalles = itemsCarrito.map((x) => ({
       //  ['ProductoId']: x.idItem,
       //  ['Cantidad']: x.cantidad,
@@ -97,9 +128,15 @@ export class ConfirmarComponent implements OnInit {
       //Datos para el API
       let infoCompra = {
         ClienteId: this.currentUser.user.id,
-        Fecha: new Date(this.fecha),
-        CompraDetalles: detalles,
+        DireccionId: this.compraForm.value.DireccionId,
+        MetodoPagoId: this.compraForm.value.MetodoPagoId,
+        CompraDetalle: this.detalles,
+        Subtotal: this.subtotal,
+        Total: this.total,
       };
+
+      console.log(infoCompra);
+
       this.gService.create('Compra', infoCompra).subscribe((respuesta: any) => {
         this.noti.mensaje(
           'Orden',
@@ -107,10 +144,11 @@ export class ConfirmarComponent implements OnInit {
           TipoMessage.success
         );
         this.cartService.deleteCart();
-        this.total = this.cartService.getTotal();
-        console.log(respuesta);
+        this.total = this.cartService.getSubTotal();
+        this.router.navigate(['/compra/' + respuesta.id]);
       });
     } else {
+      this.router.navigate(['/producto/']);
       this.noti.mensaje(
         'Orden',
         'Agregue Productos a la orden',
@@ -139,7 +177,7 @@ export class ConfirmarComponent implements OnInit {
   };
 
   listaDirecciones() {
-    console.log(this.currentUser.user.id)
+    console.log(this.currentUser.user.id);
     this.DireccionList = null;
     this.gService
       .get('direccion', parseInt(this.currentUser.user.id))
@@ -161,8 +199,16 @@ export class ConfirmarComponent implements OnInit {
       });
   }
 
-  mostrarDireccion(event){
-    let dir = this.DireccionList[event - 1]
-    this.Direccion = dir.Provincia + ', '+ dir.Canton + ', ' + dir.Distrito+ '.\n' + dir.Detalle + '\n';
+  mostrarDireccion(event) {
+    let dir = this.DireccionList[event - 1];
+    this.Direccion =
+      dir.Provincia +
+      ', ' +
+      dir.Canton +
+      ', ' +
+      dir.Distrito +
+      '.\n' +
+      dir.Detalle +
+      '\n';
   }
 }

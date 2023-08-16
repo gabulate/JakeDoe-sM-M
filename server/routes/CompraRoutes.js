@@ -7,6 +7,8 @@ const compraController = require("../controllers/CompraController");
 //Rutas de Usuarios
 router.get("/", compraController.get);
 
+router.post("/", compraController.create);
+
 router.get("/:id", compraController.getById);
 
 router.get("/cliente/:id", compraController.getByCliente);

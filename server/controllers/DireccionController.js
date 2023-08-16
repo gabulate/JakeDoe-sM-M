@@ -21,7 +21,8 @@ module.exports.getByUsuario = async (request, response, next) => {
 };
 
 module.exports.create = async (request, response, next) => {
-  let direccion = request.body;
+  try{
+    let direccion = request.body;
   const newDireccion = await prisma.direccion.create({
     data: {
       UsuarioId: direccion.UsuarioId,
@@ -35,6 +36,12 @@ module.exports.create = async (request, response, next) => {
     },
   });
   response.json(newDireccion);
+  } catch(error){
+    console.error(error);
+    response
+      .status(500)
+      .json({ error: "Ha ocurrido un error al crear la dirección." });
+  }
 };
 
 module.exports.update = async (request, response, next) => {

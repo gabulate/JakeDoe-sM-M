@@ -1,7 +1,60 @@
 <!-- <p>producto-index works!</p> -->
 <div class="grid-container" fxLayout="row" fxLayoutAlign="start start">
+  <mat-form-field class="full-width">
+    <mat-label>Buscar</mat-label>
+    <input
+      matInput
+      #filtro
+      (change)="filtrarDatos(filtro.value, categoria.value, ordenar.value)"
+    />
+    <button
+      mat-icon-button
+      matSuffix
+      (click)="filtrarDatos(filtro.value, categoria.value, ordenar.value)"
+      color="primary"
+    >
+      <mat-icon>search</mat-icon>
+    </button>
+  </mat-form-field>
+
+  <div class="row">
+    <div class="col">
+      <mat-form-field class="full-width">
+        <mat-label>Filtrar por categoría</mat-label>
+        <mat-select
+          #categoria
+          [value]="-1"
+          (valueChange)="
+            filtrarDatos(filtro.value, categoria.value, ordenar.value)
+          "
+        >
+          <mat-option [value]="-1"> Todos </mat-option>
+          <mat-option *ngFor="let g of CategoriaList" [value]="g.id">
+            {{ g.Descripcion }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div class="col">
+      <mat-form-field class="full-width">
+        <mat-label>Ordenar por precio</mat-label>
+        <mat-select
+          #ordenar
+          [value]="1"
+          (valueChange)="
+            filtrarDatos(filtro.value, categoria.value, ordenar.value)
+          "
+        >
+          <mat-option [value]="1"> Normal </mat-option>
+          <mat-option [value]="2"> Ascendiente </mat-option>
+          <mat-option [value]="3"> Descendiente </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </div>
+
   <mat-grid-list [cols]="gridCols">
-    <mat-grid-tile *ngFor="let item of datos">
+    <mat-grid-tile *ngFor="let item of filtradoDatos">
       <mat-card class="dashboard-card">
         <img
           mat-card-image
@@ -19,7 +72,7 @@
           </mat-card-subtitle>
         </mat-card-header>
         <mat-divider inset></mat-divider>
-        
+
         <mat-card-actions>
           <button class="dk" (click)="comprar(item.id)">
             <mat-icon>add_shopping_cart</mat-icon>Añadir al carrito

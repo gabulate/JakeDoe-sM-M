@@ -7,7 +7,7 @@ module.exports.get = async (request, response, next) => {
     orderBy: {
       id: "asc",
     },
-     select: {
+    select: {
       id: true,
       cliente: {
         select: {
@@ -18,10 +18,7 @@ module.exports.get = async (request, response, next) => {
       },
       Total: true,
       Fecha: true,
-    }, 
-
-
-    
+    },
   });
   response.json(compras);
 };
@@ -227,7 +224,60 @@ module.exports.getById = async (request, response, next) => {
 };
 
 //Crear un usuario
-module.exports.create = async (request, response, next) => {};
+module.exports.create = async (request, response, next) => {
+  try {
+    let compra = request.body;
+
+    //Actualizar Cantidad de Stock
+    for (let index = 0; index < compra.CompraDetalle.length; index++) {
+      let idProducto = compra.CompraDetalle[index].ProductoId;
+
+      //Obtener metodo viejo
+      const productoViejo = await prisma.producto.findUnique({
+        where: { id: idProducto },
+      });
+
+      const newProducto = await prisma.producto.update({
+        where: {
+          id: idProducto,
+        },
+        data: {
+          Nombre: productoViejo.Nombre,
+          Descripcion: productoViejo.Descripcion,
+          Precio: productoViejo.Precio,
+
+          Cantidad: parseInt((productoViejo.Cantidad - compra.CompraDetalle[index].Cantidad)),
+
+          CategoriaId: parseInt(productoViejo.CategoriaId),
+          EstadoId: parseInt(productoViejo.EstadoId),
+          VendedorId: parseInt(productoViejo.VendedorId),
+        },
+      });
+    }
+
+    const newCompra = await prisma.compra.create({
+      data: {
+        ClienteId: parseInt(compra.ClienteId),
+        DireccionId: parseInt(compra.DireccionId),
+        MetodoPagoId: parseInt(compra.MetodoPagoId),
+        Subtotal: compra.Subtotal,
+        Total: compra.Total,
+        CompraDetalle: {
+          createMany: {
+            //[{videojuegoId, cantidad}]
+            data: compra.CompraDetalle,
+          },
+        },
+      },
+    });
+    response.json(newCompra);
+  } catch (error) {
+    console.error(error);
+    response
+      .status(500)
+      .json({ error: "Ha ocurrido un error al realizar la compra." });
+  }
+};
 
 //Actualizar un usuario
 module.exports.update = async (request, response, next) => {};

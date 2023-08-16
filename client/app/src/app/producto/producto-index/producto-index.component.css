@@ -13,6 +13,11 @@
   object-fit: contain;
 
 }
+
+.full-width{
+  width: 100%;
+}
+
 .more-button {
   position: absolute;
   top: 5px;

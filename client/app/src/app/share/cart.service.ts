@@ -55,6 +55,7 @@ export class CartService {
             return;
           } else {
             //Actualizar cantidad
+            console.log(producto.Cantidad);
             listCart[objIndex].Cantidad = producto.Cantidad;
           }
         } else {
@@ -127,6 +128,20 @@ export class CartService {
     return sum;
   }
   //Calcula y retorna el total de los items del carrito
+  public getSubTotal(): number {//Total antes de impuestos
+    let total = 0;
+    let listCart = this.cart.getValue();
+    if (listCart != null) {
+       //Sumando los subtotales de cada uno de los items del carrito
+     
+      listCart.forEach((item: ItemCart, index) => {
+        total += item.subtotal;
+      });
+    }
+
+    return total;
+  }
+
   public getTotal(): number {//Total antes de impuestos
     let total = 0;
     let listCart = this.cart.getValue();
@@ -137,6 +152,8 @@ export class CartService {
         total += item.subtotal;
       });
     }
+
+    total += total * 0.13;
 
     return total;
   }

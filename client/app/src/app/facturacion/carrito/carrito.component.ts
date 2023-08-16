@@ -55,7 +55,7 @@ export class CarritoComponent {
       //console.log('carrito', data);
     });
 
-    this.total = this.cartService.getTotal();
+    this.total = this.cartService.getSubTotal();
   }
 
   actualizarCantidad(item: any) {
@@ -67,7 +67,7 @@ export class CarritoComponent {
         data.Cantidad = item.Cantidad;
 
         this.cartService.addToCart(data);
-        this.total = this.cartService.getTotal();
+        this.total = this.cartService.getSubTotal();
         this.cartService.currentDataCart$.subscribe((data) => {
           this.dataSource = new MatTableDataSource(data);
         });
@@ -76,7 +76,7 @@ export class CarritoComponent {
 
   eliminarItem(item: any) {
     this.cartService.removeFromCart(item);
-    this.total = this.cartService.getTotal();
+    this.total = this.cartService.getSubTotal();
     this.noti.mensaje('Orden', 'Producto eliminado.', TipoMessage.warning);
   }
   comprar() {

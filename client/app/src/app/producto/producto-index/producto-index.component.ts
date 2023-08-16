@@ -20,10 +20,12 @@ import {
 })
 export class ProductoIndexComponent {
   datos: any;
+  filtradoDatos: any;
   destroy$: Subject<boolean> = new Subject<boolean>();
   isAutenticated: boolean;
   currentUser: any;
   clienteId: any;
+  CategoriaList: any;
   gridCols: number = 3;
 
   constructor(
@@ -38,6 +40,7 @@ export class ProductoIndexComponent {
     private authService: AuthenticationService
   ) {
     this.listarProductos();
+    this.listaCategorias();
     this.observeBreakpoints();
 
     this.authService.currentUser.subscribe((x) => (this.currentUser = x));
@@ -55,13 +58,62 @@ export class ProductoIndexComponent {
       .subscribe((data: any) => {
         console.log(data);
         this.datos = data;
+        this.filtradoDatos = data;
       });
+  }
+
+  filtrarDatos(text: string, categoria: any, orden: number) {
+    if (!text) {
+      this.filtradoDatos = this.datos;
+    } else {
+      this.filtradoDatos = this.datos.filter((producto) =>
+        producto?.Nombre.toLowerCase().includes(text.toLowerCase())
+      );
+    }
+    this.filtrarCategoria(categoria);
+    this.ordenar(orden);
+  }
+
+  filtrarCategoria(categoria) {
+    if (categoria == -1) {
+      this.filtradoDatos = this.filtradoDatos;
+    } else {
+      this.filtradoDatos = this.filtradoDatos.filter(
+        (producto) => producto?.CategoriaId == categoria
+      );
+    }
+  }
+
+  ordenar(orden) {
+    if (orden == 1) {
+      this.filtradoDatos = this.filtradoDatos;
+    } else if (orden == 2) {
+      this.filtradoDatos = this.filtradoDatos.sort(
+        (a, b) => parseFloat(a.Precio) - parseFloat(b.Precio)
+      );
+    } else {
+      this.filtradoDatos = this.filtradoDatos.sort(
+        (a, b) => parseFloat(b.Precio) - parseFloat(a.Precio)
+      );
+    }
   }
 
   detalleProducto(id: number) {
     this.router.navigate(['/producto', id], {
       relativeTo: this.route,
     });
+  }
+
+  listaCategorias() {
+    this.CategoriaList = null;
+    this.gService
+      .list('categoria')
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((data: any) => {
+        console.log('categoria', data);
+
+        this.CategoriaList = data;
+      });
   }
 
   observeBreakpoints() {

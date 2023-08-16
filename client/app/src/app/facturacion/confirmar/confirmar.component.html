@@ -45,6 +45,12 @@
       <div class="row">
         <div class="col">
           <mat-label>
+            <b>Subtotal:</b>
+            {{ subtotal | currency : "₡"}}
+            <br>
+            <b>Total:</b>
+            {{ total| currency : "₡"}}
+            <br>
             <b>Cliente:</b>
             {{
               currentUser.user.Nombre + " " + currentUser.user.Apellido
@@ -62,14 +68,14 @@
               </mat-select>
               <mat-error> Seleccione una dirección. </mat-error>
             </mat-form-field>
+            <mat-label>{{ Direccion }}</mat-label>
           </div>
-          <mat-label>{{ Direccion }}</mat-label>
         </div>
 
         <div class="row">
           <div class="col" *ngIf="MetodoPagoList">
             <mat-form-field floatLabel="always" class="full-width">
-              <mat-label>Estado del producto</mat-label>
+              <mat-label>Método de pago</mat-label>
               <mat-select formControlName="MetodoPagoId">
                 <mat-option *ngFor="let g of MetodoPagoList" [value]="g.id">
                   {{ g.Titulo }}
