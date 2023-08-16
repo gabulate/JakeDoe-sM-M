@@ -11,8 +11,10 @@
         <mat-cell *matCellDef="let element">
           {{ element.producto.Nombre }}
         </mat-cell>
-
-        <mat-footer-cell *matFooterCellDef></mat-footer-cell>
+        
+        <mat-footer-cell *matFooterCellDef class="footer-total"
+          >Subtotal:
+        </mat-footer-cell>
       </ng-container>
 
       <ng-container matColumnDef="precio">
@@ -20,7 +22,9 @@
         <mat-cell *matCellDef="let element">
           {{ element.precio | currency : "₡"  }}
         </mat-cell>
-        <mat-footer-cell *matFooterCellDef></mat-footer-cell>
+        <mat-footer-cell *matFooterCellDef class="footer-total">{{
+          subtotal | currency : "₡" 
+        }}</mat-footer-cell>
       </ng-container>
 
       <ng-container matColumnDef="cantidad">
@@ -38,7 +42,7 @@
           </mat-form-field>
         </mat-cell>
         <mat-footer-cell *matFooterCellDef class="footer-total"
-          >Total
+          >Total (IVA):
         </mat-footer-cell>
       </ng-container>
 

@@ -17,6 +17,7 @@ import { Subject, takeUntil } from 'rxjs';
 })
 export class CarritoComponent {
   total = 0;
+  subtotal = 0;
   fecha = Date.now();
   destroy$: Subject<boolean> = new Subject<boolean>();
   qtyItems = 0;
@@ -55,7 +56,8 @@ export class CarritoComponent {
       //console.log('carrito', data);
     });
 
-    this.total = this.cartService.getSubTotal();
+    this.total = this.cartService.getTotal();
+    this.subtotal = this.cartService.getSubTotal();
   }
 
   actualizarCantidad(item: any) {
