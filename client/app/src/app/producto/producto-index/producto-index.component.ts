@@ -86,7 +86,9 @@ export class ProductoIndexComponent {
 
   ordenar(orden) {
     if (orden == 1) {
-      this.filtradoDatos = this.filtradoDatos;
+      this.filtradoDatos = this.filtradoDatos.sort(
+        (a, b) => parseFloat(a.id) - parseFloat(b.id)
+      );
     } else if (orden == 2) {
       this.filtradoDatos = this.filtradoDatos.sort(
         (a, b) => parseFloat(a.Precio) - parseFloat(b.Precio)
