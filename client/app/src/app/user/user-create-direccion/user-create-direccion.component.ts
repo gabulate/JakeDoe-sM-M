@@ -167,29 +167,29 @@ export class UserCreateDireccionComponent implements OnInit {
   }
 
   siguiente() {
-    const numFormulariosExitosos = this.direccionForms.filter(
-      (form) => form.valid
-    ).length;
+    // const numFormulariosExitosos = this.direccionForms.filter(
+    //   (form) => form.valid
+    // ).length;
     // Verificar si se cumple el mínimo de formularios exitosos
-    if (numFormulariosExitosos >= this.minFormulariosExitosos) {
-      const rolesIds = this.usuario.Roles.map((rol: any) => rol.rol.id);
-      if (rolesIds.includes(2)) {
-        this.router.navigate(['/metodopago/usuario', this.usuarioId], {
-          relativeTo: this.route,
-        });
-      } else if (rolesIds.length === 1 && rolesIds[0] === 3) {
-        this.router.navigate(['/'], {
-          relativeTo: this.route,
-        });
-      }
-    } else {
-      // Activar los errores de todos los formularios
-      this.direccionForms.forEach((form) => {
-        Object.keys(form.controls).forEach((controlName) => {
-          form.get(controlName)?.markAsTouched();
-        });
-      });
-    }
+    // if (numFormulariosExitosos >= this.minFormulariosExitosos) {
+    //   const rolesIds = this.usuario.Roles.map((rol: any) => rol.rol.id);
+    //   if (rolesIds.includes(2)) {
+    //     this.router.navigate(['/metodopago/usuario', this.usuarioId], {
+    //       relativeTo: this.route,
+    //     });
+    //   } else if (rolesIds.length === 1 && rolesIds[0] === 3) {
+    //     this.router.navigate(['/'], {
+    //       relativeTo: this.route,
+    //     });
+    //   }
+    // } else {
+    //   // Activar los errores de todos los formularios
+    //   this.direccionForms.forEach((form) => {
+    //     Object.keys(form.controls).forEach((controlName) => {
+    //       form.get(controlName)?.markAsTouched();
+    //     });
+    //   });
+    // }
 
     /* const rolesIds = this.usuario.Roles.map((rol: any) => rol.rol.id);
     if (rolesIds.includes(2)) {
@@ -202,6 +202,38 @@ export class UserCreateDireccionComponent implements OnInit {
         relativeTo: this.route,
       });
     } */
+
+    const numFormulariosExitosos = this.direccionForms.filter(
+      (form) => form.valid
+    ).length;
+  
+    const rolesIds = this.usuario.Roles.map((rol: any) => rol.rol.id);
+    
+    if (rolesIds.includes(2)) {
+      // Si hay un rol con ID 2, establecer minFormulariosExitosos en 2
+      this.minFormulariosExitosos = 2;
+    }
+  
+    if (numFormulariosExitosos >= this.minFormulariosExitosos) {
+      if (rolesIds.includes(2)) {
+        this.router.navigate(['/metodopago/usuario', this.usuarioId], {
+          relativeTo: this.route,
+        });
+      } else if (rolesIds.length === 1 && rolesIds[0] === 3) {
+        this.router.navigate(['/'], {
+          relativeTo: this.route,
+        });
+      }
+    } else {
+      this.direccionForms.forEach((form) => {
+        Object.keys(form.controls).forEach((controlName) => {
+          form.get(controlName)?.markAsTouched();
+        });
+      });
+    }
+
+
+
   }
 
   private transformJSONToArray(jsonData: any): any[] {
