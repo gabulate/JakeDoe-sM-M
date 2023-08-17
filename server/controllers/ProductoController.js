@@ -63,6 +63,7 @@ module.exports.getById = async (request, response, next) => {
           Telefono: true,
           Email: true,
           Calificacion: true,
+          NombreVendedor: true,
         },
       },
     },

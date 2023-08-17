@@ -66,6 +66,7 @@ export class ProductoDetailComponent implements OnInit {
       .get('producto', id)
       .pipe(takeUntil(this.destroy$))
       .subscribe((data: any) => {
+        console.log('producto', data)
         this.datos = data;
       });
   }
