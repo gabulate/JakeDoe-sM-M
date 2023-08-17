@@ -1,128 +1,125 @@
-<!-- <div class="divTitular borde">
-  <mat-card-header>
-    <mat-card-title
-      >¡Bienvenido(a) {{ usuario.Nombre }}
-      {{ usuario.Apellido }} !</mat-card-title
-    >
-    <br />
-    <p>
-      Para terminar con su proceso de registro, complete lo indicado a
-      continuación:
-    </p>
-    <p>IDs de Roles del Usuario:</p>
-    <ul>
-      <li *ngFor="let rol of usuario.Roles">
-        {{ rol.rol.Descripcion }}
-      </li>
-    </ul>
-  </mat-card-header>
-</div> -->
-<mat-card-content class="dialog-content">
+<!-- Encabezado "Direcciones" -->
+<div
+  style="
+    text-align: center;
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 1rem;
+  "
+>
+  <h2 style="margin-top: 1%">Métodos de pago</h2>
+</div>
+<div style="margin-bottom: 10%">
+  <mat-card-content class="dialog-content" >
     <div id="derecho" class="dialog-right">
       <ng-container
         *ngFor="let num of metodosPagoForms; let i = index"
         class="dashboard-card"
       >
-      <form
-        [formGroup]="metodosPagoForms[i]"
-        style="margin-bottom: 10%"
-        (ngSubmit)="guardarMetodo(i)"
-        style="margin-bottom: 1%; margin-top: 0"
-        class="borde"
-      >
-        <!--Columna MetodoPago-->
-        <!--Título de MétodoPago-->
-        <div class="col">
-          <mat-form-field class="full-width">
-            <mat-label>Nombre</mat-label>
-            <input matInput type="text" formControlName="titulo" />
-            <mat-error>
-              Nombre de método es <strong>requerido</strong>
-            </mat-error>
-          </mat-form-field>
-        </div>
-        <!--TipoPago-->
-        <div class="">
+        <form
+          [formGroup]="metodosPagoForms[i]"
+          style="margin-bottom: 10%"
+          (ngSubmit)="guardarMetodo(i)"
+          style="margin-bottom: 1%; margin-top: 0"
+          class="borde"
+        >
+          <!--Columna MetodoPago-->
+          <!--Título de MétodoPago-->
+          <div class="col">
+            <mat-form-field class="full-width">
+              <mat-label>Nombre</mat-label>
+              <input matInput type="text" formControlName="titulo" />
+              <mat-error>
+                Nombre de método es <strong>requerido</strong>
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <!--TipoPago-->
+          <div class="">
+            <div class="row">
+              <div class="col">
+                <mat-form-field class="full-width">
+                  <mat-label>Método de Pago</mat-label>
+                  <mat-select
+                    placeholder="Método de pago"
+                    formControlName="tipoPago"
+                  >
+                    <mat-option *ngFor="let p of tipoPagos" [value]="p.id">
+                      {{ p.Descripcion }}
+                    </mat-option>
+                  </mat-select>
+                  <mat-error>
+                    Tipo de pago es <strong>requerido</strong>
+                  </mat-error>
+                </mat-form-field>
+              </div>
+            </div>
+          </div>
+          <!--Columna N.Cuenta-->
           <div class="row">
             <div class="col">
               <mat-form-field class="full-width">
-                <mat-label>Método de Pago</mat-label>
-                <mat-select
-                  placeholder="Método de pago"
-                  formControlName="tipoPago"
-                >
-                  <mat-option *ngFor="let p of tipoPagos" [value]="p.id">
-                    {{ p.Descripcion }}
-                  </mat-option>
-                </mat-select>
+                <mat-label>Nº de Cuenta</mat-label>
+                <input
+                  matInput
+                  type="number"
+                  placeholder="9999999999999999"
+                  formControlName="cuenta"
+                />
                 <mat-error>
-                  Tipo de pago es <strong>requerido</strong>
+                  Nº de Cuenta es <strong>requerido</strong>
                 </mat-error>
               </mat-form-field>
             </div>
           </div>
-        </div>
-        <!--Columna N.Cuenta-->
-        <div class="row">
-          <div class="col">
-            <mat-form-field class="full-width">
-              <mat-label>Nº de Cuenta</mat-label>
-              <input
-                matInput
-                type="number"
-                placeholder="9999999999999999"
-                formControlName="cuenta"
-              />
-              <mat-error>
-                Nº de Cuenta es <strong>requerido</strong>
-              </mat-error>
-            </mat-form-field>
+          <!--Fecha expiracion-->
+          <div class="row">
+            <div class="col">
+              <mat-form-field class="full-width">
+                <mat-label>Fecha de expiración</mat-label>
+                <input
+                  matInput
+                  [matDatepicker]="picker"
+                  formControlName="expira"
+                  [min]="getPrimerDiaMesSiguiente()"
+                />
+
+                <mat-datepicker-toggle
+                  matIconSuffix
+                  [for]="picker"
+                ></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+                <mat-error>
+                  Fecha de expiración es <strong>requerido</strong>
+                </mat-error>
+              </mat-form-field>
+            </div>
           </div>
-        </div>
-        <!--Fecha expiracion-->
-        <div class="row">
-          <div class="col">
-            <mat-form-field class="full-width">
-              <mat-label>Fecha de expiración</mat-label>
-              <input matInput [matDatepicker]="picker"
-               formControlName="expira" 
-               [min]="getPrimerDiaMesSiguiente()"/>
-               
-               <mat-datepicker-toggle
-               matIconSuffix
-               [for]="picker"
-             ></mat-datepicker-toggle>
-             <mat-datepicker #picker></mat-datepicker>
-              <mat-error>
-                Fecha de expiración es <strong>requerido</strong>
-              </mat-error>
-            </mat-form-field>
-          </div>
-        </div>
-  
-        <mat-card-actions style="margin-left: 2%">
-          <button mat-raised-button color="primary" type="submit">
-            Guardar método
-          </button>
-          <button
-            mat-raised-button
-            color="accent"
-            type="reset"
-            (click)="onReset()"
-          >
-            Cancelar
-          </button>
-        </mat-card-actions>
-      </form>
-    </ng-container>    
+
+          <mat-card-actions style="margin-left: 2%">
+            <button mat-raised-button color="primary" type="submit">
+              Guardar método
+            </button>
+            <button
+              mat-raised-button
+              color="accent"
+              type="reset"
+              (click)="onReset()"
+            >
+              Cancelar
+            </button>
+          </mat-card-actions>
+        </form>
+      </ng-container>
     </div>
-  
   </mat-card-content>
-    
+
   <button
-  mat-raised-button
-  color="primary"
-  *ngIf="getNumFormulariosEnviados() >= 2" (click)="siguiente()"
+    mat-raised-button
+    color="primary"
+    *ngIf="getNumFormulariosEnviados() >= 2"
+    (click)="siguiente()"
   >
-  Finalizar registro
+    Finalizar registro
   </button>
+</div>

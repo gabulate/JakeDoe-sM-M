@@ -1,41 +1,12 @@
-<!-- <div class="divTitular borde">
-  <mat-card-header>
-    <mat-card-title
-      >¡Bienvenido(a) {{ usuario.Nombre }}
-      {{ usuario.Apellido }} !</mat-card-title
-    >
-    <br />
-    <p>
-      Para terminar con su proceso de registro, complete lo indicado a
-      continuación:
-    </p>
-    <p>IDs de Roles del Usuario:</p>
-    <ul>
-      <li *ngFor="let rol of usuario.Roles">
-        {{ rol.rol.Descripcion }} {{ rol.rol.id }}
-      </li>
-    </ul>
-  </mat-card-header>
-</div> -->
 
-<div class="dialog-content" style="margin-bottom: 10%">
-    <!-- <div class="dialog-left borde">
-  
-  <p>Listado de direcciones:</p>
-    <ng-container>
-      <p>Título: </p>
-      <p>Provincia: </p>
-      <p>Distrito: </p>
-      <p>Cantón: </p>
-      <p>Código Postal: </p>
-      <p>Dirección Exacta: </p>
-      <p>Teléfono: </p>
-    </ng-container>
-  
-    </div> -->
+<div class="" style="margin-bottom: 10%">
+   <!-- Encabezado "Direcciones" -->
+  <div style="text-align: center; font-size: 24px; font-weight: bold; margin-bottom: 1rem;">
+    <h2 style="margin-top: 1%;">Direcciones</h2>
+  </div>
   
     <!--Columna Dirección-->
-    <div class="dialog-right">
+    <div class="dialog-forms">
       <ng-container
         *ngFor="let num of direccionForms; let i = index"
         class="dashboard-card"
@@ -207,10 +178,10 @@
       </ng-container>
     </div>
   
-    <mat-card-actions style="margin-left: 2%">
+    <div class="btnSiguiente">
       <button mat-raised-button color="primary" (click)="siguiente()">
         Siguiente
       </button>
-    </mat-card-actions>
+    </div>
   </div>
   
