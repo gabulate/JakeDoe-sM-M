@@ -25,6 +25,8 @@ import { UserAllDeshabilitadosComponent } from './user-all-deshabilitados/user-a
 import { UserCreateDiagComponent } from './user-create-diag/user-create-diag.component';
 import { UserCreatePagoComponent } from './user-create-pago/user-create-pago.component';
 import { UserCreateDireccionComponent } from './user-create-direccion/user-create-direccion.component';
+import { MatNativeDateModule } from '@angular/material/core';
+import {MatDatepickerModule} from '@angular/material/datepicker';
 
 @NgModule({
   declarations: [
@@ -55,6 +57,8 @@ import { UserCreateDireccionComponent } from './user-create-direccion/user-creat
     MatTableModule,
     MatPaginatorModule,
     MatSortModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
     UserRoutingModule
   ]
 })

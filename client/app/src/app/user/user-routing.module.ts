@@ -6,6 +6,8 @@ import { UserLoginComponent } from './user-login/user-login.component';
 import { UserAllActivosComponent } from './user-all-activos/user-all-activos.component';
 import { AuthGuard } from '../share/guards/auth.guard';
 import { UserAllDeshabilitadosComponent } from './user-all-deshabilitados/user-all-deshabilitados.component';
+import { UserCreateDireccionComponent } from './user-create-direccion/user-create-direccion.component';
+import { UserCreatePagoComponent } from './user-create-pago/user-create-pago.component';
 
 const routes: Routes = [
   {
@@ -18,6 +20,8 @@ const routes: Routes = [
   {path: 'usuario/registrar',component: UserCreateComponent},
   //{path: 'usuario/direccionpago/:id',component: UserCreateDireccionPagoComponent},
 
+  {path: 'direccion/usuario/:id',component: UserCreateDireccionComponent},
+  {path: 'metodopago/usuario/:id',component: UserCreatePagoComponent},
 
   
     {

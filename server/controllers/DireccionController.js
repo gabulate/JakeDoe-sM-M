@@ -25,14 +25,14 @@ module.exports.create = async (request, response, next) => {
     let direccion = request.body;
   const newDireccion = await prisma.direccion.create({
     data: {
-      UsuarioId: direccion.UsuarioId,
-      Provincia: direccion.Provincia,
-      Canton: direccion.Canton,
-      Distrito: direccion.Distrito,
-      Detalle: direccion.Detalle,
-      CodigoPostal: direccion.CodigoPostal,
-      Telefono: direccion.Telefono,
-      Titulo: direccion.Titulo,
+      UsuarioId: direccion.usuarioId,
+      Provincia: direccion.provincia,
+      Canton: direccion.canton,
+      Distrito: direccion.distrito,
+      Detalle: direccion.detalle,
+      CodigoPostal: direccion.codPostal.toString(),
+      Telefono: direccion.telefono.toString(),
+      Titulo: direccion.titulo,
     },
   });
   response.json(newDireccion);

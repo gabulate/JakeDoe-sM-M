@@ -17,11 +17,11 @@ module.exports.create = async (request, response, next) => {
   let metodo = request.body;
   const newMetodo = await prisma.metodoPago.create({
     data: {
-      UsuarioId: metodo.UsuarioId,
-      TipoPagoId: metodo.TipoPagoId,
-      NumeroCuenta: metodo.NumeroCuenta,
-      Expiracion: metodo.Expiracion,
-      Titulo: metodo.Titulo,
+      UsuarioId: metodo.usuarioId,
+      TipoPagoId: metodo.tipoPago,
+      NumeroCuenta: metodo.cuenta.toString(),
+      Expiracion:new Date(metodo.expira), 
+      Titulo: metodo.titulo,
     },
   });
   response.json(newMetodo);

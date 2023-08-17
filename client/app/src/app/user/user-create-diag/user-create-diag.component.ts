@@ -36,7 +36,7 @@ export class UserCreateDiagComponent implements OnInit{
   }
   continuarRegistro(){
     
-      this.router.navigate(['/usuario/direccionpago', this.datosDialog.id],{
+      this.router.navigate(['/direccion/usuario', this.datosDialog.id],{
         relativeTo: this.route,
       });
       this.close();

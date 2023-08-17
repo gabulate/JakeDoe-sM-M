@@ -4,7 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { GenericService } from 'src/app/share/generic.service';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { NotificacionService } from 'src/app/share/notification.service';
 import { AuthenticationService } from 'src/app/share/authentication.service';
 import { LocationService } from 'src/app/share/location.service';
@@ -53,14 +53,25 @@ export class UserCreateComponent implements OnInit {
 
   reactiveForm() {
     this.formCreate = this.fb.group({
-      nombre: ['', [Validators.required]],
-      apellido: ['', [Validators.required]],
+      nombre: ['', [Validators.required, Validators.compose([
+        Validators.minLength(3),
+        // this.noWhitespaceValidator
+      ])]],
+      apellido: ['', [Validators.required, Validators.compose([
+        Validators.minLength(3),
+        // this.noWhitespaceValidator
+      ])]],
       identificacion: ['', [Validators.required, Validators.minLength(9)]],
       email: ['', [Validators.required, Validators.email]],
-      telefono: ['', [Validators.required, Validators.maxLength(8)]],
+      telefono: ['', [Validators.compose([
+        Validators.required,
+        Validators.minLength(8),
+        Validators.maxLength(8),
+        // this.noWhitespaceValidator
+      ])]],
       password: ['', [Validators.required]],
       rolesSeleccionados: ['', [Validators.required]],
-      nombreVendedor: ['', ],
+      nombreVendedor: ['',  Validators.minLength(3) ],
     });
     this.getRoles();
     this.getTipoPago();
@@ -197,18 +208,9 @@ export class UserCreateComponent implements OnInit {
         (this.makeSubmit || this.formCreate.controls[control].touched)
       );
     }
-  };
-}
+  }; 
+/*    public noWhitespaceValidator(control: FormControl) {
+    return (control.value || '').trim().length? null : { 'whitespace': true };       
+  } */
+} 
 
-// this.gService
-// .create('usuario/registrar',this.formCreate.value)
-// .pipe(takeUntil(this.destroy$))
-// .subscribe((respuesta:any)=>{
-//   this.usuario=respuesta;
-//   console.log(this.usuario);
-//   console.log(respuesta);
-//   this.router.navigate(['/usuario/login'],{
-//     //Mostrar un mensaje
-//     queryParams:{register:'true'},
-//   })
-// })

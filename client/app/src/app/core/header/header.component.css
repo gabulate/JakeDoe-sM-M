@@ -115,3 +115,8 @@ c-navbar-nav[_ngcontent-ng-c2598991299] {
 .mat-mdc-icon-button.mat-mdc-button-base {
   padding: 8px;
 }
+.btnEmail {
+  height: 70%;
+  background-color: transparent;
+  border: transparent;
+}

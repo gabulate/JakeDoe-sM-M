@@ -24,6 +24,10 @@ export class CarritoComponent {
   isAutenticated: boolean;
   currentUser: any;
   clienteId: any;
+
+  direcciones: any;
+  metodosPago: any;
+
   //Tabla
   displayedColumns: string[] = [
     'producto',
@@ -50,7 +54,10 @@ export class CarritoComponent {
     );
 
     this.clienteId = this.authService.UsuarioId;
+    console.log('idCliente => ', this.clienteId);
 
+    this.obtenerDireccionesDelUsuario();
+    this.obtenerMetodosPagoDelUsuario();
     this.cartService.currentDataCart$.subscribe((data) => {
       this.dataSource = new MatTableDataSource(data);
       //console.log('carrito', data);
@@ -83,9 +90,23 @@ export class CarritoComponent {
   }
   comprar() {
     if (this.qtyItems > 0) {
-      this.router.navigate(['/facturacion/confirmar'], {
-        relativeTo: this.route,
-      });
+      if (!this.direcciones || this.direcciones.length === 0) {
+        this.noti.mensaje(
+          'Orden',
+          'No se puede realizar la compra porque no tiene direcciones registradas.',
+          TipoMessage.error
+        );
+      } else if (!this.metodosPago || this.metodosPago.length === 0) {
+        this.noti.mensaje(
+          'Orden',
+          'No se puede realizar la compra porque no tiene métodos de pago registrados.',
+          TipoMessage.error
+        );
+      } else {
+        this.router.navigate(['/facturacion/confirmar'], {
+          relativeTo: this.route,
+        });
+      }
     } else {
       this.noti.mensaje(
         'Orden',
@@ -99,6 +120,25 @@ export class CarritoComponent {
     this.router.navigate(['/producto'], {
       relativeTo: this.route,
     });
+  }
+
+  obtenerDireccionesDelUsuario() {
+    this.gService
+      .list(`direccion/${this.clienteId}`)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((data: any) => {
+        this.direcciones = data;
+        console.log('direcciones=>', this.direcciones);
+      });
+  }
+  obtenerMetodosPagoDelUsuario() {
+    this.gService
+      .list(`metodoPago/${this.clienteId}`)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((data: any) => {
+        this.metodosPago = data;
+        console.log('metodos=>', this.metodosPago);
+      });
   }
 
   ngOnDestroy() {

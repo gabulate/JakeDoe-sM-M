@@ -1,1 +1,216 @@
-<p>user-create-direccion works!</p>
+<!-- <div class="divTitular borde">
+  <mat-card-header>
+    <mat-card-title
+      >¡Bienvenido(a) {{ usuario.Nombre }}
+      {{ usuario.Apellido }} !</mat-card-title
+    >
+    <br />
+    <p>
+      Para terminar con su proceso de registro, complete lo indicado a
+      continuación:
+    </p>
+    <p>IDs de Roles del Usuario:</p>
+    <ul>
+      <li *ngFor="let rol of usuario.Roles">
+        {{ rol.rol.Descripcion }} {{ rol.rol.id }}
+      </li>
+    </ul>
+  </mat-card-header>
+</div> -->
+
+<div class="dialog-content" style="margin-bottom: 10%">
+    <!-- <div class="dialog-left borde">
+  
+  <p>Listado de direcciones:</p>
+    <ng-container>
+      <p>Título: </p>
+      <p>Provincia: </p>
+      <p>Distrito: </p>
+      <p>Cantón: </p>
+      <p>Código Postal: </p>
+      <p>Dirección Exacta: </p>
+      <p>Teléfono: </p>
+    </ng-container>
+  
+    </div> -->
+  
+    <!--Columna Dirección-->
+    <div class="dialog-right">
+      <ng-container
+        *ngFor="let num of direccionForms; let i = index"
+        class="dashboard-card"
+      >
+        <form
+          [formGroup]="direccionForms[i]"
+          (ngSubmit)="guardarDireccion(i)"
+          style="margin-bottom: 1%"
+          class="borde"
+        >
+        <input type="hidden" formControlName="usuarioId" />
+          <div class="">
+            <div class="row">
+              <!--Título de Dirección-->
+              <div class="col">
+                <mat-form-field class="full-width">
+                  <mat-label>Título de Dirección</mat-label>
+                  <input
+                    matInput
+                    type="text"
+                    placeholder="Título de Dirección"
+                    formControlName="titulo"
+                  />
+                  <mat-error  *ngIf="errorHandling(i, 'titulo', 'required') && direccionForms[i].get('titulo').touched">
+                    Título de Dirección es requerido
+                  </mat-error>
+                </mat-form-field>
+              </div>
+              <!--Teléfono-->
+              <div class="col">
+                <mat-form-field class="full-width">
+                  <mat-label>Teléfono</mat-label>
+                  <input
+                  matInput
+                  type="number"
+                  placeholder="99999999"
+                    formControlName="telefono"
+                  />
+                  <!-- <mat-error *ngIf="errorHandling('i','telefono', 'required')">
+                    Teléfono es <strong>requerido</strong>
+                  </mat-error> -->
+                  <!-- <mat-error *ngIf="errorHandling('telefono', 'maxLength(8)')">
+                    Teléfono debe tener <strong>8 números</strong>
+                  </mat-error> -->
+                  <mat-error *ngIf="errorHandling(i, 'telefono', 'required') && direccionForms[i].get('telefono').touched">
+                    Teléfono es requerida y debe tener <strong>8 números</strong>
+                  </mat-error>
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="row-container-pcd">
+              <!--Provincia-->
+              <div class="col">
+                <div class="">
+                  <mat-form-field class="full-width">
+                    <mat-label>Provincia</mat-label>
+                    <mat-select
+                      formControlName="provincia"
+                      (selectionChange)="
+                        onProvinceChange(
+                          direccionForms[i].controls['provincia'].value
+                        )
+                      "
+                    >
+                      <mat-option
+                        *ngFor="let provincia of provincias"
+                        [value]="provincia.id"
+                      >
+                        {{ provincia.nombre }}
+                      </mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="errorHandling(i, 'provincia', 'required') && direccionForms[i].get('provincia').touched">
+                      Provincia es requerida
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+              </div>
+              <!--Cantón-->
+              <div class="col">
+                <mat-form-field class="full-width">
+                  <mat-label>Cantón</mat-label>
+                  <mat-select
+                    formControlName="canton"
+                    (selectionChange)="
+                      onCantonChange(
+                        direccionForms[i].controls['provincia'].value,
+                        direccionForms[i].controls['canton'].value
+                      )
+                    "
+                  >
+                    <mat-option
+                      *ngFor="let canton of cantones"
+                      [value]="canton.id"
+                    >
+                      {{ canton.nombre }}
+                    </mat-option>
+                  </mat-select>
+                  <mat-error *ngIf="errorHandling(i, 'canton', 'required') && direccionForms[i].get('canton').touched">
+                     Cantón es requerido
+                  </mat-error>
+                </mat-form-field>
+              </div>
+              <!--Distrito-->
+              <div class="col">
+                <mat-form-field class="full-width">
+                  <mat-label>Distrito</mat-label>
+                  <mat-select
+                    formControlName="distrito"
+                    (selectionChange)="
+                      onDistritoChange(
+                        direccionForms[i].controls['distrito'].value
+                      )
+                    "
+                  >
+                    <mat-option
+                      *ngFor="let distrito of distritos"
+                      [value]="distrito.id"
+                    >
+                      {{ distrito.nombre }}
+                    </mat-option>
+                  </mat-select>
+                  <mat-error *ngIf="errorHandling(i, 'distrito', 'required') && direccionForms[i].get('distrito').touched">
+                    Distrito es requerido
+                  </mat-error>
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="row">
+              <!--CodPostal-->
+              <div class="col" style="width: 20%">
+                <mat-form-field class="full-width">
+                  <mat-label>Código postal</mat-label>
+                  <input
+                    matInput
+                    type="number"
+                    placeholder="9999"
+                    formControlName="codPostal"
+                  />
+                  <mat-error *ngIf="errorHandling(i, 'codPostal', 'required') && direccionForms[i].get('codPostal').touched">
+                    Código postal es requerido
+                  </mat-error>
+                </mat-form-field>
+              </div>
+  
+              <!--Dirección exacta(Detalle)-->
+              <div class="col">
+                <mat-form-field class="full-width">
+                  <mat-label>Dirección Exacta</mat-label>
+                  <input
+                    matInput
+                    type="text"
+                    placeholder="Dirección Exacta"
+                    formControlName="detalle"
+                  />
+                  <mat-error *ngIf="errorHandling(i, 'detalle', 'required') && direccionForms[i].get('detalle').touched">
+                    Código postal es requerido
+                  </mat-error>
+                </mat-form-field>
+              </div>
+            </div>
+          </div>
+  
+          <mat-card-actions style="margin-left: 2%">
+            <button mat-raised-button color="primary" type="submit">
+              Guardar dirección
+            </button>
+          </mat-card-actions>
+        </form>
+      </ng-container>
+    </div>
+  
+    <mat-card-actions style="margin-left: 2%">
+      <button mat-raised-button color="primary" (click)="siguiente()">
+        Siguiente
+      </button>
+    </mat-card-actions>
+  </div>
+  

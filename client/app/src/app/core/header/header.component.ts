@@ -112,6 +112,6 @@ export class HeaderComponent implements OnInit {
     this.router.navigate(['inicio']);
   }
   register(){
-    this.router.navigate(['']);
+    this.router.navigate(['usuario/registrar']);
   }
 }
