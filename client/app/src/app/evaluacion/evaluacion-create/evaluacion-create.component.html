@@ -1,0 +1,37 @@
+<div style="margin: 5%; text-align: center;">
+
+    <h2>Evalúe a sus proveedores</h2>
+    <p>Para ofrecerle una mejor experiencia y productos, por favor evalúe a sus proveedores</p>
+    <!-- <button (click)="close()">Más tarde</button> -->
+    <div>
+
+        <div style="margin-top: 2%;">
+            <div>
+                <h3>Jake Doe</h3>
+            </div>
+            
+            <div>
+                <span>4.6</span>
+                <span>puntuación promedio</span>
+            </div>
+            
+        </div>
+        <div>
+            <!-- <mat-icon>star_border</mat-icon>
+            <mat-icon>star_border</mat-icon>
+            <mat-icon>star_border</mat-icon>
+            <mat-icon>star_border</mat-icon>
+            <mat-icon>star_border</mat-icon> -->
+
+            <mat-icon (mouseenter)="changeIcon(1)" (click)="keepIcon(1)">{{ stars[0] }}</mat-icon>
+            <mat-icon (mouseenter)="changeIcon(2)" (click)="keepIcon(2)">{{ stars[1] }}</mat-icon>
+            <mat-icon (mouseenter)="changeIcon(3)" (click)="keepIcon(3)">{{ stars[2] }}</mat-icon>
+            <mat-icon (mouseenter)="changeIcon(4)" (click)="keepIcon(4)">{{ stars[3] }}</mat-icon>
+            <mat-icon (mouseenter)="changeIcon(5)" (click)="keepIcon(5)">{{ stars[4] }}</mat-icon>
+
+        </div>
+
+    </div>
+
+
+</div>

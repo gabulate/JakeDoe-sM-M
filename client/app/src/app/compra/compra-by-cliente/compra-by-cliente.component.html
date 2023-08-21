@@ -45,7 +45,15 @@
               >
               <mat-icon>info</mat-icon>
               </button>
-            
+              <button mat-mini-fab class="btnDetalle"
+                color="accent"
+                matTooltip="Evaluacion"
+                aria-label="Evaluacion"
+                color="primary"
+                (click)="evaluacion(row.id)"
+              >
+              <mat-icon>rate_review</mat-icon>
+            </button>
             
           </td>
         </ng-container>
