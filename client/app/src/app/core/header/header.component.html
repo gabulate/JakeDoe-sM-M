@@ -112,7 +112,10 @@
                  Registrarse
               </button></li>
             </c-container>
-
+            <li><button cDropdownItem (click)="miCuenta()" *ngIf="isAutenticated">
+              <mat-icon>account_circle</mat-icon>
+              Mi cuenta
+            </button></li>
             <li><button cDropdownItem (click)="logout()" *ngIf="isAutenticated">
               <mat-icon>person_remove</mat-icon>
              Cerrar sesión
@@ -141,22 +144,3 @@
     </div>
   </c-container>
 </c-navbar>
-
-<!-- 
-      <ng-container class="usuario">
-          <c-navbar-text *ngIf="isAutenticated">{{currentUser.user.Email}}</c-navbar-text>
-          
-          <button mat-icon-button [matMenuTriggerFor]="menu3">
-            <mat-icon [ngStyle]="{'color': isAutenticated ? 'white': '#9E9E9E' }">person</mat-icon>
-          </button>
-        <mat-menu #menu3="matMenu" >
-          <a mat-menu-item *ngIf="!(isAutenticated)" (click)="login()">
-            <mat-icon>person_add</mat-icon>
-            <span>Login</span>
-          </a>
-          <a mat-menu-item *ngIf="isAutenticated" (click)="logout()">
-            <mat-icon>person_remove</mat-icon>
-            <span>Logout</span>
-          </a>
-        </mat-menu>
-        </ng-container> -->

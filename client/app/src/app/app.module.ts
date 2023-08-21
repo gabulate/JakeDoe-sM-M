@@ -16,6 +16,7 @@ import { MensajeModule } from './mensaje/mensaje.module';
 import { FacturacionModule } from './facturacion/facturacion.module';
 import { HttpErrorInterceptorService } from './share/http-error-interceptor.service';
 import { AdminModule } from './admin/admin.module';
+import { EvaluacionModule } from './evaluacion/evaluacion.module';
 
 
 @NgModule({
@@ -36,7 +37,8 @@ import { AdminModule } from './admin/admin.module';
     MensajeModule,
     ProductoModule,
     FacturacionModule,
-    AppRoutingModule
+    AppRoutingModule,
+    EvaluacionModule
   ],
   providers: [
 /*     { 

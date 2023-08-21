@@ -27,6 +27,7 @@ import { UserCreatePagoComponent } from './user-create-pago/user-create-pago.com
 import { UserCreateDireccionComponent } from './user-create-direccion/user-create-direccion.component';
 import { MatNativeDateModule } from '@angular/material/core';
 import {MatDatepickerModule} from '@angular/material/datepicker';
+import { UserCuentaComponent } from './user-cuenta/user-cuenta.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,7 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
     UserAllDeshabilitadosComponent,
     UserCreateDiagComponent,
     UserCreatePagoComponent, 
-    UserCreateDireccionComponent, 
+    UserCreateDireccionComponent, UserCuentaComponent, 
     
   ],
   imports: [

@@ -114,4 +114,7 @@ export class HeaderComponent implements OnInit {
   register(){
     this.router.navigate(['usuario/registrar']);
   }
+  miCuenta(){
+    this.router.navigate(['usuario/cuenta']);
+  }
 }

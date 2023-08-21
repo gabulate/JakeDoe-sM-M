@@ -53,7 +53,7 @@ app.use("/compra/", compraRouter);
 app.use("/mensaje/", mensajeRouter);
 app.use("/fotoProducto/", fotoRouter);
 app.use("/metodoPago/", metodoPagoRouter);
-app.use("/direccion/", direccionRouter);
+app.use("/direccion/", direccionRouter); 
 app.use("/categoria/", categoriaRoutes);
 app.use("/rol/", rolRoutes);
 app.use("/estadoProducto/", estadoProductoRoutes);
