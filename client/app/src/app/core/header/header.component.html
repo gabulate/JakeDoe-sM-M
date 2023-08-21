@@ -14,7 +14,11 @@
       <c-navbar-nav class="me-auto mb-2 mb-lg-0">
         <!--ADMIN NAVBAR-->
         <c-nav-item>
-          <button *ngIf="isAdmin()" mat-button [routerLink]="['/admin/producto/']" routerLinkActive="mat-raised-button"> Productos</button>
+          <button *ngIf="isAdmin()" mat-button [routerLink]="['/admin/dashboard']" routerLinkActive="mat-raised-button">Dashboard</button>
+        </c-nav-item>
+
+        <c-nav-item>
+          <button *ngIf="isAdmin()" mat-button [routerLink]="['/admin/producto/']" routerLinkActive="mat-raised-button">Productos</button>
         </c-nav-item>
         
         <c-dropdown *ngIf="isAdmin()" variant="nav-item" [popper]="false" >

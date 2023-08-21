@@ -17,6 +17,7 @@ export class UserLoginComponent implements OnInit {
   formulario: FormGroup;
   makeSubmit: boolean = false;
   infoUsuario: any;
+  currentUser: any;
   constructor(
     public fb: FormBuilder,
     private authService: AuthenticationService,
@@ -34,6 +35,7 @@ export class UserLoginComponent implements OnInit {
     });
   }
   ngOnInit(): void {
+    this.authService.currentUser.subscribe((x) => (this.currentUser = x));
     this.mensajes();
   }
 
@@ -75,7 +77,14 @@ export class UserLoginComponent implements OnInit {
     this.authService.loginUser(this.formulario.value).subscribe(
       (respuesta: any) => {
         console.log(respuesta);
-        this.router.navigate(['/']);
+
+        if (this.isAdmin()) {
+          this.router.navigate(['/admin/dashboard/']);
+        } else if(this.isVendedor()){
+          this.router.navigate(['/producto/vendedor/' + this.currentUser.user.id]);
+        } else{
+          this.router.navigate(['/']);
+        }
       },
       (error) => {
         this.notificacion.mensaje(
@@ -99,4 +108,36 @@ export class UserLoginComponent implements OnInit {
       (this.makeSubmit || this.formulario.controls[control].touched)
     );
   };
+
+  isAdmin() {
+    let userRole = [];
+    if (this.currentUser) {
+      for (let index = 0; index < this.currentUser.user.Roles.length; index++) {
+        userRole[index] = this.currentUser.user.Roles[index].RolId;
+      }
+    }
+
+    for (let index = 0; index < userRole.length; index++) {
+      if (userRole[index] === 1) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  isVendedor() {
+    let userRole = [];
+    if (this.currentUser) {
+      for (let index = 0; index < this.currentUser.user.Roles.length; index++) {
+        userRole[index] = this.currentUser.user.Roles[index].RolId;
+      }
+    }
+
+    for (let index = 0; index < userRole.length; index++) {
+      if (userRole[index] === 3) {
+        return true;
+      }
+    }
+    return false;
+  }
 }

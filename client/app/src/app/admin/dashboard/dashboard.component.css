@@ -1,0 +1,48 @@
+.full-width {
+  width: 100%;
+}
+
+.dashboard {
+  width: 30%;
+  margin: 1rem;
+}
+
+.shipping-card {
+  width: 90%;
+  margin: 3rem auto;
+}
+
+.container{
+    width: 100%;
+    overflow: hidden;
+}
+
+.column{
+    margin: 1rem;
+    width: 40%;
+    float: left;
+    box-sizing: border-box;
+}
+
+.chart {
+  display: block;
+  width: 20rem;
+  height: 20rem;
+  margin: 1rem auto;
+  background-color: red;
+}
+
+.list {
+  display: block;
+  width: 20rem;
+  height: 20rem;
+  margin: 1rem auto;
+  background-color: blue;
+}
+
+.fotoProducto {
+    margin-top: 5%;
+    height: 3rem;
+    width: 3rem;
+    object-fit: contain;
+  }

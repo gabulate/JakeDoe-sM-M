@@ -15,6 +15,7 @@ import { PedidoModule } from './compra/compra.module';
 import { MensajeModule } from './mensaje/mensaje.module';
 import { FacturacionModule } from './facturacion/facturacion.module';
 import { HttpErrorInterceptorService } from './share/http-error-interceptor.service';
+import { AdminModule } from './admin/admin.module';
 
 
 @NgModule({
@@ -29,6 +30,7 @@ import { HttpErrorInterceptorService } from './share/http-error-interceptor.serv
     CoreModule,
     ShareModule,
     HomeModule,
+    AdminModule,
     UserModule,
     PedidoModule,
     MensajeModule,
