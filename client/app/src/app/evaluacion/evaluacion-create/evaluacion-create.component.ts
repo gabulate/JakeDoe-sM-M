@@ -1,10 +1,15 @@
-import { Inject, Component, OnInit } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { Inject, Component, OnInit, ViewChild } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { MAT_DIALOG_DATA, MatDialog, MatDialogConfig, MatDialogRef } from '@angular/material/dialog';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Subject, takeUntil } from 'rxjs';
+import { Subject, map, takeUntil } from 'rxjs';
 import { CompraByClienteComponent } from 'src/app/compra/compra-by-cliente/compra-by-cliente.component';
 import { AuthenticationService } from 'src/app/share/authentication.service';
 import { GenericService } from 'src/app/share/generic.service';
+import { NotificacionService, TipoMessage } from 'src/app/share/notification.service';
+import { EvaluacionCreateVendedorComponent } from '../evaluacion-create-vendedor/evaluacion-create-vendedor.component';
 
 @Component({
   selector: 'app-evaluacion-create',
@@ -12,30 +17,26 @@ import { GenericService } from 'src/app/share/generic.service';
   styleUrls: ['./evaluacion-create.component.css'],
 })
 export class EvaluacionCreateComponent implements OnInit {
-  destroy$: Subject<boolean> = new Subject<boolean>();
   datosDialog: any;
+  currentUser: any;
+  destroy$: Subject<boolean> = new Subject<boolean>();
   orden: any;
   uniqueVendorInfo: any;
-  evaluaciones: any[] = [];
-  currentUser: any;
-  total: number = 0;
-  stars: string[] = [
-    'star_border',
-    'star_border',
-    'star_border',
-    'star_border',
-    'star_border',
-  ];
-  starStates: boolean[] = [false, false, false, false, false];
-  lastEvaluations: { [vendorId: number]: number } = {};
+
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  dataSource = new MatTableDataSource<any>();
+  displayedColumns = ['vendedor', 'acciones'];
 
   constructor(
     @Inject(MAT_DIALOG_DATA) data,
     private router: Router,
     private route: ActivatedRoute,
     private gService: GenericService,
+    private authService: AuthenticationService,
+    private dialog: MatDialog,
+    private noti: NotificacionService,
     private dialogRef: MatDialogRef<CompraByClienteComponent>,
-    private authService: AuthenticationService
+    private fb: FormBuilder
   ) {
     this.datosDialog = data;
   }
@@ -47,55 +48,6 @@ export class EvaluacionCreateComponent implements OnInit {
     this.authService.currentUser.subscribe((x) => (this.currentUser = x));
     console.log('id usuario: ' + this.currentUser.user.id);
   }
-  /*   changeIcon(index: number) {
-    this.stars = this.stars.map((star, i) =>
-      i < index ? 'star_rate' : 'star_border'
-    );
-  }
-  keepIcon(index: number) {
-    this.starStates = this.starStates.map((star, i) => i <= index - 1);
-    this.total = this.starStates.filter((state) => state).length;
-    console.log('cuenta', this.total);
-  } */
-
-  changeIcon(vendorInfo: any, index: number) {
-    vendorInfo.starStates = vendorInfo.starStates.map((_, i) =>
-      i <= index - 1 ? true : false
-    );
-  }
-
-  keepIcon(vendorInfo: any, index: number) {
-    vendorInfo.starStates = vendorInfo.starStates.map((_, i) => i <= index - 1);
-    const total = vendorInfo.starStates.filter((state) => state).length;
-    console.log('rating', vendorInfo.name, total);
-    // Actualizar la última evaluación para el vendedor en el objeto temporal
-    this.lastEvaluations[vendorInfo.id] = total;
-  }
-
-  guardarEvaluacion() {
-    for (const vendorId in this.lastEvaluations) {
-      if (this.lastEvaluations.hasOwnProperty(vendorId)) {
-        const evaluacion = {
-          OrdenId: this.orden.id,
-          EvaluadorId: this.currentUser.user.id,
-          EvaluadoId: parseInt(vendorId), // Convertir a número
-          Puntuacion: this.lastEvaluations[vendorId],
-        };
-        this.evaluaciones.push(evaluacion);
-      }
-      this.close();
-    }
-
-    for (const evaluacion of this.evaluaciones) {
-      this.gService
-        .create('evaluacion', evaluacion)
-        .pipe(takeUntil(this.destroy$))
-        .subscribe((data: any) => {
-          console.log('evaluacion guardada: ', data);
-        });
-    }
-  }
-
   obtenerOrden(idOrden: number) {
     this.gService
       .get('compra/', idOrden)
@@ -103,13 +55,10 @@ export class EvaluacionCreateComponent implements OnInit {
       .subscribe((data: any) => {
         this.orden = data;
         console.log(this.orden);
-
         const uniqueVendorInfoMap = new Map<number, any>();
-
         this.orden.CompraDetalle.forEach((detalle) => {
           const vendorId = detalle.producto.vendedor.id;
           const vendorName = detalle.producto.vendedor.NombreVendedor;
-
           // If the vendor ID is not already in the Map, add it
           if (!uniqueVendorInfoMap.has(vendorId)) {
             uniqueVendorInfoMap.set(vendorId, {
@@ -119,15 +68,50 @@ export class EvaluacionCreateComponent implements OnInit {
             });
           }
         });
-
         // Convert the Map values to an array of objects
         this.uniqueVendorInfo = Array.from(uniqueVendorInfoMap.values());
         console.log('VendedorInfo: ', this.uniqueVendorInfo);
+
+        this.dataSource = new MatTableDataSource(this.uniqueVendorInfo);
+        this.dataSource.paginator = this.paginator;
       });
   }
 
-  close() {
-    this.dialogRef.close();
+  evaluacion(idVendedor: number) {
+    this.evaluacionByOrdenId(this.datosDialog.idOrden, idVendedor).subscribe(
+      (evaluacionVacia) => {
+        console.log('hasEvaluacion', evaluacionVacia);
+        if (evaluacionVacia) {
+          const dialogConfig = new MatDialogConfig();
+          dialogConfig.disableClose = false;
+          dialogConfig.data = {
+            idVendedor: idVendedor,
+            idOrden: this.datosDialog.idOrden,
+          };
+          this.dialog.open(EvaluacionCreateVendedorComponent, dialogConfig);
+        } else {
+          this.noti.mensaje(
+            'Evaluación ya registrada para este proveedor',
+            'Ya hay una evaluación registrada para esta orden y proveedor',
+            TipoMessage.error
+          );
+        }
+      },
+      (error) => {
+        // Manejar errores en la suscripción, si es necesario
+        console.error('Error al obtener evaluación: ', error);
+      }
+    );
+  }
+
+  evaluacionByOrdenId(ordenId: number, vendedorId: number) {
+    const endpoint = `evaluacion/orden/${ordenId}/vendedor/${vendedorId}`;
+    return this.gService.getByUrl(endpoint).pipe(
+      takeUntil(this.destroy$),
+      map((data: any) => {
+        console.log('data', data);
+        return data.length === 0;
+      })
+    );
   }
 }
-

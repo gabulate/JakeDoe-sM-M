@@ -1,46 +1,53 @@
 <div style="margin: 5%; text-align: center">
-    <h2>Evalúe a sus proveedores</h2>
-    <p>
-      Para ofrecerle una mejor experiencia y productos, por favor evalúe a sus
-      proveedores
-    </p>
-  
-    <div id="rating" *ngFor="let vendorInfo of uniqueVendorInfo">
-      <div style="margin-top: 2%">
-        <div>
-          <h3 id="nombreVendedor">{{ vendorInfo.name }}</h3>
-        </div>
-  
-        <div>
-          <span id="puntPromedio"></span>
-          <span> puntuación promedio</span>
-        </div>
-      </div>
-      <div>
-        <mat-icon
-          
-          (click)="keepIcon(vendorInfo, 1)"
-        >{{ vendorInfo.starStates[0] ? 'star_rate' : 'star_border' }}</mat-icon>
-        <mat-icon
-          
-          (click)="keepIcon(vendorInfo, 2)"
-        >{{ vendorInfo.starStates[1] ? 'star_rate' : 'star_border' }}</mat-icon>
-        <mat-icon
-          
-          (click)="keepIcon(vendorInfo, 3)"
-        >{{ vendorInfo.starStates[2] ? 'star_rate' : 'star_border' }}</mat-icon>
-        <mat-icon
-          
-          (click)="keepIcon(vendorInfo, 4)"
-        >{{ vendorInfo.starStates[3] ? 'star_rate' : 'star_border' }}</mat-icon>
-        <mat-icon
-          
-          (click)="keepIcon(vendorInfo, 5)"
-        >{{ vendorInfo.starStates[4] ? 'star_rate' : 'star_border' }}</mat-icon>
-      </div>
-  
+  <h2>Evalúe a sus proveedores</h2>
+  <p>
+    Para ofrecerle una mejor experiencia y productos, por favor evalúe a sus
+    proveedores
+  </p>
+
+  <div id="rating" >
+    <table
+        mat-table
+        [dataSource]="dataSource"
+        class="full-width-table"
+        matSort
+        aria-label="Elements"
+      >
+        <!-- Columna Vendedor -->
+        <ng-container matColumnDef="vendedor">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Proveedor</th>
+          <td mat-cell *matCellDef="let row">{{ row.name}}</td>
+        </ng-container>
+
+        <!-- Columna acciones -->
+        <ng-container matColumnDef="acciones">
+          <th mat-header-cell *matHeaderCellDef>Acciones</th>
+          <td mat-cell *matCellDef="let row">
+            <button mat-mini-fab class="btnDetalle"
+              color="accent"
+              matTooltip="Evaluacion"
+              aria-label="Evaluacion"
+              color="primary"
+              (click)="evaluacion(row.id)"
+            >
+            <mat-icon>rate_review</mat-icon>
+            </button>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+      </table>
+
+      <mat-paginator
+        #paginator
+        [length]="dataSource?.data?.length"
+        [pageIndex]="0"
+        [pageSize]="3"
+        [pageSizeOptions]="[3, 5, 10]"
+        aria-label="Selecccione una página"
+      >
+      </mat-paginator>
     </div>
-    <button  style="margin-top: 5%; " (click)="guardarEvaluacion()">Enviar</button>
+    
   </div>
-  
-  

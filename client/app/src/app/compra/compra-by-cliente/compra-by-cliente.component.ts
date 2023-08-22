@@ -67,40 +67,16 @@ export class CompraByClienteComponent implements AfterViewInit {
       relativeTo: this.route,
     });
   }
+
   evaluacion(idOrden: number) {
-    this.evaluacionByOrdenId(idOrden).subscribe(evaluacionVacia => {
-      console.log("hasEvaluacion", evaluacionVacia);
-      if (evaluacionVacia) {
-        const dialogConfig = new MatDialogConfig();
-        dialogConfig.disableClose = false;
-        dialogConfig.data = {
-          idOrden: idOrden
-        };
-        this.dialog.open(EvaluacionCreateComponent, dialogConfig);
-      } else {
-        this.noti.mensaje(
-          'Evaluación ya registrada',
-          'Ya hay una evaluación registrada para esta orden, por favor evalúe otra orden',
-          TipoMessage.error
-        );
-      }
-    },
-    error => {
-      // Manejar errores en la suscripción, si es necesario
-      console.error('Error al obtener evaluación: ', error);
-    });
-    
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.disableClose = false;
+    dialogConfig.data = {
+      idOrden: idOrden,
+    };
+    this.dialog.open(EvaluacionCreateComponent, dialogConfig);
   }
-  
-  evaluacionByOrdenId(ordenId: number) {
-    return this.gService.get('evaluacion/orden', ordenId).pipe(
-      takeUntil(this.destroy$),
-      map((data: any) => {
-        console.log("data",data);
-        return data.length === 0;
-      })
-    );
-  }
+
   ngOnDestroy() {
     this.destroy$.next(true);
     this.destroy$.unsubscribe();

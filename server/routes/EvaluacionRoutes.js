@@ -9,5 +9,6 @@ const productoController =require("../controllers/ProductoController")
 router.post("/",evaluacionController.create);
 router.get("/usuario/:id", evaluacionController.getByEvaluadoId);
 router.get("/orden/:id", evaluacionController.getByIdOrden);
+router.get("/orden/:idOrden/vendedor/:vendedorId", evaluacionController.getByIdOrdenAndVendedor);
 
 module.exports = router;

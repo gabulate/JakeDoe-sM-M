@@ -9,6 +9,7 @@ module.exports.create = async (request, response, next) => {
        EvaluadorId: parseInt(evaluacion.EvaluadorId),
        EvaluadoId: parseInt(evaluacion.EvaluadoId),
        Calificacion: parseInt(evaluacion.Puntuacion),
+       Comentario: evaluacion.Comentario,
       }, 
     });
     response.json(newEvaluacion); 
@@ -20,7 +21,7 @@ module.exports.create = async (request, response, next) => {
   
     const evaluaciones = await prisma.evaluacion.findMany({
       where: {
-        EvaluadoId: EvaluadoId,
+        EvaluadoId: parseInt(EvaluadoId),
       },
     });
     response.json(evaluaciones);
@@ -31,7 +32,19 @@ module.exports.create = async (request, response, next) => {
   
     const evaluacion = await prisma.evaluacion.findMany({
       where: {
-        CompraId: OrdenId,
+        CompraId: parseInt(OrdenId),
+      },
+    });
+    response.json(evaluacion);
+  };
+
+  module.exports.getByIdOrdenAndVendedor = async (request, response, next) => {
+    let OrdenId = parseInt(request.params.idOrden);
+    let VendedorId = parseInt(request.params.vendedorId);
+    const evaluacion = await prisma.evaluacion.findMany({
+      where: {
+        CompraId: parseInt(OrdenId),
+        EvaluadoId: parseInt(VendedorId),
       },
     });
     response.json(evaluacion);
