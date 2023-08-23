@@ -10,12 +10,16 @@ import { MatInputModule } from '@angular/material/input';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatTableModule } from '@angular/material/table';
 import { ReactiveFormsModule } from '@angular/forms';
+import { EvaluacionIndexClienteComponent } from './evaluacion-index-cliente/evaluacion-index-cliente.component';
+import { EvaluacionCreateClienteComponent } from './evaluacion-create-cliente/evaluacion-create-cliente.component';
 
 
 @NgModule({
   declarations: [
     EvaluacionCreateComponent,
-    EvaluacionCreateVendedorComponent
+    EvaluacionCreateVendedorComponent,
+    EvaluacionIndexClienteComponent,
+    EvaluacionCreateClienteComponent
   ],
   imports: [
     CommonModule,

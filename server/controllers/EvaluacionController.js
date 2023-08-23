@@ -38,13 +38,13 @@ module.exports.create = async (request, response, next) => {
     response.json(evaluacion);
   };
 
-  module.exports.getByIdOrdenAndVendedor = async (request, response, next) => {
+  module.exports.getByIdOrdenAndEvaluado = async (request, response, next) => {
     let OrdenId = parseInt(request.params.idOrden);
-    let VendedorId = parseInt(request.params.vendedorId);
+    let EvaluadoId = parseInt(request.params.evaluadoId);
     const evaluacion = await prisma.evaluacion.findMany({
       where: {
         CompraId: parseInt(OrdenId),
-        EvaluadoId: parseInt(VendedorId),
+        EvaluadoId: parseInt(EvaluadoId),
       },
     });
     response.json(evaluacion);

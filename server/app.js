@@ -61,7 +61,7 @@ app.use("/estadoProducto/", estadoProductoRoutes);
 app.use("/tipoPago/", tipoPagoRoutes);
 app.use("/reporte/", reporteRoutes);
 app.use("/evaluacion/", evaluacionRoutes);
-// Servidor
+// Servidor 
 app.listen(port, () => {
   console.log("Jake Doe's store API is up and running! B^)");
   console.log(`Check here --> http://localhost:${port}`);

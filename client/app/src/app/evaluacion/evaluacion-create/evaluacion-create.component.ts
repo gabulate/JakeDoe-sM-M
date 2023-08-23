@@ -1,6 +1,11 @@
 import { Inject, Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { MAT_DIALOG_DATA, MatDialog, MatDialogConfig, MatDialogRef } from '@angular/material/dialog';
+import {
+  MAT_DIALOG_DATA,
+  MatDialog,
+  MatDialogConfig,
+  MatDialogRef,
+} from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -8,7 +13,10 @@ import { Subject, map, takeUntil } from 'rxjs';
 import { CompraByClienteComponent } from 'src/app/compra/compra-by-cliente/compra-by-cliente.component';
 import { AuthenticationService } from 'src/app/share/authentication.service';
 import { GenericService } from 'src/app/share/generic.service';
-import { NotificacionService, TipoMessage } from 'src/app/share/notification.service';
+import {
+  NotificacionService,
+  TipoMessage,
+} from 'src/app/share/notification.service';
 import { EvaluacionCreateVendedorComponent } from '../evaluacion-create-vendedor/evaluacion-create-vendedor.component';
 
 @Component({
@@ -104,8 +112,8 @@ export class EvaluacionCreateComponent implements OnInit {
     );
   }
 
-  evaluacionByOrdenId(ordenId: number, vendedorId: number) {
-    const endpoint = `evaluacion/orden/${ordenId}/vendedor/${vendedorId}`;
+  evaluacionByOrdenId(ordenId: number, evaluadoId: number) {
+    const endpoint = `evaluacion/orden/${ordenId}/evaluado/${evaluadoId}`;
     return this.gService.getByUrl(endpoint).pipe(
       takeUntil(this.destroy$),
       map((data: any) => {

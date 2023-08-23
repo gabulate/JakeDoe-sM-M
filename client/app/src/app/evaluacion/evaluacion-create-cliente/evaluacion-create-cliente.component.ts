@@ -8,22 +8,20 @@ import { AuthenticationService } from 'src/app/share/authentication.service';
 import { GenericService } from 'src/app/share/generic.service';
 
 @Component({
-  selector: 'app-evaluacion-create-vendedor',
-  templateUrl: './evaluacion-create-vendedor.component.html',
-  styleUrls: ['./evaluacion-create-vendedor.component.css'],
+  selector: 'app-evaluacion-create-cliente',
+  templateUrl: './evaluacion-create-cliente.component.html',
+  styleUrls: ['./evaluacion-create-cliente.component.css'],
 })
-export class EvaluacionCreateVendedorComponent implements OnInit {
+export class EvaluacionCreateClienteComponent implements OnInit {
+  currentUser: any;
   destroy$: Subject<boolean> = new Subject<boolean>();
   datosDialog: any;
   orden: any;
-  uniqueVendorInfo: any;
+  cliente: any;
   evaluacion: any;
   comentarioForm: FormGroup;
-  comentario: any;
   submitted = false;
-  currentUser: any;
-  vendedorId: any;
-  vendedor: any;
+  comentario: any;
   total: number = 0;
   stars: string[] = [
     'star_border',
@@ -47,7 +45,6 @@ export class EvaluacionCreateVendedorComponent implements OnInit {
     this.datosDialog = data;
     this.formularioReactive();
   }
-
   formularioReactive() {
     this.comentarioForm = this.fb.group({
       idOrden: [null, null],
@@ -56,18 +53,14 @@ export class EvaluacionCreateVendedorComponent implements OnInit {
       comentario: [null, null],
     });
   }
-
   ngOnInit(): void {
     if (this.datosDialog.idOrden) {
-      console.log('idOrden', this.datosDialog.idOrden);
-      console.log('idVendedor', this.datosDialog.idVendedor);
-
-      this.obtenerVendedor(this.datosDialog.idVendedor);
+      console.log('idOrden -> ', this.datosDialog.idOrden);
+      this.obtenerOrden(this.datosDialog.idOrden);
     }
     this.authService.currentUser.subscribe((x) => (this.currentUser = x));
     console.log('id usuario autenticado: ' + this.currentUser.user.id);
   }
-
   changeIcon(index: number) {
     this.stars = this.stars.map((star, i) =>
       i <= index - 1 ? 'star_rate' : 'star_border'
@@ -79,7 +72,37 @@ export class EvaluacionCreateVendedorComponent implements OnInit {
     const total = this.starStates.filter((state) => state).length;
     console.log('rating', total);
     // Actualizar la última evaluación para el vendedor en el objeto temporal
-    this.lastEvaluations[this.vendedor.id] = total;
+    this.lastEvaluations[this.cliente.id] = total;
+  }
+
+  obtenerOrden(idOrden: number) {
+    this.gService
+      .get('compra', idOrden)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((data: any) => {
+        this.orden = data;
+        console.log('orden -> ', this.orden);
+        this.obtenerCliente(this.orden.cliente.id);
+      });
+  }
+
+  obtenerCliente(idCliente: number) {
+    this.gService
+      .get('usuario', idCliente)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((data: any) => {
+        this.cliente = data;
+        console.log('cliente -> ', this.cliente);
+      });
+  }
+
+  crearComentario() {
+    this.submitted = true;
+    if (this.comentarioForm.invalid) {
+      return;
+    }
+    this.comentarioForm.patchValue({});
+    console.log(this.comentarioForm.value);
   }
 
   guardarEvaluacion() {
@@ -88,7 +111,7 @@ export class EvaluacionCreateVendedorComponent implements OnInit {
         const evaluacion = {
           OrdenId: this.datosDialog.idOrden,
           EvaluadorId: this.currentUser.user.id,
-          EvaluadoId: parseInt(this.vendedor.id), // Convertir a número
+          EvaluadoId: parseInt(this.cliente.id), // Convertir a número
           Puntuacion: this.lastEvaluations[vendorId],
           Comentario: this.comentarioForm.get('comentario').value,
         };
@@ -101,28 +124,9 @@ export class EvaluacionCreateVendedorComponent implements OnInit {
       .create('evaluacion', this.evaluacion)
       .pipe(takeUntil(this.destroy$))
       .subscribe((data: any) => {
-        console.log('evaluacion cliente->vendedor guardada: ', data);
+        console.log('evaluacion vendedor->cliente guardada: ', data);
       });
       
-  }
-
-  crearPregunta() {
-    this.submitted = true;
-    if (this.comentarioForm.invalid) {
-      return;
-    }
-    this.comentarioForm.patchValue({});
-    console.log(this.comentarioForm.value);
-  }
-
-  obtenerVendedor(idVendedor: number) {
-    this.gService
-      .get('usuario/', idVendedor)
-      .pipe(takeUntil(this.destroy$))
-      .subscribe((data: any) => {
-        this.vendedor = data;
-        console.log(this.vendedor);
-      });
   }
 
   close() {
