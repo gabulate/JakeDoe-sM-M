@@ -7,13 +7,14 @@ import {
 } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogConfig, MatDialogRef } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Subject, takeUntil } from 'rxjs';
+import { Subject, map, takeUntil } from 'rxjs';
 import { GenericService } from 'src/app/share/generic.service';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTable, MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
 import { AuthenticationService } from 'src/app/share/authentication.service';
 import { EvaluacionCreateComponent } from 'src/app/evaluacion/evaluacion-create/evaluacion-create.component';
+import { NotificacionService, TipoMessage } from 'src/app/share/notification.service';
 
 @Component({
   selector: 'app-compra-by-cliente',
@@ -39,7 +40,8 @@ export class CompraByClienteComponent implements AfterViewInit {
     private route: ActivatedRoute,
     private gService: GenericService,
     private authService: AuthenticationService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private noti: NotificacionService,
   ) {}
 
   ngAfterViewInit(): void {
@@ -65,15 +67,16 @@ export class CompraByClienteComponent implements AfterViewInit {
       relativeTo: this.route,
     });
   }
-  evaluacion(idOrden:number){
+
+  evaluacion(idOrden: number) {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = false;
     dialogConfig.data = {
-      idOrden: idOrden
+      idOrden: idOrden,
     };
-    //"abra el elemento q se va a convertir en el dialogo"
     this.dialog.open(EvaluacionCreateComponent, dialogConfig);
   }
+
   ngOnDestroy() {
     this.destroy$.next(true);
     this.destroy$.unsubscribe();

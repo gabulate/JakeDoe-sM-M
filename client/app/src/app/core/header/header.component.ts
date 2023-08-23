@@ -57,6 +57,12 @@ export class HeaderComponent implements OnInit {
     ]);
   }
 
+  evaluaciones() {
+    this.router.navigate([
+      '/evaluaciones/vendedor/' + this.currentUser.user.id,
+    ]);
+  }
+
   isVendedor() {
     let userRole = [];
     if (this.currentUser) {

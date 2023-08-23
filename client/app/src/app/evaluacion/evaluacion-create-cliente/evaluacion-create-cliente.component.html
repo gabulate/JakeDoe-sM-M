@@ -1,0 +1,48 @@
+<div style="margin: 5%; text-align: center">
+  <h2 >Evalúe a su cliente</h2>
+  <p>
+    Por favor califique a su cliente y ofrezca un comentario
+  </p>
+
+  <div id="rating" >
+    <div style="margin-top: 2%">
+      <div>
+        <h3  id="nombre">{{cliente.Nombre + " " + cliente.Apellido}}</h3>
+      </div>
+
+      <div>
+        <span id="puntPromedio">{{cliente.Calificacion}}</span>
+        <span> puntuación promedio</span>
+      </div>
+    </div>
+    <div>
+      <mat-icon (mouseenter)="changeIcon(1)" (click)="keepIcon(1)">
+        {{starStates[0] ? 'star_rate' : 'star_border' }}</mat-icon>
+      <mat-icon (mouseenter)="changeIcon(2)" (click)="keepIcon(2)">
+        {{ starStates[1] ? 'star_rate' : 'star_border' }}</mat-icon>
+      <mat-icon (mouseenter)="changeIcon(3)" (click)="keepIcon(3)">
+        {{ starStates[2] ? 'star_rate' : 'star_border' }}</mat-icon>
+      <mat-icon (mouseenter)="changeIcon(4)" (click)="keepIcon(4)">
+        {{ starStates[3] ? 'star_rate' : 'star_border' }}</mat-icon>
+      <mat-icon (mouseenter)="changeIcon(5)" (click)="keepIcon(5)">
+        {{ starStates[4] ? 'star_rate' : 'star_border' }}</mat-icon>
+    </div>
+
+    <div>
+      <form [formGroup]="comentarioForm" (ngSubmit)="crearComentario()">
+        <h4>¿Algún comentario?</h4>
+        <input type="hidden" formControlName="idOrden" />
+        <input type="hidden" formControlName="clienteId" />
+        <input type="hidden" formControlName="vendedorId" />
+        <mat-form-field class="full-width">
+          <mat-label>Escriba aquí</mat-label>
+          <textarea matInput formControlName="comentario" maxlength="500">
+          </textarea>
+          <mat-hint align="end"> / 500</mat-hint>
+
+        </mat-form-field>
+      </form>
+    </div>
+  </div>
+  <button mat-raised-button class="btnDetalle" color="primary" style="margin-top: 5%; " (click)="guardarEvaluacion()">Enviar</button>
+</div>

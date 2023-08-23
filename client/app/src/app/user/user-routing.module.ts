@@ -9,6 +9,7 @@ import { UserAllDeshabilitadosComponent } from './user-all-deshabilitados/user-a
 import { UserCreateDireccionComponent } from './user-create-direccion/user-create-direccion.component';
 import { UserCreatePagoComponent } from './user-create-pago/user-create-pago.component';
 import { UserCuentaComponent } from './user-cuenta/user-cuenta.component';
+import { EvaluacionIndexClienteComponent } from '../evaluacion/evaluacion-index-cliente/evaluacion-index-cliente.component';
 
 const routes: Routes = [
   {
@@ -23,6 +24,8 @@ const routes: Routes = [
 
   {path: 'direccion/usuario/:id',component: UserCreateDireccionComponent},
   {path: 'metodopago/usuario/:id',component: UserCreatePagoComponent},
+  {path: 'evaluaciones/vendedor/:id', component: EvaluacionIndexClienteComponent},
+  
   {path: 'usuario/cuenta', component:UserCuentaComponent},
 
   

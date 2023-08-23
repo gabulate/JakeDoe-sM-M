@@ -213,5 +213,7 @@ model Evaluacion {
 
   Calificacion Int
 
+  Comentario  String
+
   Borrado Boolean @default(false)
 }

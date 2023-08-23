@@ -1,3 +1,7 @@
 .btnDetalle:hover{
     background-color: #C44536;
   }
+
+  .btnDetalle{
+    margin-top: 5%;
+  }

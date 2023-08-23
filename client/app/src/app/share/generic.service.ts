@@ -26,6 +26,9 @@ export class GenericService {
   get(endopoint: string, filtro: any): Observable<any | any[]> {
     return this.http.get<any | any[]>(this.urlAPI + endopoint + `/${filtro}`);
   }
+  getByUrl(url: string): Observable<any | any[]> {
+    return this.http.get<any | any[]>(this.urlAPI + url);
+  }
   // crear
   create(endopoint: string, objCreate: any | any): Observable<any | any[]> {
     return this.http.post<any | any[]>(this.urlAPI + endopoint, objCreate);

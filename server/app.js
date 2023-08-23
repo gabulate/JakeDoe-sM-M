@@ -20,6 +20,7 @@ const rolRoutes = require("./routes/RolRoutes");
 const estadoProductoRoutes = require('./routes/EstadoProductoRoutes.js');
 const tipoPagoRoutes = require("./routes/TipoPagoRoutes");
 const reporteRoutes = require("./routes/ReporteRoutes");
+const evaluacionRoutes = require("./routes/EvaluacionRoutes");
 
 // Acceder a la configuracion del archivo .env
 dotEnv.config();
@@ -59,8 +60,8 @@ app.use("/rol/", rolRoutes);
 app.use("/estadoProducto/", estadoProductoRoutes);
 app.use("/tipoPago/", tipoPagoRoutes);
 app.use("/reporte/", reporteRoutes);
- 
-// Servidor
+app.use("/evaluacion/", evaluacionRoutes);
+// Servidor 
 app.listen(port, () => {
   console.log("Jake Doe's store API is up and running! B^)");
   console.log(`Check here --> http://localhost:${port}`);

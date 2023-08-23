@@ -106,6 +106,7 @@ module.exports.getDetalleById = async (request, response, next) => {
               id: true,
               Nombre: true,
               Apellido: true,
+              NombreVendedor:true,
             },
           },
         },
@@ -174,6 +175,7 @@ module.exports.getById = async (request, response, next) => {
                   id: true,
                   Nombre: true,
                   Apellido: true,
+                  NombreVendedor:true,
                 },
               },
               Precio: true,
@@ -190,6 +192,7 @@ module.exports.getById = async (request, response, next) => {
       },
       cliente: {
         select: {
+          id:true,
           Nombre: true,
           Apellido: true,
           Telefono: true,
@@ -281,3 +284,37 @@ module.exports.create = async (request, response, next) => {
 
 //Actualizar un usuario
 module.exports.update = async (request, response, next) => {};
+ 
+//Obtener listado de vendedores por IdOrden
+module.exports.getVendedorByIdCompra = async (request, response, next) =>{
+  let id = parseInt(request.params.id);
+  const compra = await prisma.compra.findUnique({
+    where: { id: id },
+    select: {
+      id: true,
+      CompraDetalle: {
+        select: {
+          id: true,
+          producto: {
+            select: {
+              vendedor: {
+                select: {
+                  id: true,
+                  NombreVendedor:true,
+                },
+              },
+            },
+          },
+
+        },
+      },
+      cliente: {
+        select: {
+          id:true,
+        },
+      },
+
+    },
+  });
+  response.json(compra);
+};

@@ -97,6 +97,17 @@
           </button>
         </c-nav-item>
 
+        <c-nav-item>
+          <button
+            *ngIf="isVendedor()"
+            mat-button
+            (click)="evaluaciones()"
+            routerLinkActive="mat-raised-button"
+          >
+            Evaluaciones
+          </button>
+        </c-nav-item>
+
         <c-dropdown variant="nav-item" [popper]="false">
           <button cDropdownToggle cNavLink class="dropdown btnEmail">
             <c-navbar-text *ngIf="isAutenticated"
