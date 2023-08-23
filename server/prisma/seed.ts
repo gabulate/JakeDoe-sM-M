@@ -14,6 +14,7 @@ import { Compras } from "./seeds/Compra";
 import { CompraDetalles } from "./seeds/CompraDetalle";
 import { Mensajes } from "./seeds/Mensaje";
 import { FotoProductos } from "./seeds/FotoProducto";
+import { Evaluaciones } from "./seeds/Evaluacion";
 
 const prisma = new PrismaClient();
 
@@ -257,6 +258,10 @@ data: {
 
   await prisma.mensaje.createMany({
     data: Mensajes,
+  });
+
+  await prisma.evaluacion.createMany({
+    data: Evaluaciones,
   });
 }
 

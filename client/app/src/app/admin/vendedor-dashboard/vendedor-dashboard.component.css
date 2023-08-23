@@ -1,0 +1,51 @@
+.full-width {
+    width: 100%;
+  }
+  
+  .dashboard {
+    width: 30%;
+    margin: 1rem;
+    height: 100%;
+  }
+  
+  h5{
+    color: black;
+  }
+  
+  table{
+    background-color: rgba(255, 255, 255, 0.1);
+  }
+  
+  .shipping-card {
+    width: 90%;
+    margin: 3rem auto;
+  }
+  
+  .container{
+      width: 100%;
+      align-content: center;
+      display: flex;
+      height: 25rem;
+  }
+  
+  .column{
+      margin: 2%;
+      width: 45%;
+      box-sizing: border-box;
+  }
+  
+  .chart {
+    display: block;
+    width: 20rem;
+    height: 20rem;
+    margin: 1rem auto;
+  }
+  
+  
+  .fotoProducto {
+      margin-top: 5%;
+      height: 3rem;
+      width: 3rem;
+      object-fit: contain;
+    }
+  

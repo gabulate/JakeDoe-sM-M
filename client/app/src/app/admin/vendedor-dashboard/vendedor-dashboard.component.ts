@@ -2,14 +2,16 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { Subject, takeUntil } from 'rxjs';
 import Chart from 'chart.js/auto';
 import { GenericService } from 'src/app/share/generic.service';
+import { AuthenticationService } from 'src/app/share/authentication.service';
 
 @Component({
-  selector: 'app-dashboard',
-  templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.css'],
+  selector: 'app-vendedor-dashboard',
+  templateUrl: './vendedor-dashboard.component.html',
+  styleUrls: ['./vendedor-dashboard.component.css']
 })
-export class DashboardComponent implements OnInit {
+export class VendedorDashboardComponent implements OnInit{
   destroy$: Subject<boolean> = new Subject<boolean>();
+  currentUser: any;
   //Canvas para el grafico
   canvas: any;
   //Contexto del Canvas
@@ -25,35 +27,20 @@ export class DashboardComponent implements OnInit {
 
   VentasHoy: any = 0;
   MasVendidos: any[];
-  Vendedores: any[];
-  MejoresVendedores: any[];
-  PeoresVendedores: any[];
 
-  constructor(private gService: GenericService) {}
+  constructor(private gService: GenericService, private authService: AuthenticationService) {}
 
   ngOnInit(): void {
+    this.authService.currentUser.subscribe((x) => (this.currentUser = x));
+
     this.cantidadVentas();
     this.listMasVendidos();
-    this.listVendedores();
     this.inicioGrafico();
-  }
-
-  listVendedores() {
-    this.gService
-      .list('reporte/vendedores')
-      .pipe(takeUntil(this.destroy$))
-      .subscribe((data: any) => {
-        console.log('Vendedores', data);
-        this.MejoresVendedores = data.slice(0, 5);
-        this.PeoresVendedores = data
-          .sort((a, b) => a.Calificacion - b.Calificacion)
-          .slice(0, 5);
-      });
   }
 
   listMasVendidos() {
     this.gService
-      .list('reporte/topProductos')
+      .list('reporte/topProductos/' + this.currentUser.user.id)
       .pipe(takeUntil(this.destroy$))
       .subscribe((data: any) => {
         console.log('Mas Vendidos', data);
@@ -64,7 +51,7 @@ export class DashboardComponent implements OnInit {
 
   cantidadVentas() {
     this.gService
-      .list('reporte/ventasHoy')
+      .list('reporte/ventasHoy/' + this.currentUser.user.id)
       .pipe(takeUntil(this.destroy$))
       .subscribe((data: any) => {
         console.log('Ventas Hoy', data);
@@ -75,7 +62,7 @@ export class DashboardComponent implements OnInit {
   inicioGrafico() {
     //Obtener datos del API
     this.gService
-      .list('reporte/calificaciones')
+      .list('reporte/calificaciones/' + this.currentUser.user.id)
       .pipe(takeUntil(this.destroy$))
       .subscribe((data: any) => {
         console.log('Calificaciones', data);

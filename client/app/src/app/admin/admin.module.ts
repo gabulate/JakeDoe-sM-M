@@ -12,11 +12,13 @@ import { MatDividerModule} from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon'; 
 import { MatButtonModule } from '@angular/material/button'; 
 import { MatDialogModule } from '@angular/material/dialog';
+import { VendedorDashboardComponent } from './vendedor-dashboard/vendedor-dashboard.component';
 
 
 @NgModule({
   declarations: [
-    DashboardComponent
+    DashboardComponent,
+    VendedorDashboardComponent
   ],
   imports: [
     MatGridListModule, 

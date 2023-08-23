@@ -81,7 +81,7 @@ export class UserLoginComponent implements OnInit {
         if (this.isAdmin()) {
           this.router.navigate(['/admin/dashboard/']);
         } else if(this.isVendedor()){
-          this.router.navigate(['/producto/vendedor/' + this.currentUser.user.id]);
+          this.router.navigate(['/vendedor/dashboard/']);
         } else{
           this.router.navigate(['/']);
         }

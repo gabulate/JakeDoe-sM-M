@@ -8,8 +8,15 @@ const reporteController = require("../controllers/ReporteController");
 //Rutas de Producto
 
 router.get("/topProductos", reporteController.topVendidos);
+router.get("/topProductos/:id", reporteController.topVendidosVendedor);
 
 router.get("/ventasHoy", reporteController.ventasHoy);
+router.get("/ventasHoy/:id", reporteController.ventasHoyVendedor);
+
+router.get("/vendedores", reporteController.vendedores);
+
+router.get("/calificaciones", reporteController.calificaciones);
+router.get("/calificaciones/:id", reporteController.calificacionesVendedor);
 
 /* router.post("/", reporteController.create);
 
