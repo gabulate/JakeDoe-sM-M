@@ -9,6 +9,7 @@ export const Evaluaciones = [
         CompraId: 1,
         EvaluadorId: 1,
         EvaluadoId: 5,
+        Comentario: 'Muchas gracias, me encanta uwu',
         Calificacion: 5, 
     },
     //2
@@ -16,6 +17,7 @@ export const Evaluaciones = [
         CompraId: 1,
         EvaluadorId: 1,
         EvaluadoId: 4,
+        Comentario: 'Me llegó antes y todo.',
         Calificacion: 5, 
     },
     //3
@@ -23,6 +25,7 @@ export const Evaluaciones = [
         CompraId: 1,
         EvaluadorId: 1,
         EvaluadoId: 4,
+        Comentario: 'Me llegó tarde pero el producto está perfecto!',
         Calificacion: 4, 
     },
     //4
@@ -30,6 +33,7 @@ export const Evaluaciones = [
         CompraId: 2,
         EvaluadorId: 3,
         EvaluadoId: 4,
+        Comentario: 'Venía con un rayón',
         Calificacion: 3, 
     },
     //5
@@ -37,6 +41,7 @@ export const Evaluaciones = [
         CompraId: 3,
         EvaluadorId: 2,
         EvaluadoId: 5,
+        Comentario: 'Muy bonito.',
         Calificacion: 4, 
     },
     //6
@@ -44,6 +49,7 @@ export const Evaluaciones = [
         CompraId: 3,
         EvaluadorId: 2,
         EvaluadoId: 5,
+        Comentario: 'No me quedó',
         Calificacion: 3, 
     },
     //7
@@ -51,6 +57,7 @@ export const Evaluaciones = [
         CompraId: 4,
         EvaluadorId: 1,
         EvaluadoId: 5,
+        Comentario: 'Its perfect, thanks',
         Calificacion: 5, 
     },
      //7
@@ -58,12 +65,14 @@ export const Evaluaciones = [
         CompraId: 4,
         EvaluadorId: 1,
         EvaluadoId: 5,
+        Comentario: 'Venía dañado, llamé al vendedor y me gritó',
         Calificacion: 2, 
     },
     {
         CompraId: 5,
         EvaluadorId: 1,
         EvaluadoId: 4,
+        Comentario: 'No es la legítima guitarra de Slash, es una estafa.',
         Calificacion: 1, 
     },
 ];
