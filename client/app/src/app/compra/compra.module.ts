@@ -24,6 +24,7 @@ import { PedidoDetalleComponent } from './pedido-detalle/pedido-detalle.componen
 import { PedidoDiagComponent } from './pedido-diag/pedido-diag.component';
 import { OrdenAllComponent } from './orden-all/orden-all.component';
 import { OrdenDiagComponent } from './orden-diag/orden-diag.component';
+import { PedidoEditComponent } from './pedido-edit/pedido-edit.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,7 @@ import { OrdenDiagComponent } from './orden-diag/orden-diag.component';
     PedidoByVendedorComponent, 
     PedidoDetalleComponent, 
     PedidoDiagComponent, 
-    OrdenAllComponent, OrdenDiagComponent
+    OrdenAllComponent, OrdenDiagComponent, PedidoEditComponent
   ],
   imports: [
     CommonModule,
@@ -42,7 +43,11 @@ import { OrdenDiagComponent } from './orden-diag/orden-diag.component';
     MatCardModule,
     MatPaginatorModule,
     MatTableModule,
-    MatButtonModule
+    MatButtonModule,
+    ReactiveFormsModule,
+    MatInputModule,
+    MatButtonModule,
+    MatSelectModule,
   ],
 })
 export class PedidoModule {}

@@ -318,3 +318,30 @@ module.exports.getVendedorByIdCompra = async (request, response, next) =>{
   });
   response.json(compra);
 };
+//Actualizar DetalleCompra
+module.exports.updateCompraDetallePedido = async (request, response, next) => {
+  try {
+    let compraDetalle = request.body;
+    let idCompraDetalle = parseInt(compraDetalle.id);
+
+    const newCompraDetalle = await prisma.compraDetalle.update({
+      where: {
+        id: idCompraDetalle
+      },
+      data: {
+        EstadoCompraId: parseInt(compraDetalle.estadoPedido),
+      },
+    });
+
+    response.status(201).json({
+      success: true,
+      message: "CompraDetalle Actualizado",
+      data: newCompraDetalle,
+    });
+  } catch (error) {
+    console.error(error);
+    response
+      .status(500)
+      .json({ error: "Ha ocurrido un error al actualizar compraDetalle." });
+  }
+};

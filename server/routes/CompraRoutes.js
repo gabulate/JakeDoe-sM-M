@@ -11,6 +11,10 @@ router.post("/", compraController.create);
 
 router.get("/:id", compraController.getById);
 
+router.get("/detalle/:id", compraController.getDetalleById);
+
+router.put("/detalle/:id", compraController.updateCompraDetallePedido);
+
 router.get("/cliente/:id", compraController.getByCliente);
 
 router.get("/vendedor/:id", compraController.getByVendedor);

@@ -58,7 +58,7 @@
             matTooltip="Evaluacion"
             aria-label="Evaluacion"
             color="primary"
-
+            (click)="actualizarPedido(row.id, row.compra.id)"
           >
             <mat-icon >edit_attributes</mat-icon>
           </button>

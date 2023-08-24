@@ -7,6 +7,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatTable, MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
 import { PedidoDiagComponent } from '../pedido-diag/pedido-diag.component';
+import { PedidoEditComponent } from '../pedido-edit/pedido-edit.component';
 
 @Component({
   selector: 'app-pedido-by-vendedor',
@@ -58,11 +59,15 @@ export class PedidoByVendedorComponent implements AfterViewInit {
     };
   //"abra el elemento q se va a convertir en el dialogo"  
   this.dialog.open(PedidoDiagComponent, dialogConfig); 
-  
-
-/*     this.router.navigate(['/pedido', id], {
-      relativeTo: this.route,
-    }); */
+  }
+  actualizarPedido(detalleId:number,compraId:number){
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.disableClose = false;
+    dialogConfig.data = {
+      detalleId:detalleId,
+      compraId:compraId,
+    };
+    this.dialog.open(PedidoEditComponent, dialogConfig); 
   }
 
   ngOnDestroy() {
