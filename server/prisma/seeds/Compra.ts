@@ -41,5 +41,21 @@ export const Compras = [
       Subtotal: "95000",
       Total: "107350",
     },
+    //6
+    {
+      ClienteId: 7,
+      DireccionId: 1,
+      MetodoPagoId: 1,
+      Subtotal: "5000",
+      Total: "5650",
+    },
+    //7
+    {
+      ClienteId: 6,
+      DireccionId: 1,
+      MetodoPagoId: 1,
+      Subtotal: "5000",
+      Total: "5650",
+    },
   ];
   

@@ -98,4 +98,24 @@ export const FotoProductos = [
     ProductoId: 7,
     Foto: fs.readFileSync("images/producto7_img2.jpg").toString("base64"),
   },
+  //16
+  {
+    ProductoId: 8,
+    Foto: fs.readFileSync("images/producto8_img1.jpg").toString("base64"),
+  },
+  //17
+  {
+    ProductoId: 8,
+    Foto: fs.readFileSync("images/producto8_img2.jpg").toString("base64"),
+  },
+  //18
+  {
+    ProductoId: 9,
+    Foto: fs.readFileSync("images/producto9_img1.jpg").toString("base64"),
+  },
+  //19
+  {
+    ProductoId: 10,
+    Foto: fs.readFileSync("images/producto10_img1.jpg").toString("base64"),
+  },
 ];

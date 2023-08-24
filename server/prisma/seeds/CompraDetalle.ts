@@ -71,5 +71,21 @@ export const CompraDetalles = [
       EstadoCompraId: 3,
       Subtotal: "3000000",
     },
+    //10
+    {
+      CompraId: 6,
+      ProductoId: 10,
+      Cantidad: 1,
+      EstadoCompraId: 4,
+      Subtotal: "5000",
+    },
+    //11
+    {
+      CompraId: 6,
+      ProductoId: 9,
+      Cantidad: 1,
+      EstadoCompraId: 4,
+      Subtotal: "5000",
+    },
   ];
   

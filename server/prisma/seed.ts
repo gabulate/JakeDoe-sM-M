@@ -170,7 +170,7 @@ data: {
       data: [{ RolId: 3 }],
     },
   },
-  Deshabilitado: true,
+  //Deshabilitado: true,
 },
 });
 //9
@@ -190,7 +190,7 @@ data: {
       data: [{ RolId: 3 }],
     },
   },
-  Deshabilitado: true,
+  //Deshabilitado: true,
 },
 });
 

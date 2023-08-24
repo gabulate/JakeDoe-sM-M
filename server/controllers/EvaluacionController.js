@@ -2,17 +2,23 @@ const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
 
 module.exports.create = async (request, response, next) => {
-  let evaluacion = request.body;
-  const newEvaluacion = await prisma.evaluacion.create({
-    data: {
-      CompraId: parseInt(evaluacion.OrdenId),
-      EvaluadorId: parseInt(evaluacion.EvaluadorId),
-      EvaluadoId: parseInt(evaluacion.EvaluadoId),
-      Calificacion: parseInt(evaluacion.Puntuacion),
-      Comentario: evaluacion.Comentario,
-    },
-  });
-  response.json(newEvaluacion);
+  try{
+    let evaluacion = request.body;
+    const newEvaluacion = await prisma.evaluacion.create({
+      data: {
+        CompraId: parseInt(evaluacion.OrdenId),
+        EvaluadorId: parseInt(evaluacion.EvaluadorId),
+        EvaluadoId: parseInt(evaluacion.EvaluadoId),
+        Calificacion: parseInt(evaluacion.Puntuacion),
+        Comentario: evaluacion.Comentario,
+      },
+    });
+    response.json(newEvaluacion);
+  } catch(error){
+    console.error('Error fetching calificaciones:', error);
+    res.status(500).json({ error: 'Error fetching calificaciones' });
+  }
+  
 };
 
   //obtener listado por Id de usuario evaluado

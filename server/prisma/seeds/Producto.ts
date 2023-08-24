@@ -76,4 +76,37 @@ export const Productos = [
     EstadoId: 1,
     VendedorId: 5,
   },
+  //8
+  {
+    Nombre: "La camisa negra",
+    Descripcion:
+      "La legítima camisa negra de Juanes.",
+    Precio: "500000",
+    Cantidad: 20,
+    CategoriaId: 5,
+    EstadoId: 1,
+    VendedorId: 8,
+  },
+  //9
+  {
+    Nombre: "Smooth Criminal - Michael Jackson",
+    Descripcion:
+      "Hee hee.",
+    Precio: "5000",
+    Cantidad: 25,
+    CategoriaId: 1,
+    EstadoId: 1,
+    VendedorId: 8,
+  },
+  //10
+  {
+    Nombre: "Vinilo de Eclipse Total del corazón - Los Waldners",
+    Descripcion:
+      "Vinilo del álbum Eclipse Total del Corazón de Los Waldners, famosa banda costarricense.",
+    Precio: "5000",
+    Cantidad: 25,
+    CategoriaId: 2,
+    EstadoId: 1,
+    VendedorId: 8,
+  }
 ];

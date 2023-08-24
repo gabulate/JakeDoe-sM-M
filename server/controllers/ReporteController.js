@@ -183,9 +183,8 @@ module.exports.calificacionesVendedor = async (request, response, next) => {
       E.Calificacion,
       COUNT(*) AS CantidadEvaluaciones
       FROM Evaluacion AS E
-      JOIN Producto AS P ON E.CompraId = P.VendedorId
       WHERE E.Borrado = false
-      AND P.VendedorId = ${idVendedor}
+      AND E.EvaluadoId = ${idVendedor}
       GROUP BY E.Calificacion
       ORDER BY E.Calificacion DESC;`
     );
