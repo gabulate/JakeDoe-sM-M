@@ -6,6 +6,8 @@ import { Subject, takeUntil } from 'rxjs';
 import { CompraByClienteComponent } from 'src/app/compra/compra-by-cliente/compra-by-cliente.component';
 import { AuthenticationService } from 'src/app/share/authentication.service';
 import { GenericService } from 'src/app/share/generic.service';
+import { CalificacionService } from 'src/app/share/calificacion.service';
+import {NotificacionService,TipoMessage} from 'src/app/share/notification.service';
 
 @Component({
   selector: 'app-evaluacion-create-cliente',
@@ -13,6 +15,7 @@ import { GenericService } from 'src/app/share/generic.service';
   styleUrls: ['./evaluacion-create-cliente.component.css'],
 })
 export class EvaluacionCreateClienteComponent implements OnInit {
+  data:any;
   currentUser: any;
   destroy$: Subject<boolean> = new Subject<boolean>();
   datosDialog: any;
@@ -40,7 +43,9 @@ export class EvaluacionCreateClienteComponent implements OnInit {
     private route: ActivatedRoute,
     private gService: GenericService,
     private dialogRef: MatDialogRef<CompraByClienteComponent>,
-    private authService: AuthenticationService
+    private authService: AuthenticationService,
+    private calificacionService: CalificacionService,
+    private noti: NotificacionService
   ) {
     this.datosDialog = data;
     this.formularioReactive();
@@ -117,14 +122,29 @@ export class EvaluacionCreateClienteComponent implements OnInit {
         };
         this.evaluacion = evaluacion;
       }
-      this.close();
     }
 
     this.gService
       .create('evaluacion', this.evaluacion)
       .pipe(takeUntil(this.destroy$))
       .subscribe((data: any) => {
+        this.data=data;
+        const evaluadoId = parseInt(this.cliente.id);
+        this.calificacionService.getCalificacionesUsuario(evaluadoId)
+            .subscribe((calificaciones: any[]) => {
+              const promedio = this.calificacionService.calcularCalificacionPromedio(calificaciones);
+              console.log('Calificación promediada:', promedio);
+              this.calificacionService.actualizarCalificacionPromedio(evaluadoId,promedio)
+              .subscribe((response:any)=>{
+                console.log('Promedio actualizado', response);
+              })
+            });
         console.log('evaluacion vendedor->cliente guardada: ', data);
+        this.noti.mensaje(
+          'Gracias por su evaluación',
+          'Se ha registrado su validación exitosamente' , TipoMessage.success
+        );
+        this.close();
       });
       
   }

@@ -14,6 +14,7 @@ router.post("/registrar", usuarioController.create);
 router.post("/login", usuarioController.login);
 
 router.put("/activacion/:id", usuarioController.cambiarActivacion);
+router.put("/evaluacion/:id", usuarioController.actualizarCalificacion);
 
 
 

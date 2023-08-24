@@ -339,3 +339,30 @@ module.exports.login = async (request, response, next) => {
     });
   }
 };
+
+module.exports.actualizarCalificacion= async (request, response, next) => {
+  let id = parseInt(request.body.id);
+
+  const usuarioOriginal = await prisma.usuario.findUnique({
+    where: { id: id },
+  });
+
+  try {
+    const usuarioActualizado = await prisma.usuario.update({
+      where: {
+        id: id,
+      },
+      data: { 
+        Calificacion: parseFloat(request.body.Calificacion),
+      },
+    });
+
+    response.json(usuarioActualizado);
+  } catch (error) {
+    response.status(500).json({
+      status: false,
+      message: "Error: " + error,
+      data: error,
+    });
+  }
+};

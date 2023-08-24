@@ -15,17 +15,22 @@ module.exports.create = async (request, response, next) => {
   response.json(newEvaluacion);
 };
 
-//obtener listado por Id de usuario evaluado
-module.exports.getByEvaluadoId = async (request, response, next) => {
-  let EvaluadoId = parseInt(request.params.id);
-
-  const evaluaciones = await prisma.evaluacion.findMany({
-    where: {
-      EvaluadoId: parseInt(EvaluadoId),
-    },
-  });
-  response.json(evaluaciones);
-};
+  //obtener listado por Id de usuario evaluado
+  module.exports.getByEvaluadoId = async (request, response, next) => {
+    let EvaluadoId = parseInt(request.params.id);
+    try{
+      const evaluaciones = await prisma.evaluacion.findMany({
+        where: {
+          EvaluadoId: parseInt(EvaluadoId),
+        },
+      });
+      response.json(evaluaciones);
+    
+  } catch (error) {
+    console.error('Error fetching calificaciones:', error);
+    res.status(500).json({ error: 'Error fetching calificaciones' });
+  }
+}
 
 module.exports.getByIdOrden = async (request, response, next) => {
   let OrdenId = parseInt(request.params.id);
