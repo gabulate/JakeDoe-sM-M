@@ -1,3 +1,97 @@
-<p style="text-align: center;"> <mat-icon>build</mat-icon></p>
+<!-- <p style="text-align: center;"> <mat-icon>build</mat-icon></p>
 <p style="text-align: center; text-decoration: underline;">Diálogo en construcción</p>
 <p>Aquí iría una tabla con todo lo de la compra, como el componente CompraByCliente</p>
+ -->
+
+ <mat-card class="dashboard-card color" *ngIf="datos"  >
+    <p class="titulo"><b>Orden No. </b>{{datos.id}}</p>
+  
+    <mat-dialog-content class="dialog-content">
+      <div class="dialog-left">
+        
+        <p><b>Fecha: </b> {{ datos.Fecha | date : "dd/MM/yyyy"}}</p>
+      <p><b>Cliente </b>{{datos.cliente.Nombre + ' ' + datos.cliente.Apellido}}</p>
+  
+      <p><b>Código Postal: </b> {{ datos.direccion.CodigoPostal}}</p>
+      <p><b>Dirección de envío: </b> {{ datos.direccion.Provincia + ', ' + 
+        datos.direccion.Canton + ', ' + 
+        datos.direccion.Distrito+ '. '}} 
+        {{datos.direccion.Detalle}} 
+        </p>
+        
+      </div>
+      <div class="dialog-right">
+        <p><b>Método de pago: </b> {{ datos.metodoPago.Titulo}}</p>
+          <p><b>Subtotal: </b>{{datos.Subtotal | currency : "₡" }}</p>
+          <p><b>Total: </b>{{datos.Total | currency : "₡" }}</p>
+      </div>
+    </mat-dialog-content>
+    
+    
+  
+    <mat-card-content class="dashboard-card-content">
+      <mat-card-content>
+        <!-- Table -->
+        <div class="mat-elevation-z8" *ngIf="dataSource">
+          <table
+            mat-table
+            [dataSource]="dataSource"
+            class="full-width-table"
+            matSort
+            aria-label="Elements"
+          >
+            <!-- Columna Cliente -->
+            <ng-container matColumnDef="producto">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>Producto</th>
+              <td mat-cell *matCellDef="let row">{{ row.producto.Nombre}}</td>
+            </ng-container>
+    
+    
+            <!-- Columna Fecha -->
+            <ng-container matColumnDef="categoriaProducto">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>Categoría</th>
+              <td mat-cell *matCellDef="let row">{{ row.producto.categoria.Descripcion }}</td>
+            </ng-container>
+  
+            <!-- Columna Fecha -->
+            <ng-container matColumnDef="estadoProducto">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>Estado</th>
+              <td mat-cell *matCellDef="let row">{{ row.producto.estado.Descripcion }}</td>
+            </ng-container>
+    
+            <!-- Columna Producto -->
+            <ng-container matColumnDef="cantidad">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>Cantidad</th>
+              <td mat-cell *matCellDef="let row">{{ row.Cantidad }}</td>
+            </ng-container>
+  
+            <!-- Columna Producto -->
+            <ng-container matColumnDef="precio">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>Precio Unitario</th>
+              <td mat-cell *matCellDef="let row">{{ row.producto.Precio | currency : "₡"  }}</td>
+            </ng-container>
+  
+            <ng-container matColumnDef="estado">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Pedido</th>
+                <td mat-cell *matCellDef="let row">{{ row.estadoCompra.Descripcion }}</td>
+              </ng-container>
+    
+ 
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+          </table>
+    
+          <mat-paginator
+            #paginator
+            [length]="dataSource?.data?.length"
+            [pageIndex]="0"
+            [pageSize]="10"
+            [pageSizeOptions]="[10, 30, 100]"
+            aria-label="Selecccione una página"
+          >
+          </mat-paginator>
+        </div>
+        <!-- Table -->
+      </mat-card-content>
+    </mat-card-content>
+  </mat-card>
