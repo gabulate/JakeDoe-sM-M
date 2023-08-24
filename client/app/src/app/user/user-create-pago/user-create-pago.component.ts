@@ -10,6 +10,7 @@ import { Subject, takeUntil } from 'rxjs';
 import { AuthenticationService } from 'src/app/share/authentication.service';
 import { GenericService } from 'src/app/share/generic.service';
 import { DateTime } from 'luxon';
+import {NotificacionService,TipoMessage} from 'src/app/share/notification.service';
 
 @Component({
   selector: 'app-user-create-pago',
@@ -34,7 +35,8 @@ export class UserCreatePagoComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private gService: GenericService,
-    private authService: AuthenticationService
+    private authService: AuthenticationService,
+    private noti: NotificacionService
   ) {}
 
   getNextMonthFirstDay() {
@@ -112,6 +114,10 @@ export class UserCreatePagoComponent implements OnInit {
           (data: any) => {
             this.metodosPago = data;
             console.log('metodo =>', this.metodosPago);
+            this.noti.mensaje(
+              'Método de pago guardado',
+              'Se ha registrado un método de pago correctamente' , TipoMessage.success
+              );
             this.obtenerListaMetodos();
             this.sentForms[i] = true;
           },
@@ -120,6 +126,10 @@ export class UserCreatePagoComponent implements OnInit {
           }
         );
     } else {
+      this.noti.mensaje(
+        'Oops!',
+        'Algo pasó. Revise sus respuestas' , TipoMessage.error
+        );
       console.log('El formulario no es válido. No se enviará la respuesta.');
     }
   }
@@ -145,6 +155,7 @@ export class UserCreatePagoComponent implements OnInit {
     return this.sentForms.filter((form) => form).length;
   }
   siguiente() {
+
     this.router.navigate(['/usuario/login'], {
       relativeTo: this.route,
     });

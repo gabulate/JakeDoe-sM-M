@@ -10,6 +10,7 @@ import { Subject, takeUntil } from 'rxjs';
 import { AuthenticationService } from 'src/app/share/authentication.service';
 import { GenericService } from 'src/app/share/generic.service';
 import { LocationService } from 'src/app/share/location.service';
+import {NotificacionService,TipoMessage} from 'src/app/share/notification.service';
 
 @Component({
   selector: 'app-user-create-direccion',
@@ -42,7 +43,8 @@ export class UserCreateDireccionComponent implements OnInit {
     private route: ActivatedRoute,
     private gService: GenericService,
     private authService: AuthenticationService,
-    private locationService: LocationService
+    private locationService: LocationService,
+    private noti: NotificacionService
   ) {}
 
   getUsuario(id: number) {
@@ -154,6 +156,10 @@ export class UserCreateDireccionComponent implements OnInit {
           (data: any) => {
             this.direccion = data;
             console.log('direccion => ', this.direccion);
+            this.noti.mensaje(
+              'Dirección guardada',
+              'Se ha registrado una dirección correctamente' , TipoMessage.success
+              );
             this.obtenerListaDirecciones();
             // this.siguiente();
           },
@@ -162,6 +168,10 @@ export class UserCreateDireccionComponent implements OnInit {
           }
         );
     } else {
+      this.noti.mensaje(
+        'Oops!',
+        'Algo pasó. Revise sus respuestas' , TipoMessage.error
+        );
       console.log('El formulario no es válido. No se enviará la respuesta.');
     }
   }
@@ -192,6 +202,10 @@ export class UserCreateDireccionComponent implements OnInit {
         });
       }
     } else {
+      this.noti.mensaje(
+        'Oops!',
+        'Algo pasó. Revise sus respuestas' , TipoMessage.error
+        );
       this.direccionForms.forEach((form) => {
         Object.keys(form.controls).forEach((controlName) => {
           form.get(controlName)?.markAsTouched();
