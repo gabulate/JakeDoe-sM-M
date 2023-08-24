@@ -1,7 +1,7 @@
 import {AfterViewInit,Component,Inject,OnInit,ViewChild,} from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogConfig, MatDialogRef } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Subject, takeUntil } from 'rxjs';
+import { BehaviorSubject, Observable, Subject, switchMap, takeUntil } from 'rxjs';
 import { GenericService } from 'src/app/share/generic.service';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTable, MatTableDataSource } from '@angular/material/table';
@@ -24,7 +24,7 @@ export class PedidoByVendedorComponent implements AfterViewInit {
   dataSource = new MatTableDataSource<any>();
 
   /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
-  displayedColumns = ['orden', 'producto', 'cantidad', 'total' ,'acciones'];
+  displayedColumns = ['orden', 'producto', 'cantidad', 'total' , 'estado','acciones'];
 
   constructor(
     private router: Router,
@@ -32,6 +32,7 @@ export class PedidoByVendedorComponent implements AfterViewInit {
     private gService: GenericService,
     private dialog:MatDialog
   ) {
+    
   }
 
   ngAfterViewInit(): void {
@@ -44,6 +45,8 @@ export class PedidoByVendedorComponent implements AfterViewInit {
       .get('compra/vendedor', id)
       .pipe(takeUntil(this.destroy$))
       .subscribe((data: any) => {
+
+
         console.log(data);
         this.datos = data;
         this.dataSource = new MatTableDataSource(this.datos);
@@ -67,7 +70,13 @@ export class PedidoByVendedorComponent implements AfterViewInit {
       detalleId:detalleId,
       compraId:compraId,
     };
-    this.dialog.open(PedidoEditComponent, dialogConfig); 
+
+    const dialogRef = this.dialog.open(PedidoEditComponent, dialogConfig);
+
+    let id=this.route.snapshot.paramMap.get('id');
+    dialogRef.afterClosed().subscribe(() => {
+      this.listaPedidos(id)
+    });
   }
 
   ngOnDestroy() {

@@ -6,6 +6,7 @@ import { PedidoByVendedorComponent } from '../pedido-by-vendedor/pedido-by-vende
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import {NotificacionService,TipoMessage} from 'src/app/share/notification.service';
 
+
 @Component({
   selector: 'app-pedido-edit',
   templateUrl: './pedido-edit.component.html',
@@ -24,6 +25,7 @@ export class PedidoEditComponent implements OnInit {
   constructor(
     @Inject(MAT_DIALOG_DATA) data,
     private dialogRef: MatDialogRef<PedidoByVendedorComponent>,
+    private dialogRef1: MatDialogRef<PedidoEditComponent>,
     private gService: GenericService,
     private fb: FormBuilder,
     private noti: NotificacionService,
@@ -82,6 +84,8 @@ export class PedidoEditComponent implements OnInit {
           'Pedido actualizado',
           'Se ha actualizado el estado de su pedido exitosamente' , TipoMessage.success
         );
+        this.dialogRef1.close({ updated: true }); // Emit the signal
+
         this.close();
       });
   }
